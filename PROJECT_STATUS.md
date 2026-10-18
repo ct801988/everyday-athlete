@@ -1,4 +1,61 @@
 # Everyday Athlete — PROJECT_STATUS
+
+## Current authoritative checkpoint — 2026-10-18 owner review
+Visual V1 is approved as an INTERMEDIATE DEVELOPMENT CHECKPOINT ONLY. It is not the final visual design, V2 approval, or production/publication approval. Work is stopped pending the next owner-approved visual implementation package. This current section supersedes older recovery and resumption instructions below; those are retained as historical evidence.
+
+### Verified source and rollback
+- Repository: https://github.com/ct801988/everyday-athlete
+- Development branch: ea/m1-visual-refinement.
+- Last verified saved Visual V1 source/evidence commit: 6b3feef151ac7b48f76c3e574203be0902faa623. This status update is documentation-only; its enclosing commit is the subsequent branch checkpoint.
+- PR #3: https://github.com/ct801988/everyday-athlete/pull/3 — verified OPEN and DRAFT, targeting ea/workout-session-m1. Keep draft.
+- Preserved M1 rollback: ea/workout-session-m1 at 370f555f1a075e54ee604277bd8ef31cc33d564d, draft PR #2. Do not overwrite it.
+- Existing source history, screenshots, test reports, recovery records, source provenance and review ZIPs remain preserved. The supplied Everyday_Athlete_Visual_V1_Review.zip is the reviewed intermediate artifact.
+
+### Visual V1 completed
+Compact branded workout header; tighter exercise cards and aligned logging rows; slim factual Last Performance/Today's Target guidance; dark navy styling; completion/collapse presentation; four-tab navigation; compact/expandable radial rest timer; image-led overlay structure and searchable/category library presentation; factual partial-finish summary. Data contracts, migrations, storage, workout lifecycle and timer domain modules were preserved. See VISUAL_CHANGELOG.md, VISUAL_V1_COMPARISON.md and VISUAL_MEDIA_PLAN.md.
+
+### Executed tests and evidence
+Previously executed final Visual V1 runs, NOT rerun for this documentation-only update:
+- Typecheck, lint and production build: PASS.
+- Unit: 117 PASS / 0 FAIL.
+- Integration: 21 PASS / 0 FAIL / 3 SKIP (inherited native Supabase stack checks).
+- M1 browser regression: 11 PASS / 0 FAIL.
+- Prepared Pages/offline browser: 1 PASS / 0 FAIL.
+- Visual V1 capture/Visuals accessibility scenario: 1 PASS / 0 FAIL.
+- Total: 151 PASS / 0 FAIL / 3 SKIP. Initial contrast failure was corrected before these final runs; reruns are not added to totals.
+- Responsive evidence: 320px, 390px and 412px; automated accessibility checks included.
+- Evidence: VISUAL_V1_TEST_RESULTS.md, M1_TEST_RESULTS.md, M1_ACCEPTANCE_COVERAGE.md, reports/visual-v1 and reports/m1. These are local desktop Chromium results, not GitHub Actions or physical iPhone certification.
+No new application tests were needed or claimed for this documentation-only checkpoint.
+
+### Remaining design work — priorities, not authorization
+Standard ChatGPT will develop the next exercise-card and Visuals designs with owner approval. Remaining priorities: correctly mapped/reviewed exercise photography and ordered instructional sequences; more polished compact photo-led cards/typography; concise image-led library demonstrations; timer clearance around fields, keyboard and navigation. Preserve factual performance guidance; do not invent history, prescriptions or progression recommendations. V1 does not yet demonstrate final premium-mockup fidelity.
+
+### Known limitations
+- Photo placeholders remain. The reference inventory contains 42 entries/126 frames; rights, technique and exact exercise-variant review remain pending. Unreviewed images are not approved instructions.
+- One manual superset group is currently supported; content remains synthetic.
+- Backup size/node limits are enforced without pruning history.
+- Physical iPhone keyboard, sound, safe-area, lock/background/process-restart behavior remains unverified.
+- Dedicated hostname, root-path hosting adaptation, hosted service-worker update/rollback and public deployment remain unapproved/unverified. Local Pages build evidence is not publication.
+
+### Responsibilities and exact safe resumption
+Standard ChatGPT: product strategy, visual/UX concepts, exercise-media review and preparation of designs for owner approval.
+ChatGPT Work: React/TypeScript implementation, branches/draft PRs, data protection/migration/offline/backup, regression testing and substantial fitness research only when assigned. The earlier manual-upload division of responsibilities is superseded.
+Owner: scope/design approval and separate explicit approval of merges, hosting and publication.
+
+STOP NOW. Do not perform further coding, research, optional polish or redesign while waiting.
+When the next approved design package arrives:
+1. Fetch current ea/m1-visual-refinement and inspect PR #3/head and this checkpoint; compare against saved Visual V1 commit above. Preserve existing work; do not restart M1 or use the old single-exercise source.
+2. Read the approved package, written UX v0.9 requirements, VISUAL_V1_COMPARISON.md, VISUAL_MEDIA_PLAN.md and test evidence. Resolve material ambiguities before implementation.
+3. Implement only the supplied approved changes on the development branch; preserve single-scroll logging, Begin/Pause/Resume/Finish, independent duration/rest, Done/undo, extras, manual supersets, partial completion, four tabs/gear, optional hidden RIR, migration, persistence, offline and backup/restore.
+4. Run checks appropriate to the approved changes, record pass/fail/skip separately, capture required responsive screenshots and save source/evidence/checkpoints durably to the development branch.
+5. Prepare the next owner-review package and keep the PR draft pending review. Do not begin onboarding, adaptive equipment, running/HIIT programs, real prescriptions, automatic progression/supersets, nutrition or M2.
+No merge, deployment, hostname configuration, publication, costs or live Winter Strong access/modification is authorized.
+
+---
+
+## Historical recovery and implementation log
+The following entries describe earlier states and are retained for provenance; they are not the current stopping point.
+
 Recovery checkpoint: 2026-10-18. M1-A through M1-C remain approved; implementation recovery is paused under the owner's explicit lost-work/inconsistent-state stop condition.
 
 ## Verified repository state before this documentation commit
