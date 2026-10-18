@@ -74,3 +74,8 @@ Owner does not need to reapprove all M1 scope; the decision needed is whether to
 ## Exact resumption
 Read this checkpoint, master source, Implementation Plan v1.0 and UX Handoff v0.9. Freshly inspect remote branches/PRs and compare with this checkpoint before any write. Fetch original preflight artifact and verify bundle/source mapping above. Do not interpret this documentation-only PR as application source integration or permission to publish.
 After owner accepts the recovery path, resume at source integration, then M1-A contract/migration tests. Optional RIR stays hidden; content stays synthetic; grouping stays manual; duration and rest remain independent.
+
+## Reconstruction authorization and M1-A checkpoint
+Owner explicitly authorized bounded reconstruction ("go") on 2026-10-18. Runtime baseline remotely saved at e738f1e100245e35b24dcf806609a0ddef3ce6aa. Original c0e4045 history retained locally and in original source bundle; see SOURCE_PROVENANCE_M1.md.
+M1-A reconstructed modules: src/m1/model.ts and storage.ts; legacy modules untouched. New workspace storage preserves raw legacy payload and original database. M1 lifecycle domain primitives are added but not wired to UI.
+Executed: typecheck PASS; unit contract cases PASS; browser migration/storage scenario PASS (exact legacy preservation, idempotent retry, stale-tab rejection, invalid-write abort, backup roundtrip, duplicate import, rollback). User-facing migration recovery, quota simulation and expanded boundary checks remain M1-C work. UI remains pre-M1 until M1-B. Resume at src/m1 actions and App implementation after fetching latest branch. No merge/deploy. This section supersedes earlier stop status.

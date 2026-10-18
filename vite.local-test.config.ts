@@ -5,6 +5,12 @@ export default defineConfig({
   build: {
     outDir: ".data/local-test-build",
     emptyOutDir: true,
-    rollupOptions: { input: ["index.html", "tests/local/harness.html"] },
+    rollupOptions: {
+      input: [
+        "index.html",
+        "tests/local/harness.html",
+        "tests/local/m1-harness.html",
+      ],
+    },
   },
 });
