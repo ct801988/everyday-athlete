@@ -248,3 +248,15 @@ it("treats clearing a zero-weight field as an invalid correction, not undo", () 
   expect(rowChanged(p, r, r.draft)).toBe(true);
   expect(() => rowValues(p, r)).toThrow("Enter actual weight");
 });
+
+it("ignores malformed optional legacy draft evidence without mutating current records", () => {
+  const d = createModel(),
+    p = d.sessions[0].performances[0],
+    r = p.rows[0];
+  r.draft = { weight: "20", amount: "8", rir: "" };
+  d.legacy = {
+    drafts: { [d.sessions[0].id]: { "1": { values: { reps: 8 } } } },
+  };
+  expect(draftUnit(p, r, d)).toBe("lb");
+  expect(rowValues(p, r, d).load).toMatchObject({ value: 20, unit: "lb" });
+});

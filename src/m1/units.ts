@@ -29,7 +29,10 @@ export function draftUnit(p: Performance, r: Row, model?: Model): WeightUnit {
       : undefined;
     if (
       prior &&
+      prior.load &&
+      typeof prior.load === "object" &&
       "value" in prior.load &&
+      (prior.load.unit === "lb" || prior.load.unit === "kg") &&
       String(prior.load.value) === r.draft.weight &&
       String(prior.reps ?? prior.seconds) === r.draft.amount
     )
