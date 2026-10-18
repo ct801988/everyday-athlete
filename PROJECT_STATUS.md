@@ -26,8 +26,14 @@ Recovered and CRC-checked eight ZIPs: UX Handoff v0.9; R01-A research; R01-B res
 All eight archive CRC checks passed. Older evidence/screenshots are historical, not current device verification.
 No M1-named checkpoint appeared in the inspected artifact inventory. The known pre-M1 source is available; no recovered artifact establishes the contents of interrupted uncommitted edits.
 
+## Interrupted-session evidence supplied after initial recovery
+Owner reports a screenshot marking M1-A complete and M1-B complete, M1-C underway, and 206 passing automated tests/local scenarios with 8 skipped. Treat this as previously reported implementation, not as nonexistent work. The screenshot itself was not attached in this turn.
+Prior-conversation retrieval also returned assistant reports of local completion and legacy/M1/browser/Pages checks, but no exact source path, candidate ZIP, commit SHA or persisted log path. Those statements corroborate reported local work, not recoverable bytes.
+A targeted follow-up artifact search and workspace filename scan did not locate an M1 candidate or test logs. Remote branch recheck found only this recovery documentation added by this session. The 115 passes/3 skips below belong to the old baseline and must never replace or be combined with the reported 206/8.
+No M1 code is being recreated. Priority remains locating and preserving the existing candidate. Finishing M1-C requires its actual source; do not pretend the older baseline is that candidate.
+
 ## Code-grounded scope comparison
-| Scope | Current source evidence | Missing M1 work |
+| Scope | Current source evidence | Absent from recovered pre-M1 baseline (not a claim about interrupted local work) |
 |---|---|---|
 | M1-A | src/local/model.ts: dataset v2, one prescription and actual-set array per session; typed loads, nullable RIR. store.ts: IndexedDB transactions, conflict checks, mutation receipts, audit, retained v1 timer migration workspace. | Versioned multi-exercise snapshots and performed records; stable exercise-level addressing; v1/v2 to M1 reversible migration; explicit lifecycle and intervals; new backup format and compatibility tests. |
 | M1-B | commands.ts and LocalApp.tsx: draft/confirmed set logging, correction/reopen, complete/partial finishing and schedule records. | Explicit Begin/Pause/Resume; persistent elapsed intervals, anomalous duration review/correction; six-exercise continuous logging; extras; new completion semantics; collapse state; grounded per-exercise previous performance. |
