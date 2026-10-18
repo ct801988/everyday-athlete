@@ -1,0 +1,10 @@
+import { defineConfig } from "@playwright/test";
+import m1 from "./playwright.m1.config";
+export default defineConfig({
+  ...m1,
+  testMatch: "visual-v1.spec.ts",
+  reporter: [
+    ["list"],
+    ["json", { outputFile: "reports/visual-v1/capture-results.json" }],
+  ],
+});

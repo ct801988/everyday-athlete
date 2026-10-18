@@ -197,6 +197,9 @@ test("independent origins cannot read M1 records or clear its caches", async ({
   context,
 }) => {
   await page.goto("/");
+  await expect(
+    page.getByRole("button", { name: "Begin Workout", exact: true }),
+  ).toBeVisible();
   await page.evaluate(async () => {
     await navigator.serviceWorker.ready;
   });

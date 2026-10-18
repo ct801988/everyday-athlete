@@ -1,3 +1,4 @@
+import { Icon, MediaPlaceholder, displayName } from "./visual";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   catalog,
@@ -230,10 +231,7 @@ export default function App() {
   function library(add: boolean) {
     return (
       <>
-        <p className="muted">
-          Synthetic catalog · demonstration media unavailable, not form
-          guidance.
-        </p>
+        <p className="muted">Demo library · exercise media awaiting review.</p>
         <label>
           Search exercises
           <input
@@ -242,6 +240,25 @@ export default function App() {
             placeholder="Exercise, body area, equipment"
           />
         </label>
+        <div className="category-chips" aria-label="Exercise categories">
+          {[
+            "All",
+            "Full Body",
+            "Lower Body",
+            "Upper Body",
+            "Core",
+            "Mobility & Flexibility",
+            "Cardio & Conditioning",
+          ].map((c) => (
+            <button
+              key={c}
+              aria-pressed={category === c}
+              onClick={() => setCategory(c)}
+            >
+              {c === "All" ? "All exercises" : c}
+            </button>
+          ))}
+        </div>
         <div className="filters">
           <label>
             Body area
@@ -277,6 +294,7 @@ export default function App() {
         {matches.map((item) => (
           <button
             className="library-row"
+            aria-label={(add ? "Add " : "") + item.name}
             key={item.id}
             onClick={() => {
               if (add) {
@@ -306,11 +324,9 @@ export default function App() {
               } else setDialog({ kind: "info", id: item.id });
             }}
           >
-            <span className="thumb" aria-hidden="true">
-              S
-            </span>
+            <MediaPlaceholder />
             <span>
-              <strong>{item.name}</strong>
+              <strong>{displayName(item.name)}</strong>
               <small>
                 {item.category} · {item.equipment.join(", ")}
               </small>
@@ -393,19 +409,22 @@ export default function App() {
       <header className="brand">
         <div>
           <span className="brand-mark" aria-hidden="true">
-            EA
+            <Icon name="workout" size={25} />
           </span>
           <div>
-            <strong>EVERYDAY ATHLETE</strong>
-            <small>Synthetic software preview · M1 reconstruction</small>
+            <strong>
+              Everyday<span>Athlete</span>
+            </strong>
+            <small>Synthetic workout preview</small>
           </div>
         </div>
         <button aria-label="Settings" onClick={() => open("settings")}>
-          ⚙
+          <Icon name="settings" />
         </button>
       </header>
       <div className="save-status" role="status">
-        {saved}
+        <span className="status-dot" aria-hidden="true" />
+        {saved === "Saved on this device" ? "Saved" : saved}
       </div>
       {error && (
         <div className="error" role="alert">
@@ -435,14 +454,15 @@ export default function App() {
                 {s.prescription.program === "strength"
                   ? "EVERYDAY STRENGTH"
                   : "EVERYDAY FOUNDATION"}{" "}
-                · SYNTHETIC
+                · DEMO SESSION
               </p>
               <h1>
-                {s.legacyStatus ? "Recovered legacy workout" : "Your workout"}
+                {s.legacyStatus ? "Recovered workout" : "Today’s workout"}
               </h1>
               <p className="muted">
                 {s.performances.length} exercises · {totals.done}/
-                {totals.planned} prescribed sets logged · {totals.extras} extras
+                {totals.planned} sets logged
+                {totals.extras > 0 ? ` · ${totals.extras} extra sets` : ""}
               </p>
               <div className="session-bar">
                 <span>
@@ -512,12 +532,16 @@ export default function App() {
                 </p>
               )}
             </section>
-            {s.performances.map((p, index) => {
+            {s.performances.map((p) => {
               const collapsed = d.view.collapsed[p.id];
               const last = comparable(d, s, p);
               return (
                 <section
-                  className="exercise-card"
+                  className={
+                    "exercise-card" +
+                    (collapsed ? " card-collapsed" : "") +
+                    (p.rows.every((r) => r.confirmed) ? " card-complete" : "")
+                  }
                   key={p.id}
                   aria-label={p.name}
                 >
@@ -531,11 +555,17 @@ export default function App() {
                         })
                       }
                     >
-                      <span className="thumb" aria-hidden="true">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
+                      <MediaPlaceholder />
                       <span>
-                        <strong>{p.name}</strong>
+                        <strong>{displayName(p.name)}</strong>
+                        <span className="prescription-line">
+                          {p.rows.filter((r) => r.origin === "prescribed")
+                            .length || p.rows.length}{" "}
+                          sets ·{" "}
+                          {p.identity.modality === "time"
+                            ? "Time-based"
+                            : "Reps"}
+                        </span>
                         <small>
                           {p.identity.equipment.join(" · ")} ·{" "}
                           {p.identity.modality === "time"
@@ -543,17 +573,22 @@ export default function App() {
                             : p.identity.loadKind === "bodyweight"
                               ? "Bodyweight"
                               : p.identity.loadKind === "external"
-                                ? `${p.identity.unit} ${p.identity.basis.replaceAll("_", " ")}`
+                                ? `${p.identity.unit} · ${p.identity.basis === "per_dumbbell" ? "per dumbbell" : p.identity.basis.replaceAll("_", " ")}`
                                 : "No weight"}
                         </small>
                       </span>
-                      <span>{collapsed ? "+" : "−"}</span>
+                      <span className="card-toggle">
+                        {p.rows.every((r) => r.confirmed) && (
+                          <Icon name="check" size={17} />
+                        )}
+                        <Icon name="chevron" size={17} />
+                      </span>
                     </button>
                     <button
                       aria-label={"Information for " + p.name}
                       onClick={() => open("info", p.identity.id)}
                     >
-                      i
+                      <Icon name="info" size={20} />
                     </button>
                   </header>
                   <div className="exercise-meta">
@@ -575,7 +610,7 @@ export default function App() {
                     <>
                       <div className="last-target">
                         <span>
-                          <b>Last</b>{" "}
+                          <b>Previous</b>{" "}
                           {last
                             ? last
                                 .map(
@@ -583,11 +618,10 @@ export default function App() {
                                     `${"value" in v.load ? v.load.value + " " + v.load.unit + " × " : ""}${v.reps ?? v.seconds}${v.seconds ? "s" : ""}`,
                                 )
                                 .join(" / ")
-                            : "No comparable recorded history"}
+                            : "No recorded sets yet"}
                         </span>
                         <span>
-                          <b>Target</b> Synthetic entry · no training
-                          prescription
+                          <b>Today’s target</b> Demo · log your actual sets
                         </span>
                       </div>
                       <div className="set-head">
@@ -604,7 +638,7 @@ export default function App() {
                         <span>
                           {p.identity.modality === "time" ? "Seconds" : "Reps"}
                         </span>
-                        <span>Record</span>
+                        <span>Done</span>
                       </div>
                       {p.rows.map((r, i) => {
                         const draft = edits[r.id] ?? r.draft;
@@ -802,7 +836,7 @@ export default function App() {
         )}
         {d.view.tab === "Visuals" && (
           <section className="panel">
-            <p className="eyebrow">CANONICAL EXERCISE LIBRARY</p>
+            <p className="eyebrow">FIND YOUR MOVEMENT</p>
             <h1>Visuals</h1>
             {library(false)}
           </section>
@@ -1118,7 +1152,11 @@ export default function App() {
                 })
               }
             >
-              <span aria-hidden="true">{["◈", "▤", "▧", "▥"][i]}</span>
+              <Icon
+                name={
+                  (["workout", "program", "visuals", "progress"] as const)[i]
+                }
+              />
               {tab}
             </button>
           ),
@@ -1145,16 +1183,26 @@ export default function App() {
           {dialog.kind === "info" && (
             <>
               <h3>
-                {catalog.find((x) => x.id === dialog.id)?.name ?? dialog.id}
+                {displayName(
+                  catalog.find((x) => x.id === dialog.id)?.name ??
+                    dialog.id ??
+                    "Exercise",
+                )}
               </h3>
-              <p className="notice">
-                Synthetic reference only. Demonstration photos and form
-                instructions are unavailable and have not been reviewed.
+              <p className="media-note">
+                Media awaiting rights &amp; technique review. This preview does
+                not provide form instruction.
               </p>
               <div className="frames">
                 {(mediaLibrary[dialog.id ?? ""] ?? []).map((frame) => (
                   <figure key={frame.id}>
-                    <div className="frame">Frame {frame.order + 1}</div>
+                    <div className="frame">
+                      <MediaPlaceholder large />
+                      <span className="frame-step">
+                        {frame.order + 1} /{" "}
+                        {mediaLibrary[dialog.id ?? ""]?.length}
+                      </span>
+                    </div>
                     <figcaption>{frame.caption}</figcaption>
                   </figure>
                 ))}
@@ -1162,15 +1210,43 @@ export default function App() {
               <details>
                 <summary>Additional details</summary>
                 <p>
-                  One canonical library serves this overlay, Visuals, and Add
-                  Exercise. Ordered media may contain more than three reviewed
-                  frames in a future release.
+                  Reviewed demonstrations will show each position with a short
+                  caption. More than three frames can be used for movements that
+                  need them.
                 </p>
               </details>
             </>
           )}
           {dialog.kind === "finish" && (
             <>
+              <div className="finish-intro">
+                <Icon name="check" size={28} />
+                <h3>Your work, recorded.</h3>
+                <p>Finish what you did. Keep the rest honest.</p>
+              </div>
+              <div className="summary-grid">
+                <div>
+                  <span>Prescribed sets</span>
+                  <strong>
+                    {totals.done}
+                    <small> / {totals.planned}</small>
+                  </strong>
+                </div>
+                <div>
+                  <span>Additional sets</span>
+                  <strong>{totals.extras}</strong>
+                </div>
+                <div>
+                  <span>Not completed</span>
+                  <strong>{totals.planned - totals.done}</strong>
+                </div>
+                <div>
+                  <span>Workout time</span>
+                  <strong>
+                    {time.review ? "Needs review" : clock(time.seconds)}
+                  </strong>
+                </div>
+              </div>
               <p>
                 {totals.done}/{totals.planned} prescribed sets recorded ·{" "}
                 {totals.extras} extra sets.{" "}
@@ -1441,3 +1517,5 @@ export default function App() {
     </div>
   );
 }
+
+import "./refinement.css";
