@@ -100,14 +100,15 @@ export function rowChanged(
   const v = r.actual;
   const sameWeight =
     !("value" in v.load) ||
-    Math.abs(
-      convertWeight(
-        Number(draft.weight),
-        draft.weightUnit ?? draftUnit(p, r, model),
-        v.load.unit,
-      ) - v.load.value,
-    ) <=
-      Math.max(1, v.load.value) * 1e-12;
+    (draft.weight.trim() !== "" &&
+      Math.abs(
+        convertWeight(
+          Number(draft.weight),
+          draft.weightUnit ?? draftUnit(p, r, model),
+          v.load.unit,
+        ) - v.load.value,
+      ) <=
+        Math.max(1, v.load.value) * 1e-12);
   return (
     !sameWeight ||
     Number(draft.amount) !== (v.reps ?? v.seconds) ||

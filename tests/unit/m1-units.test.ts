@@ -232,3 +232,19 @@ it("matches the same exercise across lb and kg prescription units", () => {
   d.sessions.push(h);
   expect(comparable(d, s, p)?.[0]).toEqual(r.actual);
 });
+
+it("treats clearing a zero-weight field as an invalid correction, not undo", () => {
+  const p = createModel().sessions[0].performances[0],
+    r = p.rows[0];
+  r.actual = {
+    load: { kind: "external", value: 0, unit: "lb", basis: "per_dumbbell" },
+    reps: 8,
+    seconds: null,
+    rir: null,
+    rirCapped: false,
+  };
+  r.confirmed = true;
+  r.draft = { weight: "", amount: "8", rir: "" };
+  expect(rowChanged(p, r, r.draft)).toBe(true);
+  expect(() => rowValues(p, r)).toThrow("Enter actual weight");
+});

@@ -52,6 +52,17 @@ for (const width of [320, 390, 412])
     await first.locator(".target-explanation summary").click();
     await expect(first.locator(".last-target")).toContainText("100 lb");
     await first.locator(".target-explanation summary").click();
+    await expect(
+      page
+        .locator(".rest-bar")
+        .getByRole("button", { name: "Start", exact: true }),
+    ).toBeVisible();
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+        ),
+    );
     await page.screenshot({
       path: `reports/visual-v2-final/${width}-pounds.png`,
     });
@@ -80,9 +91,11 @@ for (const width of [320, 390, 412])
     await page.goto("/");
     const select = async (unit: string) => {
       await page.getByRole("button", { name: "Settings", exact: true }).click();
-      await page.getByLabel("Weight units", { exact: true }).selectOption(unit);
+      await page
+        .getByRole("combobox", { name: "Weight units", exact: true })
+        .selectOption(unit);
       await expect(
-        page.getByLabel("Weight units", { exact: true }),
+        page.getByRole("combobox", { name: "Weight units", exact: true }),
       ).toHaveValue(unit);
       await expect(page.getByRole("status")).toContainText("Saved");
       await page.getByRole("button", { name: "Close overlay" }).click();
@@ -99,6 +112,17 @@ for (const width of [320, 390, 412])
     await first.locator(".target-explanation summary").click();
     await expect(first.locator(".last-target")).toContainText("45.359 kg");
     await first.locator(".target-explanation summary").click();
+    await expect(
+      page
+        .locator(".rest-bar")
+        .getByRole("button", { name: "Start", exact: true }),
+    ).toBeVisible();
+    await page.evaluate(
+      () =>
+        new Promise<void>((resolve) =>
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+        ),
+    );
     await page.screenshot({
       path: `reports/visual-v2-final/${width}-kilograms.png`,
     });
