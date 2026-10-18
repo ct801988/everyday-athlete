@@ -1,0 +1,32 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:30) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:43) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:80) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:88) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:101) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 17 tests using 1 worker
+
+(node:135) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 tests/local/m1-storage.spec.ts:2:1 › atomic legacy migration preserves original, conflicts, duplicate retry, backups and rollback (285ms)
+  ✓   2 tests/local/m1-storage.spec.ts:79:1 › migration quota/interruption leaves original database and active pointer intact (215ms)
+  ✓   3 tests/local/m1-storage.spec.ts:115:1 › restore interruption retains current workspace and audit stays bounded on repeated drafts (1.3s)
+  ✓   4 tests/local/m1-ui.spec.ts:3:1 › continuous logging, deliberate actuals, extras, grouping, pause, reopen, partial history and overlays (2.7s)
+  ✓   5 tests/local/m1-ui.spec.ts:89:3 › mobile 320: labels, navigation, contrast and screenshot (1.6s)
+  ✓   6 tests/local/m1-ui.spec.ts:89:3 › mobile 390: labels, navigation, contrast and screenshot (1.5s)
+  ✓   7 tests/local/m1-ui.spec.ts:89:3 › mobile 412: labels, navigation, contrast and screenshot (1.6s)
+  ✓   8 tests/local/m1-ui.spec.ts:115:1 › rest deadline expires green and reset restores configured time (6.0s)
+  ✓   9 tests/local/m1-ui.spec.ts:134:1 › offline reopen retains paused drafts and completed records; backup download and preview import (1.0s)
+  ✓  10 tests/local/m1-ui.spec.ts:174:1 › collapse and keyboard focus restore exact overlay position (592ms)
+  ✓  11 tests/local/m1-ui.spec.ts:195:1 › independent origins cannot read M1 records or clear its caches (799ms)
+  ✘  12 tests/local/m1-units.spec.ts:4:3 › units, preserved history, targets and keyboard clearance 320 (45.1s)
+(node:429) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)

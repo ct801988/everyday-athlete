@@ -1,3 +1,10 @@
+# Current checkpoint — Visual V2 final candidate awaiting owner approval
+2026-10-18: approved bounded final card refinements and lb/kg support completed on ea/visual-v2-exercise-cards, draft PR #4. Tested source: 1fcde01483683deb8ac07c1711933cc4f83930ec; later commits save documentation/evidence only. Rollback to initial V2: 1a819b1dc29f4c0f661acdb74be793245564171d. V1/PR #3 and M1/PR #2 remain preserved.
+See VISUAL_V2_FINAL_REVIEW.md for exact changes, unit metadata/backup compatibility, source references, tests and resumption instructions. Final evidence: 136 unit + 21 integration + 17 M1/V2 browser + 1 Pages/offline = 175 PASS / 0 FAIL / 3 inherited native-stack SKIP. Typecheck/lint/build pass; 320/390/412 and axe covered; physical iPhone unverified. History is unchanged by unit preference changes, and exact lb/kg entry/backup behavior is tested.
+STOP for final owner visual approval. No merge, deployment, public release, hosting/hostname changes, costs or Winter Strong access/modification. Do not start M2. Inspect current HEAD/PR, owner feedback and unit compatibility notes before any further edits. Older readers may reject new optional weightUnit draft metadata; never blindly downgrade new browser data. This entry supersedes older waiting instructions below, retained for history.
+
+---
+
 # Current checkpoint — Visual V2 screenshot review
 2026-10-18: owner authorized bounded exercise-card V2. Branch ea/visual-v2-exercise-cards starts at 27ce80a51f916d086356574635b1f16ab63e03c2, retaining V1/PR #3 unchanged. V2 application presentation is saved at 9b5b4f2a40d5d173c092af9ec2a38dd45a9fe807; subsequent commits add tests/review documentation only. See VISUAL_V2_REVIEW.md for exact scope, evidence, comparison deviations and rollback.
 Final targeted verification: typecheck/lint/build PASS; 3 new responsive card scenarios + 11 existing M1 browser scenarios PASS (14 PASS / 0 FAIL / 0 SKIP). Unit/integration/Pages final suites deferred until owner visual approval; do not carry V1 counts forward as new runs.
