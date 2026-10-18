@@ -1,0 +1,29 @@
+# Preview continuation and UX planning handoff — v0.3.2 packaging
+
+## Completed versus authorized scope
+
+Temporary naming is implemented: Fitness App Preview in browser title, app heading/loading heading, manifest and password realm; fitness-pilot-preview in Worker configurations. Internal Everyday Athlete database, package, backup and canonical identities are retained. Existing React functionality, local persistence, backup/restore and offline code are preserved. No timer/mobility functionality has been implemented.
+
+Owner authorized the dashboard packaging adjustment on October 17 after the dashboard could not attach Static Assets to the manually created Worker. The new dashboard-candidate embeds the same ten static files inside one Worker module and supplies an internal response adapter to the existing tested authentication handler. No external ASSETS binding, KV, R2, D1 or workout backend exists. The original Worker/Static Assets approach remains reproducible separately; the dashboard candidate is now preferred for this owner-assisted deployment.
+
+N04 is IN PROGRESS, not complete. Owner screenshots show a Worker created and the gate deployed, logs/traces/issues disabled and Production PREVIEW_HOST plus encrypted PREVIEW_PASSWORD configured. Initial invalid-secret configuration returned 503; after the owner changed the secret, a fresh unauthenticated live request returned 401. Owner reports credentials close the browser prompt, then sees Preview unavailable, consistent with missing ASSETS. No authenticated live app/assets, alias protection, Free plan status/CPU quotas or physical iPhone acceptance has been independently verified. The owner must paste/deploy the new embedded package; agent has not published it.
+
+## Actual tests and failures
+
+Renamed standard package regression: 56 unit passed; 21 integration passed/3 skipped; 11 original lab browser passed; 36 local acceptance passed/3 skipped; 19 native preview passed/3 skipped. Total143 passed,0 failed,9 skipped. The realm-only naming edit was followed by a56/56 unit rerun. New embedded package:19 native workerd/HTTPS Chromium cases passed,0 failed,3 skipped; local copy helper3 checks passed,0 failed. Total current package/regression executions reported separately to avoid implying different shared cases are unique: 165 passes across suites,0 final failures,12 skipped placeholders (overlapping deferred/device/live conditions). Build, typecheck, lint and local Wrangler dry run passed. All native cases run the bundled embedded module, compare every static payload hash and test real offline/update/recovery behavior. Update test regenerates the module with a controlled changed SW and restores the original release artifact afterwards. Evidence in reports/preview-update and reports/dashboard-preview.
+
+Earlier TLS/lint/JSONC failures are preserved in reports/preview-preparation and historical TEST_RESULTS.md. Cloud browser Cloudflare sign-in failed403; access to Google was declined and must remain prohibited. No workaround, session transfer or token extraction was attempted. Owner performed dashboard actions independently. Missing Static Assets option confirmed the dashboard-only original route could not finish; this led to the explicitly approved packaging change. No final local test failures are hidden.
+
+## Files and preservation
+
+Added scripts/build-dashboard-preview.mjs, wrangler.dashboard.jsonc, dashboard-candidate (Worker JS/TXT, local copy HTML, config and hashes), current requirement/register/master/blueprint revisions, UX/data/impact/proposed-test documents, and actual evidence. Modified naming-only app/index strings; preview build naming; Worker realm; scripts/test-preview.mjs to test either package; package/lockfile (pinned esbuild development dependency plus build/test scripts); lint generated-output exclusion. No application feature, workout model, data schema, domain logic, server/SQL or historical tests changed. Changed paths appear in package source history/manifest. Repository Git history is preserved in complete bundle; no remote push.
+
+## Outstanding bugs, risks and decisions
+
+Embedded assets move decode/response work into Worker CPU; no claim of hosted Free10ms CPU compliance. Live quota/CPU/certificate/CDN/aliases and iPhone Safari/PWA/clipboard behavior need verification. Dashboard may have editor/paste size limitations not represented by workerd tests; do not weaken the gate to bypass them. Payload is500284 bytes, with conservative build ceiling1MiB; measured compressed size is171989 bytes. No paid upgrade is permitted. Authorized offline copies remain usable after password rotation; no remote wipe/logout guarantee. Exact-byte SHA256 checks cover packaging and copy helper. No secrets or owner screenshots are delivered. Browser-held local workout data is not encrypted external backup. Native Supabase verification remains deferred, not waived.
+
+## Next work and approval checkpoints
+
+Finish this N04: owner deploys dashboard candidate at the same host with existing runtime secret, then verify every unauthenticated/wrong-credential asset and authenticated byte hash, no public alternate routes, Free status/limits and owner iPhone checklist including backup/restore/offline/update. Stop if the dashboard cannot handle the exact bundle or hosted CPU exceeds Free limits. No new hosting or payment workaround is authorized.
+
+Review Decision Register v0.7, master v1.5, blueprint v1.4 and proposed U01–U06 scope. Basic no-Pause timer functional design is approved but implementation still needs a separate assignment. Approve documented default/migration/alert policies and reviewer/content gate before upgrades. Mobility/exercise library follows timer work; do not start Assignment004 automatically. No personal/family exercise evaluation before reviewed program/media/rule content, and no family enrollment now.

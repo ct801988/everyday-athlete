@@ -1,0 +1,20 @@
+{
+  "version": "pages-access-preflight-1.0",
+  "filesHashed": 365,
+  "pagesBuild": "passed",
+  "typecheck": "passed",
+  "lint": "passed",
+  "pagesBrowser": {
+    "passed": 17,
+    "failed": 0,
+    "skipped": 3
+  },
+  "workflowStatic": {
+    "passed": 13,
+    "failed": 0
+  },
+  "githubWrites": "blocked; connection not installed/exposed and repository URL unknown",
+  "secretPatterns": "0 high-confidence matches; limited offline scan",
+  "sharedOriginIsolation": "not secure; synthetic sibling read demonstrated",
+  "publication": false
+}

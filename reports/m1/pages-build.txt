@@ -1,0 +1,19 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> everyday-athlete-foundation@0.5.0-m1-candidate build:pages
+> vite build --config vite.pages.config.ts && node --import tsx scripts/build-pages.ts
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 125 modules transformed.
+rendering chunks...
+computing gzip size...
+.data/pages-build/index.html                        0.51 kB │ gzip:  0.30 kB
+.data/pages-build/assets/App-BLx640Y2.css           8.53 kB │ gzip:  2.65 kB
+.data/pages-build/assets/index-DvG4p3FA.css        11.47 kB │ gzip:  3.45 kB
+.data/pages-build/assets/jsx-runtime-Am8b9ysO.js    8.27 kB │ gzip:  3.12 kB
+.data/pages-build/assets/App-B4TqdzmV.js          153.99 kB │ gzip: 43.54 kB
+.data/pages-build/assets/index-yo7GwOfN.js        213.49 kB │ gzip: 66.97 kB
+
+✓ built in 145ms
+Prepared project-path Pages artifact: /fitness-pilot-preview/; 13 files; NO deployment

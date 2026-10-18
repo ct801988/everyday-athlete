@@ -1,0 +1,68 @@
+# Scientific knowledge sources and candidate evidence register
+Version 1.0 • Retrieved/reviewed for this planning task: 17 October 2026.
+
+## Access and approval status
+All entries: curator = Assignment 001 research draft; human reviewer = **unassigned**; publication approval = **pending**; proposed review due = 17 January 2027 or sooner upon correction. Confidence is provisional applicability judgment, not formal GRADE. Links identify exact original sources; no full articles or figures are redistributed. “Accessible” does not mean redistribution licensed. Article-level terms and full-text methods require qualified review before rules publish. Contraindications not addressed by a source remain unestablished; none of these sources clears an individual's symptoms.
+
+### E01 — Contemporary ACSM foundation
+Currier BS et al. *American College of Sports Medicine Position Stand. Resistance Training Prescription for Muscle Function, Hypertrophy, and Physical Performance in Healthy Adults: An Overview of Reviews.* Medicine & Science in Sports & Exercise. 2026;58(4):851–872; online 5 March 2026. DOI [10.1249/MSS.0000000000003897](https://doi.org/10.1249/MSS.0000000000003897); [PubMed PMID 41843416](https://pubmed.ncbi.nlm.nih.gov/41843416/).
+
+Verified metadata/abstract and ACSM announcement; PMC full text was blocked by browser challenge. Synthesizes 137 reviews (>30,000 participants), healthy adults ≥18, interventions ≥6 weeks, searches through October 2024. Progressive resistance training improves multiple outcomes; heavier loading favors strength, higher weekly volume favors hypertrophy; failure/periodization effects are not consistently superior. Broad confidence high; exact individual prescription moderate/indirect. Does not validate our programs, fixed deloads or algorithm. Linked P01–03, R03–05/R09. License not cleared for product redistribution. [ACSM announcement](https://acsm.org/resistance-training-guidelines-update-2026/) is corroboration, not substitute for full appraisal.
+
+### E02 — Load, sets and frequency synthesis
+Currier BS et al. *Resistance training prescription for muscle strength and hypertrophy in healthy adults: a systematic review and Bayesian network meta-analysis.* British Journal of Sports Medicine. 2023;57(18):1211–1220. DOI [10.1136/bjsports-2023-106807](https://doi.org/10.1136/bjsports-2023-106807); [PMID 37414459](https://pubmed.ncbi.nlm.nih.gov/37414459/).
+
+Metadata/abstract verified via PubMed; original journal record identified. Healthy adults, randomized training comparisons. Different prescriptions improve strength and size; loading and multiset design matter differently by goal. Network rankings depend on indirect comparisons and study populations, not personal optimality. Moderate applicability; training status and outcome specificity require full appraisal. Linked P01–03/R04/R09. Full-text redistribution terms unreviewed; no copied content. This synthesis may overlap E01 and is not independent confirmation of every claim.
+
+### E03 — WHO activity context
+World Health Organization. *WHO guidelines on physical activity and sedentary behaviour.* Geneva: WHO; 2020. ISBN 9789240015128. [Official publication](https://www.who.int/publications/i/item/9789240015128); [recommendations](https://www.ncbi.nlm.nih.gov/books/NBK566046/).
+
+Official record and recommendations retrieved. Adults are advised 150–300 minutes moderate or 75–150 vigorous aerobic activity weekly (or equivalent), plus muscle-strengthening involving major groups on ≥2 days; some activity is better than none. Public-health guidance, not an individual screening or exercise-selection protocol. High broad applicability, with subgroup recommendations requiring care. Linked P03/R09 and rest-day education; our scheduled walk is only part of activity context. WHO license/attribution/derivative terms must be checked before product reuse; only authored summary here.
+
+### E04 — NSCA guidance and population limits
+Fragala MS et al. *Resistance Training for Older Adults: Position Statement From the National Strength and Conditioning Association.* Journal of Strength and Conditioning Research. 2019;33(8):2019–2052. DOI [10.1519/JSC.0000000000003230](https://doi.org/10.1519/JSC.0000000000003230); [PMID 31343601](https://pubmed.ncbi.nlm.nih.gov/31343601/); [NSCA page](https://www.nsca.com/about-us/position-statements/resistance-training-for-older-adults/).
+
+Metadata/abstract and organization page verified. Older-adult scope includes function and adaptation, with frailty/chronic-condition considerations. Useful for population suitability and review standards, not permission to market a generic beginner app as frailty treatment. Moderate indirect applicability to broad pilot. Linked eligibility/media review and R09, not numeric load formula. NSCA educational articles/certification curricula remain copyrighted resources requiring rights review; none ingested. A qualified reviewer should select relevant education rather than rely on credential branding alone.
+
+### E05 — RIR dose-response uncertainty
+Robinson ZP et al. *Exploring the Dose-Response Relationship Between Estimated Resistance Training Proximity to Failure, Strength Gain, and Muscle Hypertrophy: A Series of Meta-Regressions.* Sports Medicine. 2024;54(9):2209–2231. DOI [10.1007/s40279-024-02069-2](https://doi.org/10.1007/s40279-024-02069-2); [PMID 38970765](https://pubmed.ncbi.nlm.nih.gov/38970765/).
+
+Metadata/abstract inspected. Estimated study-level RIR in exploratory meta-regressions is not measured individual RIR. Findings suggest outcome-dependent proximity relationships, but extrapolation is limited by estimation and study designs. Moderate conceptual confidence, low support for an exact user threshold. Linked R03/R04/R07; no rule infers missing effort or mandates failure. Full-text/licensing review pending. Conflicting interpretations must distinguish strength from hypertrophy and study-average association from individual prescription.
+
+### E06 — Informative controlled trial
+Refalo MC et al. *Similar muscle hypertrophy following eight weeks of resistance training to momentary muscular failure or with repetitions-in-reserve in resistance-trained individuals.* Journal of Sports Sciences. 2024;42(1):85–101. DOI [10.1080/02640414.2024.2321021](https://doi.org/10.1080/02640414.2024.2321021); [PMID 38393985](https://pubmed.ncbi.nlm.nih.gov/38393985/); [publisher](https://www.tandfonline.com/doi/full/10.1080/02640414.2024.2321021).
+
+Bibliography and original-study abstract/publisher excerpts verified; detailed full-text appraisal pending. Eighteen trained participants, eight-week unilateral quadriceps protocol; close-to-failure training yielded similar hypertrophy to failure in this context. Small short study, specific exercises/population; not proof of equivalence for all muscles or beginners, nor proof of safety. Moderate/limited applicability. Linked R07 and explanatory effort limits; no numeric algorithm derived. Rights unreviewed.
+
+### E07 — Rest interval research
+Singer A et al. *Give it a rest: a systematic review with Bayesian meta-analysis on the effect of inter-set rest interval duration on muscle hypertrophy.* Frontiers in Sports and Active Living. 2024;6:1429789. DOI [10.3389/fspor.2024.1429789](https://doi.org/10.3389/fspor.2024.1429789); [PMC full text](https://pmc.ncbi.nlm.nih.gov/articles/PMC11349676/).
+
+Full page available; selected methods/discussion inspected, not formal risk-of-bias appraisal. Healthy adults, randomized comparisons, ≥4-week protocols, search through March 2024. The review suggests a small hypertrophy benefit for rest >60 seconds; longer-duration distinctions remain uncertain. It does not establish one universally optimal timer setting. Moderate confidence; limited trials/heterogeneity and volume control matter. Linked rest defaults in P01–03/R09; allow longer recovery. Publisher states CC BY with attribution requirements; asset-specific exceptions and intended reuse still need review. Only an original summary is bundled.
+
+### E08 — Biomechanics/range of motion
+Pallarés JG et al. *Effects of range of motion on resistance training adaptations: A systematic review and meta-analysis.* Scandinavian Journal of Medicine & Science in Sports. 2021;31(10):1866–1881. DOI [10.1111/sms.14006](https://doi.org/10.1111/sms.14006); [PMID 34170576](https://pubmed.ncbi.nlm.nih.gov/34170576/).
+
+Metadata/abstract verified; prospectively registered review, searches through March 2021. Full/partial-range comparisons concern training adaptations, not diagnosis or assurance of injury prevention. Moderate/indirect applicability; exercise-specific newer muscle-length research needs reviewer follow-up before advanced claims. Linked technique/media review/R09; comfortable reviewed range, no forcing painful ROM. Full-text rights and detailed appraisal pending. This source cannot certify any of the 126 supplied images.
+
+### E09 — Motor learning/attentional focus
+Grgic J, Mikulic I, Mikulic P. *Acute and Long-Term Effects of Attentional Focus Strategies on Muscular Strength: A Meta-Analysis.* Sports. 2021;9(11):153. [Original journal](https://www.mdpi.com/2075-4663/9/11/153); [PMID 34822352](https://pubmed.ncbi.nlm.nih.gov/34822352/).
+
+Metadata/abstract search records verified; full-page retrieval blocked. Acute and longer-term attention effects must be separated; long-term advantage was uncertain. Moderate/low applicability for cue design; beginner motor-skill retention was not established by this source alone. Linked authored concise cues and usability validation/R09; do not promise one cue guarantees form. Licensing and full appraisal pending. No automatic form assessment or technique diagnosis from logs.
+
+### E10 — Participation and adherence
+Rhodes RE, Lubans DR, Karunamuni N, Kennedy S, Plotnikoff R. *Factors associated with participation in resistance training: a systematic review.* British Journal of Sports Medicine. 2017;51(20):1466–1472. DOI [10.1136/bjsports-2016-096950](https://doi.org/10.1136/bjsports-2016-096950); [PMID 28404558](https://pubmed.ncbi.nlm.nih.gov/28404558/).
+
+Bibliography and abstract verified from the [author institutional repository](https://dspace.library.uvic.ca/items/73fe41f3-f085-40ee-8adb-c500af949e50/full); original journal direct retrieval blocked. Adult studies from nine countries examine participation correlates; associations do not establish causal effects of app notifications or interface design. Low/indirect applicability. Linked pilot adherence questions, not prescription rules. Repository postprint lists Attribution-NonCommercial 2.5 Canada; commercial reuse is not cleared. Full-text appraisal and reviewer decision required before authoritative claims.
+
+### E11 — International/elite-performance context
+Soligard T et al. *How much is too much? (Part 1) International Olympic Committee consensus statement on load in sport and risk of injury.* British Journal of Sports Medicine. 2016;50(17):1030–1041. DOI [10.1136/bjsports-2016-096581](https://doi.org/10.1136/bjsports-2016-096581); [PMID 27535989](https://pubmed.ncbi.nlm.nih.gov/27535989/).
+
+Publisher/PubMed identity and abstract/search excerpts verified. Sport/competition load, recovery, travel and broader stressors inform context; populations differ from sedentary beginners. Low direct applicability for MVP numeric decisions. Linked recovery context/R06 and research boundaries only. No acute:chronic workload ratio, elite training volume or injury-risk prediction imported into beginner rules. Full appraisal/rights review pending. International evidence is assessed by population/method, not prestige or nationality.
+
+## Research gaps and disagreements
+E01/E02 support broad training while E05/E06 show why effort findings cannot reduce to “always train to failure” or “RIR2 is optimal.” Different outcomes, designs and populations can explain disagreement. Exact deload cadence, break-duration thresholds, two-exposure progression, 5% increment cap, safe substitutions and individual readiness response remain programming/software safeguards needing review and pilot validation. No trial of this app or these three exact programs exists here. No source validates diagnosis, individual injury prediction, automatic form grading or athletic plyometrics for this audience.
+
+Further search queue: detailed beginner RIR accuracy; exercise-specific motor learning; direct deload/re-entry trials; contemporary ROM/long-muscle-length evidence; real-world adherence interventions; clinical screening language. A contemporary detraining review in middle-aged/older adults was discovered (PMID 34510028), but not appraised or used as numeric authority. Lack of full-text access is documented, not concealed by invented conclusions.
+
+## Search provenance and restrictions
+Queries included “site.acsm.org 2026 resistance training position stand,” “resistance training prescription Bayesian network meta analysis 2023,” “site.nsca.com resistance training older adults,” “proximity failure repetitions reserve meta regression 2024,” “rest interval hypertrophy 2024 systematic,” “external focus muscular strength meta-analysis,” “resistance training adherence systematic review,” “range motion resistance training adaptations,” and “IOC load sport injury risk.” PubMed, original journals and organizations were prioritized; social/secondary search hits were not authoritative sources. ACSM contemporary update verified in 2026; its evidence search stops in 2024, so publication date is not evidence recency for every subclaim. This was bounded searching with no formal exhaustive hit-count/screening flow; never label it a systematic review.

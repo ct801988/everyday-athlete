@@ -1,0 +1,73 @@
+{
+  "base": "/fitness-pilot-preview/",
+  "hash": "591174c3481e6822",
+  "cachePrefix": "ea-pages-shell-9c143e40f8e7-",
+  "files": [
+    {
+      "path": "release.json",
+      "bytes": 84,
+      "sha256": "1699061caaee29c6a8526cf78e8af81fdd8c32775b43f54b24377aec0943427f"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1038,
+      "sha256": "dc5bd8c652f4b04aed403b087c5f68e98924ee7ab6c0a7afe676c53082547e85"
+    },
+    {
+      "path": "assets/App-B4TqdzmV.js",
+      "bytes": 153998,
+      "sha256": "61e1702bfa71c56952c9635987c59d4b52c63375927b3fbfd2f0dfc77c71b765"
+    },
+    {
+      "path": "assets/App-BLx640Y2.css",
+      "bytes": 8531,
+      "sha256": "27dd854fb8839a75b143735d82487f442a8af74095c7953d6bf70566a1de7402"
+    },
+    {
+      "path": "assets/index-DvG4p3FA.css",
+      "bytes": 11472,
+      "sha256": "2dc0cca496653cbaa2f0fb002da112c3ba3ce192a7ed1f2479e1061c787b7ec2"
+    },
+    {
+      "path": "assets/index-yo7GwOfN.js",
+      "bytes": 213491,
+      "sha256": "a72e649ac14a45b756bc94b22874a49ca670450c27389f51d6064b9dbcbca172"
+    },
+    {
+      "path": "assets/jsx-runtime-Am8b9ysO.js",
+      "bytes": 8276,
+      "sha256": "9bd1e242e0169cc4dc70b19b33bcdae67118a8d2e564f794723fd15f0d4cab40"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "bytes": 541,
+      "sha256": "88f509827fdce59df70877682bd2cc13cb0336c0ac6afd950bbea92e01c4a640"
+    },
+    {
+      "path": "icons/icon-180.png",
+      "bytes": 741,
+      "sha256": "77d64ede8a2ba6a33fa5e5d752289984b2469bdd62c205b003cdfdf8c376b556"
+    },
+    {
+      "path": "icons/icon-192.png",
+      "bytes": 823,
+      "sha256": "61a924c78a29f6d84ab05a22adb3d30c83b4b25cb68772372a2086eb30be2558"
+    },
+    {
+      "path": "icons/icon-512.png",
+      "bytes": 3274,
+      "sha256": "3cd670ab90618c8082bdf4117436ef33abe473ed452583f531e79ccb4d8fb514"
+    },
+    {
+      "path": "sw.js",
+      "bytes": 1451,
+      "sha256": "f30c6c16098ea6cf1a43f7f183dfd979717cd3ea5b2c83aa3cfd4b8fcab43838"
+    },
+    {
+      "path": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "authentication": "none; public static host only; approval required"
+}

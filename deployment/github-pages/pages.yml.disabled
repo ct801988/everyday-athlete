@@ -1,0 +1,85 @@
+# Inert template. Install as .github/workflows/pages.yml ONLY after owner approval.
+name: Everyday Athlete — verify and approved Pages release
+"on":
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Optional full SHA of a reviewed Pages-ready main ancestor for rollback
+        required: false
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: everyday-athlete-pages-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: github.repository == vars.EA_AUTHORIZED_REPOSITORY
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      SOURCE_SHA: ${{ inputs.source_sha || github.sha }}
+      EA_PAGES_BASE: /${{ github.event.repository.name }}/
+      EA_PAGES_RELEASE_SHA: ${{ inputs.source_sha || github.sha }}
+    steps:
+      - name: Validate immutable source identifier
+        run: node -e 'if(!/^[a-f0-9]{40}$/.test(process.env.SOURCE_SHA))process.exit(1)'
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: ${{ env.SOURCE_SHA }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Restrict rollback to main history
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          test "$GITHUB_REF" = refs/heads/main
+          git merge-base --is-ancestor "$SOURCE_SHA" origin/main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version: '24.19.0'
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run test:unit
+      - run: npm run test:integration
+      - run: npm run browser:prepare
+      - run: npm run test:browser
+      - run: npm run test:local
+      - run: npm run build:pages
+      - run: npm run test:pages
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        if: always()
+        with:
+          name: synthetic-test-evidence-${{ github.run_id }}
+          path: |
+            reports/github-pages
+            reports/mobile-timer/local-browser.json
+            reports/browser.json
+          retention-days: 7
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.EA_PAGES_PUBLICATION_APPROVED == 'true' && vars.EA_PAGES_PUBLIC_ACCESS_APPROVED == 'true'
+        with:
+          path: .data/pages-build
+          retention-days: 1
+  deploy:
+    needs: verify
+    if: github.repository == vars.EA_AUTHORIZED_REPOSITORY && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.EA_PAGES_PUBLICATION_APPROVED == 'true' && vars.EA_PAGES_PUBLIC_ACCESS_APPROVED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: everyday-athlete-pages-production
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.release.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e
+        id: release
