@@ -9,23 +9,19 @@ import {
 } from "./model";
 export const GAP = 2 * 60 * 60 * 1000;
 export function elapsed(s: Session, now: number) {
-  if (s.correction)
-    return {
-      seconds: s.correction.seconds,
-      review: s.durationQuality === "review",
-    };
   let ms = 0;
   let review = s.durationQuality !== "known";
   for (const i of s.intervals) {
     const end = i.end ?? now;
+    if (s.correction && end <= s.correction.at) continue;
     if (end < i.start) {
       review = true;
       continue;
     }
-    ms += end - i.start;
+    ms += end - Math.max(i.start, s.correction?.at ?? i.start);
   }
   return {
-    seconds: Math.floor(ms / 1000),
+    seconds: (s.correction?.seconds ?? 0) + Math.floor(ms / 1000),
     review:
       review ||
       (s.status === "active" &&

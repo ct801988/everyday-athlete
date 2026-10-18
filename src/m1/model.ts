@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { SetValues, UUID } from "../domain/contracts";
-import { validate as validateLegacy } from "../local/model";
+import { SlotSchema, validate as validateLegacy } from "../local/model";
 import { Timer, TimerPreferences, readyTimer } from "../local/timer";
 export const Draft = z
   .object({
@@ -128,20 +128,7 @@ export const Model = z
     revision: z.number().int().nonnegative(),
     program: z.enum(["foundation", "strength"]),
     sessions: z.array(Session).min(1).max(1000),
-    slots: z
-      .array(
-        z
-          .object({
-            id: z.string(),
-            ordinal: z.number(),
-            originalDate: z.string(),
-            plannedDate: z.string(),
-            status: z.string(),
-            revision: z.number(),
-          })
-          .strict(),
-      )
-      .max(200),
+    slots: z.array(SlotSchema).max(200),
     legacy: z.unknown().nullable(),
     preferences: z
       .object({
@@ -486,18 +473,47 @@ export function validate(raw: unknown): Model {
   };
   for (const s of d.sessions) {
     unique(s.id);
+    const prescriptionIds = new Set<string>();
+    for (const e of s.prescription.exercises) {
+      if (prescriptionIds.has(e.id))
+        throw Error("Duplicate prescribed exercise");
+      prescriptionIds.add(e.id);
+      const setIds = new Set(e.sets.map((a) => a.id));
+      if (setIds.size !== e.sets.length) throw Error("Duplicate planned set");
+    }
     const ps = new Set(
       s.prescription.exercises.flatMap((e) => e.sets.map((r) => r.id)),
     );
     const linked = new Set<string>();
     for (const p of s.performances) {
       unique(p.id);
+      const prescribed = s.prescription.exercises.find(
+        (e) => e.id === p.prescriptionExerciseId,
+      );
+      if (
+        p.origin === "prescribed" &&
+        (!prescribed ||
+          JSON.stringify(prescribed.identity) !== JSON.stringify(p.identity))
+      )
+        throw Error("Invalid exercise prescription identity");
+
       for (const r of p.rows) {
         unique(r.id);
+        if (
+          r.actual &&
+          ((p.identity.modality === "time") !== (r.actual.seconds !== null) ||
+            r.actual.load.kind !== p.identity.loadKind)
+        )
+          throw Error("Actual values mismatch exercise modality/load");
         if (r.confirmed && !r.actual)
           throw Error("Confirmed row needs actual values");
         if (r.plannedSetId) {
-          if (!ps.has(r.plannedSetId) || linked.has(r.plannedSetId))
+          if (
+            !ps.has(r.plannedSetId) ||
+            linked.has(r.plannedSetId) ||
+            !prescribed?.sets.some((a) => a.id === r.plannedSetId) ||
+            p.origin !== "prescribed"
+          )
             throw Error("Invalid prescription link");
           linked.add(r.plannedSetId);
         }

@@ -147,3 +147,29 @@ describe("M1 lifecycle truthfulness", () => {
     expect(summary(s).done).toBe(0);
   });
 });
+import { allowedHost } from "../../src/m1/host";
+it("blocks unapproved hosts and same-origin github.io deployment", () => {
+  expect(allowedHost("127.0.0.1")).toBe(true);
+  expect(allowedHost("evil.example")).toBe(false);
+  expect(allowedHost("ct801988.github.io", "ct801988.github.io")).toBe(false);
+  expect(allowedHost("fitness.example", "fitness.example")).toBe(true);
+});
+it("duration correction continues accumulating later active intervals", () => {
+  const d = createModel();
+  const s = d.sessions[0];
+  lifecycle(d, s, "begin", 1000);
+  s.correction = { seconds: 10, at: 5000, reason: "Corrected" };
+  expect(elapsed(s, 8000).seconds).toBe(13);
+  lifecycle(d, s, "pause", 9000);
+  lifecycle(d, s, "resume", 20000);
+  expect(elapsed(s, 22000).seconds).toBe(16);
+});
+it("rejects a set credited to another exercise", () => {
+  const d = createModel();
+  const a = d.sessions[0].performances;
+  [a[0].rows[0].plannedSetId, a[1].rows[0].plannedSetId] = [
+    a[1].rows[0].plannedSetId,
+    a[0].rows[0].plannedSetId,
+  ];
+  expect(() => validate(d)).toThrow();
+});

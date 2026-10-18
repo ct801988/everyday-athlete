@@ -100,7 +100,7 @@ export async function change(
     }
     if (d.id !== expected.id || d.revision !== expected.revision)
       throw Error("Another tab changed records. Reload before editing.");
-    const before = canonical(d.sessions);
+    const beforeSessions = structuredClone(d.sessions);
     apply(d);
     d.revision++;
     d.receipts[id] = fingerprint;
@@ -109,8 +109,8 @@ export async function change(
       at: Date.now(),
       action,
       session: d.view.session,
-      before,
-      after: canonical(d.sessions),
+      before: canonical(delta(d.sessions, beforeSessions)),
+      after: canonical(delta(beforeSessions, d.sessions)),
     });
     validate(d);
     safeParse(JSON.stringify(d));
@@ -157,6 +157,28 @@ export async function restore(
       throw Error("Export current records before restore");
     if (current.id === incoming.id && current.revision === incoming.revision)
       throw Error("Conflicting same-revision records");
+    if (current.id === incoming.id) {
+      for (const s of incoming.sessions) {
+        const old = current.sessions.find((a) => a.id === s.id);
+        if (!old) continue;
+        if (canonical(old.prescription) !== canonical(s.prescription))
+          throw Error("Conflicting pinned prescription");
+        for (const p of s.performances)
+          for (const row of p.rows) {
+            const prior = old.performances
+              .flatMap((e) => e.rows)
+              .find((r) => r.id === row.id);
+            if (prior && prior.plannedSetId !== row.plannedSetId)
+              throw Error("Conflicting set identity");
+            if (
+              prior &&
+              prior.revision === row.revision &&
+              canonical(prior.actual) !== canonical(row.actual)
+            )
+              throw Error("Conflicting same-revision actual");
+          }
+      }
+    }
     const next = crypto.randomUUID();
     s.add(incoming, next);
     s.put(key, "previous");
@@ -181,4 +203,21 @@ export async function rollback(expected: Model, exportedRevision: number) {
     s.put(prev, "active");
     return prior;
   });
+}
+
+function delta(before: unknown, after: unknown, path = ""): unknown[] {
+  if (canonical(before) === canonical(after)) return [];
+  if (
+    before &&
+    after &&
+    typeof before === "object" &&
+    typeof after === "object"
+  ) {
+    const a = before as Record<string, unknown>,
+      b = after as Record<string, unknown>;
+    return [...new Set([...Object.keys(a), ...Object.keys(b)])].flatMap((k) =>
+      delta(a[k] ?? null, b[k] ?? null, path + "/" + k),
+    );
+  }
+  return [{ path, value: after ?? null }];
 }
