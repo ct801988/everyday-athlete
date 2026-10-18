@@ -1,3 +1,10 @@
+# Current checkpoint — Visual V2 screenshot review
+2026-10-18: owner authorized bounded exercise-card V2. Branch ea/visual-v2-exercise-cards starts at 27ce80a51f916d086356574635b1f16ab63e03c2, retaining V1/PR #3 unchanged. V2 application presentation is saved at 9b5b4f2a40d5d173c092af9ec2a38dd45a9fe807; subsequent commits add tests/review documentation only. See VISUAL_V2_REVIEW.md for exact scope, evidence, comparison deviations and rollback.
+Final targeted verification: typecheck/lint/build PASS; 3 new responsive card scenarios + 11 existing M1 browser scenarios PASS (14 PASS / 0 FAIL / 0 SKIP). Unit/integration/Pages final suites deferred until owner visual approval; do not carry V1 counts forward as new runs.
+STOP for owner screenshot feedback. No final V2 approval, merge, publication, hosting, cost or Winter Strong changes. Next: inspect current remote checkpoint and owner feedback/reference, implement only approved adjustments, then full relevant validation and candidate packaging. This section supersedes the older waiting-for-design stopping point retained below.
+
+---
+
 # Everyday Athlete — PROJECT_STATUS
 
 ## Current authoritative checkpoint — 2026-10-18 owner review
