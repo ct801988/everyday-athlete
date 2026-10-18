@@ -31,7 +31,7 @@ describe("weight units without historical rewriting", () => {
     expect(convertWeight(20, "kg", "lb")).toBeCloseTo(44.0924524369755, 12);
   });
   it("rounds converted display only and preserves original precision and zero", () => {
-    expect(weightText(100, "lb", "kg")).toBe("45.359");
+    expect(weightText(100, "lb", "kg")).toBe("45.4");
     expect(weightText(100.123456789, "lb", "lb")).toBe("100.123456789");
     expect(weightText(0, "kg", "lb")).toBe("0");
   });
@@ -49,7 +49,7 @@ describe("weight units without historical rewriting", () => {
       basis: "per_dumbbell",
     });
     expect(p.identity.unit).toBe("lb");
-    expect(draftWeight(p, r, r.draft, "lb")).toBe("44.365");
+    expect(draftWeight(p, r, r.draft, "lb")).toBe("44.4");
   });
   it("preserves old unitless draft behavior and malformed/empty entry validation", () => {
     const p = createModel().sessions[0].performances[0],
@@ -105,7 +105,7 @@ describe("weight units without historical rewriting", () => {
           ? "Bodyweight"
           : kind === "none"
             ? "No added weight"
-            : `22.046 lb ${kind === "assisted" ? "assistance" : "added"}`,
+            : `22 lb ${kind === "assisted" ? "assistance" : "added"}`,
       );
     });
   it("does not convert exercise duration when switching weight units", () => {
@@ -160,7 +160,7 @@ describe("weight units without historical rewriting", () => {
     };
     r.draft = { weight: "20", amount: "8", rir: "" };
     r.confirmed = true;
-    expect(draftWeight(p, r, r.draft, "lb")).toBe("44.092");
+    expect(draftWeight(p, r, r.draft, "lb")).toBe("44.1");
     expect(rowChanged(p, r, r.draft)).toBe(false);
     expect(rowValues(p, r).load).toEqual(r.actual.load);
   });
@@ -186,7 +186,7 @@ describe("weight units without historical rewriting", () => {
       value: 20,
       unit: "kg",
     });
-    expect(loadText(comparable(d, s, p)![0].load, "lb")).toBe("44.092 lb");
+    expect(loadText(comparable(d, s, p)![0].load, "lb")).toBe("44.1 lb");
     expect(valuesDraft(comparable(d, s, p)![0]).weightUnit).toBe("kg");
   });
 });
@@ -259,4 +259,18 @@ it("ignores malformed optional legacy draft evidence without mutating current re
   };
   expect(draftUnit(p, r, d)).toBe("lb");
   expect(rowValues(p, r, d).load).toMatchObject({ value: 20, unit: "lb" });
+});
+
+it("uses one decimal without trailing zeroes for conversions, retaining exact editing values", () => {
+  expect(weightText(20, "kg", "lb")).toBe("44.1");
+  expect(weightText(25.123456789, "lb", "kg")).toBe("11.4");
+  expect(weightText(10, "kg", "lb")).toBe("22");
+  const p = createModel().sessions[0].performances[0],
+    r = p.rows[0];
+  r.draft = { weight: "25.123456789", weightUnit: "lb", amount: "8", rir: "" };
+  expect(draftWeight(p, r, r.draft, "kg")).toBe("11.4");
+  expect(draftWeight(p, r, r.draft, "kg", undefined, true)).toBe(
+    String(convertWeight(25.123456789, "lb", "kg")),
+  );
+  expect(r.draft.weight).toBe("25.123456789");
 });

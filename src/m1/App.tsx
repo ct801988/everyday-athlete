@@ -88,6 +88,7 @@ export default function App() {
     [weightInputs, setWeightInputs] = useState<
       Record<string, { text: string; unit: WeightUnit; weight: string }>
     >({}),
+    [focusedWeight, setFocusedWeight] = useState<string | null>(null),
     [preview, setPreview] = useState<Model | null>(null),
     [exported, setExported] = useState(-1),
     [duration, setDuration] = useState(""),
@@ -381,6 +382,12 @@ export default function App() {
     value: string,
   ) {
     const prior = edits[r.id] ?? r.draft;
+    // A focus/unchanged input event must never persist a rounded conversion.
+    if (
+      key === "weight" &&
+      value === draftWeight(p, r, prior, d!.preferences.unit, d!, true)
+    )
+      return;
     const draft = {
       ...prior,
       weightUnit: prior.weightUnit ?? draftUnit(p, r, d ?? undefined),
@@ -726,8 +733,11 @@ export default function App() {
                                           draft,
                                           d.preferences.unit,
                                           d,
+                                          focusedWeight === r.id,
                                         )
                                   }
+                                  onFocus={() => setFocusedWeight(r.id)}
+                                  onBlur={() => setFocusedWeight(null)}
                                   onChange={(e) =>
                                     setDraft(p, r, "weight", e.target.value)
                                   }
@@ -1463,8 +1473,8 @@ export default function App() {
               </label>
               <p className="muted">
                 Display and entry units. Your recorded weights keep their
-                original units. Converted displays round to 0.001; saved
-                precision is retained.
+                original units. Converted displays round to 0.1; saved precision
+                is retained.
               </p>
               <label className="check">
                 <input

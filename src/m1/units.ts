@@ -12,8 +12,8 @@ export function convertWeight(value: number, from: WeightUnit, to: WeightUnit) {
 }
 export function weightText(value: number, from: WeightUnit, to: WeightUnit) {
   const n = convertWeight(value, from, to);
-  // Three decimal places for converted displays only; original-unit precision retained.
-  return from === to ? String(value) : String(Number(n.toFixed(3)));
+  // One decimal place for converted displays only; original-unit precision retained.
+  return from === to ? String(value) : String(Number(n.toFixed(1)));
 }
 export function draftUnit(p: Performance, r: Row, model?: Model): WeightUnit {
   if (!r.draft.weightUnit && model?.legacy) {
@@ -54,14 +54,14 @@ export function draftWeight(
   draft: Row["draft"],
   unit: WeightUnit,
   model?: Model,
+  editing = false,
 ) {
   if (!draft.weight.trim() || !Number.isFinite(Number(draft.weight)))
     return draft.weight;
-  return weightText(
-    Number(draft.weight),
-    draft.weightUnit ?? draftUnit(p, r, model),
-    unit,
-  );
+  const from = draft.weightUnit ?? draftUnit(p, r, model);
+  return editing
+    ? String(convertWeight(Number(draft.weight), from, unit))
+    : weightText(Number(draft.weight), from, unit);
 }
 export function loadText(
   load: SetValues["load"],

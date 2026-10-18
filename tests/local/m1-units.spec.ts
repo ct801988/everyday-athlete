@@ -48,7 +48,7 @@ for (const width of [320, 390, 412])
     await page.goto("/");
     const first = page.locator(".exercise-card").first();
     await expect(first.locator(".set-head")).toContainText("Weight (lb)");
-    await expect(first.locator(".last-target")).toContainText("44.092 lb");
+    await expect(first.locator(".last-target")).toContainText("44.1 lb");
     await first.locator(".target-explanation summary").click();
     await expect(first.locator(".last-target")).toContainText("100 lb");
     await first.locator(".target-explanation summary").click();
@@ -106,11 +106,11 @@ for (const width of [320, 390, 412])
     await page.goto("/");
     await expect(first.locator(".set-head")).toContainText("Weight (kg)");
     await expect(first.getByLabel(/set 1 weight/)).toHaveValue(
-      String(Number((25.123456789 * 0.45359237).toFixed(3))),
+      String(Number((25.123456789 * 0.45359237).toFixed(1))),
     );
     await expect(first.locator(".last-target")).toContainText("20 kg");
     await first.locator(".target-explanation summary").click();
-    await expect(first.locator(".last-target")).toContainText("45.359 kg");
+    await expect(first.locator(".last-target")).toContainText("45.4 kg");
     await first.locator(".target-explanation summary").click();
     await expect(
       page
@@ -135,6 +135,25 @@ for (const width of [320, 390, 412])
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
+    // Focus reveals full converted precision but never writes it back by itself.
+    await first.getByLabel(/set 1 weight/).focus();
+    await expect(first.getByLabel(/set 1 weight/)).toHaveValue(
+      String(25.123456789 * 0.45359237),
+    );
+    await page.getByRole("heading", { name: "Today’s workout" }).click();
+    await expect(first.getByLabel(/set 1 weight/)).toHaveValue("11.4");
+    // A reps-only correction must retain the original exact lb load, not 11.4 kg.
+    await first.getByLabel(/set 1 reps/).fill("10");
+    await first.getByRole("button", { name: "Save edit", exact: true }).click();
+    await expect(
+      first.getByRole("button", { name: "Undo", exact: true }),
+    ).toHaveCount(1);
+    const corrected = await readSessions();
+    expect(corrected[0].performances[0].rows[0].actual?.load).toEqual(
+      before[0].performances[0].rows[0].actual?.load,
+    );
+    expect(corrected[0].performances[0].rows[0].actual?.reps).toBe(10);
+    await page.goto("/");
     await first.getByLabel(/set 2 weight/).fill("10.50");
     await first.getByLabel(/set 2 reps/).fill("9");
     await first
@@ -159,7 +178,7 @@ for (const width of [320, 390, 412])
     }
     await select("lb");
     await expect(first.getByLabel(/set 1 weight/)).toHaveValue("25.123456789");
-    await expect(first.getByLabel(/set 2 weight/)).toHaveValue("23.149");
+    await expect(first.getByLabel(/set 2 weight/)).toHaveValue("23.1");
     await page.goto("/tests/local/m1-harness.html");
     await page.waitForFunction(() => !!window.m1Test);
     const saved = await page.evaluate(async () => {
