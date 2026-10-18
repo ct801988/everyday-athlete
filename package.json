@@ -1,6 +1,6 @@
 {
   "name": "everyday-athlete-foundation",
-  "version": "0.4.0-candidate",
+  "version": "0.5.0-m1-candidate",
   "description": "No-login local-first synthetic software preview; not approved training guidance",
   "scripts": {
     "test": "npm run test:unit && npm run test:integration",
@@ -22,14 +22,17 @@
     "start": "vite --host 127.0.0.1",
     "start:lab": "node scripts/start-lab.mjs",
     "demo": "npm run build && vite preview --host 127.0.0.1 --port 5175 --strictPort",
-    "test:local": "playwright test --config playwright.local.config.ts",
+    "test:local": "playwright test --config playwright.m1.config.ts",
     "build:test": "vite build --config vite.local-test.config.ts && node scripts/build-offline.mjs .data/local-test-build",
     "build:preview": "npm run build && node scripts/build-preview.mjs",
     "test:preview": "node scripts/test-preview.mjs",
     "build:dashboard": "npm run build:preview && node scripts/build-dashboard-preview.mjs",
     "test:dashboard": "EA_PREVIEW_PACKAGE=dashboard node scripts/test-preview.mjs",
     "build:pages": "vite build --config vite.pages.config.ts && node --import tsx scripts/build-pages.ts",
-    "test:pages": "node --import tsx scripts/test-pages.ts"
+    "test:pages": "node --import tsx scripts/test-pages.ts",
+    "test:m1": "playwright test --config playwright.m1.config.ts",
+    "test:m1:pages": "playwright test --config playwright.m1-pages.config.ts",
+    "test:local:historical": "playwright test --config playwright.local.config.ts acceptance.spec.ts mobile-timer.spec.ts"
   },
   "license": "UNLICENSED",
   "type": "module",

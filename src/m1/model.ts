@@ -529,3 +529,25 @@ export function validate(raw: unknown): Model {
     throw Error("Invalid selected session");
   return d;
 }
+
+// Ordered, variant-specific media has no fixed maximum. Synthetic entries have
+// no approved image URL or instructional claims; production review is separate.
+export type MediaFrame = {
+  id: string;
+  order: number;
+  url: string | null;
+  caption: string;
+  review: "not-reviewed" | "approved";
+};
+export const mediaLibrary: Record<string, MediaFrame[]> = Object.fromEntries(
+  catalog.map((e) => [
+    e.id,
+    Array.from({ length: 3 }, (_, i) => ({
+      id: e.id + ":frame:" + i,
+      order: i,
+      url: null,
+      caption: "Media unavailable · caption awaiting review",
+      review: "not-reviewed" as const,
+    })),
+  ]),
+);

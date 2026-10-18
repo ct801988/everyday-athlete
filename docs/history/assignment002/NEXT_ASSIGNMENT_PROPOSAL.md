@@ -1,0 +1,11 @@
+> **Native verification follow-up 01 (17 October 2026):** current outcome is [NATIVE_FOLLOWUP_HANDOFF.md](NATIVE_FOLLOWUP_HANDOFF.md). Native verification remains blocked on this host. See [NATIVE_VERIFICATION_PLAN.md](NATIVE_VERIFICATION_PLAN.md) for the supported-host continuation. The original foundation record below is retained.
+
+# Proposed next assignment — explicit owner approval required
+
+**Recommended immediate step: Assignment002 verification follow-up, not automatic Assignment003.** Complete the blocked secure-account/native restoration proof before expanding the consumer journey.
+
+On a supported isolated local host with Docker/Supabase CLI (or another explicitly approved native local stack), integrate actual Supabase Auth/JWT, replace lab-only bootstrap/session transport, apply and review migrations/grants/functions, test Alice/Bob/anonymous requests, password recovery/token refresh, expired tokens, spoofed ownership/publishing, Storage object authorization and database+object restoration. No real user data, paid services or public deployment. Do not reuse test-public credentials as production credentials. Owner chooses the environment/connection method and explicitly authorizes this bounded verification work. No credentials should be pasted into chat; use an approved secret mechanism if later required.
+
+Deliver source delta, actual pass/fail/skip report, threat/rollback notes and six-part milestone handoff. Native transport integration may require a narrowly revised scope; approve it before execution. Do not treat the WASM SQL suite as signed-JWT verification.
+
+**Candidate Assignment003 after002 acceptance: Core MVP Journey.** Scope would include real invitation/account flow, onboarding/program matching, reviewed3-/4-day program versions and schedule flow, approved minimal workout UI, canonical reviewed overlays/media, Why/history and privacy/export/deletion groundwork. Explicit exclusions remain payments, public launch, live AI, native stores, full Travel Mode, running/HIIT and unsupported medical advice. Obtain named content reviewer, final UX/recovery/effort-scale decisions, media rights, privacy/operations plan and bounded tests/deliverables before authorizing003. This proposal does not begin either task.

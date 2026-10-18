@@ -221,3 +221,29 @@ function delta(before: unknown, after: unknown, path = ""): unknown[] {
   }
   return [{ path, value: after ?? null }];
 }
+
+export async function rawM1(): Promise<unknown> {
+  const q = indexedDB.open(DB_NAME);
+  let missing = false;
+  q.onupgradeneeded = () => {
+    missing = true;
+    q.transaction!.abort();
+  };
+  let db: IDBDatabase;
+  try {
+    db = await req(q);
+  } catch (e) {
+    if (missing) return null;
+    throw e;
+  }
+  try {
+    if (!db.objectStoreNames.contains("workspaces"))
+      throw Error("Unknown database layout; original database retained");
+    const tx = db.transaction("workspaces", "readonly");
+    const s = tx.objectStore("workspaces");
+    const key = await req(s.get("active"));
+    return key ? await req(s.get(key)) : null;
+  } finally {
+    db.close();
+  }
+}

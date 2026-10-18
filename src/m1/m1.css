@@ -574,3 +574,22 @@
     gap: 7px;
   }
 }
+.m1 .radial {
+  position: relative;
+}
+.m1 .radial svg {
+  position: absolute;
+  inset: 0;
+  width: 110px;
+  height: 110px;
+  pointer-events: none;
+}
+.m1 .radial strong {
+  z-index: 1;
+}
+.m1 .rest-bar button {
+  min-height: 44px;
+}
+.m1 input {
+  scroll-margin-block: 170px;
+}

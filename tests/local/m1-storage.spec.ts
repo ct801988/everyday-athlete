@@ -75,3 +75,73 @@ test("atomic legacy migration preserves original, conflicts, duplicate retry, ba
     rollback: true,
   });
 });
+
+test("migration quota/interruption leaves original database and active pointer intact", async ({
+  page,
+}) => {
+  await page.goto("/tests/local/m1-harness.html");
+  await page.waitForFunction(() => !!window.m1Test);
+  expect(
+    await page.evaluate(async () => {
+      const a = window.m1Test;
+      const old = a.legacy.createDataset("foundation", "2026-10-19", [1, 3, 5]);
+      await new a.legacyStorage.LocalStore().create(old);
+      const original = JSON.stringify(await a.rawLegacy());
+      const add = IDBObjectStore.prototype.add;
+      IDBObjectStore.prototype.add = function () {
+        throw new DOMException("Simulated quota", "QuotaExceededError");
+      };
+      let rejected = false;
+      try {
+        await a.initialize();
+      } catch {
+        rejected = true;
+      } finally {
+        IDBObjectStore.prototype.add = add;
+      }
+      if (
+        !rejected ||
+        (await a.read()) !== null ||
+        JSON.stringify(await a.rawLegacy()) !== original
+      )
+        throw Error("Migration loss");
+      const migrated = await a.initialize();
+      return (
+        migrated.legacy && JSON.stringify(await a.rawLegacy()) === original
+      );
+    }),
+  ).toBe(true);
+});
+test("restore interruption retains current workspace and audit stays bounded on repeated drafts", async ({
+  page,
+}) => {
+  await page.goto("/tests/local/m1-harness.html");
+  await page.waitForFunction(() => !!window.m1Test);
+  expect(
+    await page.evaluate(async () => {
+      const a = window.m1Test;
+      let current = await a.initialize();
+      for (let i = 0; i < 120; i++) {
+        current = await a.change(current, "draft", { i }, (d) => {
+          d.sessions[0].performances[0].rows[0].draft.amount = String(i);
+        });
+      }
+      if (JSON.stringify(current).length > 150000)
+        throw Error("Audit inflation");
+      const before = JSON.stringify(current);
+      const other = a.createModel("strength");
+      const add = IDBObjectStore.prototype.add;
+      IDBObjectStore.prototype.add = function () {
+        throw new DOMException("Interrupted restore", "AbortError");
+      };
+      try {
+        await a.restore(current, other, current.revision);
+      } catch {
+        /* expected */
+      } finally {
+        IDBObjectStore.prototype.add = add;
+      }
+      return JSON.stringify(await a.read()) === before;
+    }),
+  ).toBe(true);
+});

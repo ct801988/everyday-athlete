@@ -1,3 +1,7 @@
+# Current candidate: M1 reconstruction
+
+Start with [M1_README.md](M1_README.md) for installation, tests, data recovery and review limits. The material below documents the preserved pre-M1 foundation and may describe historical screens.
+
 # Pages access preflight — publication still disabled
 
 The owner chose public GitHub Pages with no app login/password. See [current setup and approval checkpoint](docs/pages-access/SETUP_AND_CHECKPOINT.md) and [follow-up handoff](docs/pages-access/MILESTONE_HANDOFF.md). GitHub still reports not installed/exposed here; authenticated branch/commit/PR writes and hosted CI remain blocked pending installation and the exact new repository URL. No remote/site/settings changed.

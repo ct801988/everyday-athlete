@@ -1,0 +1,18 @@
+# Known limitations and owner checkpoints
+
+No unresolved failing automated checks are accepted for the final candidate; consult TEST_RESULTS for actual final counts. Earlier failed development checks are recorded there.
+
+| Area | Remaining limitation / decision |
+| --- | --- |
+| iPhone hardware | Chromium layouts and keyboard automation are simulations. Safari engine, iPhone keyboard occlusion, safe-area/browser-chrome changes, Dynamic Type, VoiceOver, Add to Home Screen and Files workflow need physical-device checks. No device certification is claimed. |
+| Audio | One Web Audio oscillator is tested in headless Chromium, including blocked-audio fallback. This proves invocation/count/cancellation, not speaker audibility. iPhone Safari/PWA background/locked-screen sound cannot be promised. Returning after interruption is intentionally visual-only. At-most-once claim may drop sound after a crash. |
+| Clock | Monotonic elapsed-time floor prevents ordinary backward clock changes from extending an active run. Forward wall-clock changes can expire early; clock changes across restart affect persisted deadlines. No server time exists. |
+| Offline access | Cached offline copies remain accessible after password rotation. Shared browser profiles are not secure accounts; clearing storage destroys local history. Backup files are plaintext. |
+| Real content | All exercises, media and coaching fixtures are synthetic and labeled. No prescribed rest recommendation is approved or displayed. Foundation/Strength content and evidence review remain separate gates; Fit and mobility remain deferred. |
+| Cloud authorization | Native Supabase auth/storage/restore verification remains deferred, not waived, before any future accounts. Existing PGlite/lab tests are not native Supabase certification. |
+| Deployment | Candidate is NOT deployed; live edge policy, free-plan account settings and physical-device behavior of this version are unverified. No remote push, hosting operation or external cost occurred. |
+| Rollback | Older code cannot read schema-2 datasets; export both current and pre-upgrade backups and use a compatible profile or forward repair. Pre-upgrade rollback does not include later workouts. |
+
+Approval requested next: review the screenshots, timer behavior specification and evidence, then explicitly approve (or request revisions to) this exact candidate before replacing the owner-only Cloudflare preview. No approval is needed for any further action in this completed milestone because work stops here. Recommended next assignment, only after approval: controlled same-origin preview replacement using the existing account/secret and $0 restrictions, followed by owner-only physical-iPhone checks and any narrowly scoped fixes. Do not enroll family testers or implement mobility/program guidance under that deployment task.
+
+Physical-device checklist after separately approved replacement: export current backup first; sign-in gate and direct asset denial; browser title/name; Safari portrait/landscape and keyboard on every logging field; explicit Done/correction/Undo; overlays preserve scroll/drafts/countdown; presets/custom 1:20/1:30; lock while running; X collapses/reset without prompt; no Pause/Resume/auto-start; silent completion; single-beep in foreground, mute mode, PWA, background and lock-screen with honest limitations; timer/drafts/history after browser close; Airplane Mode startup/reload/log/history/schedule; export to Files, verify file, restore duplicate and fresh isolated workspace; controlled cache update retains data; VoiceOver labels/focus and touch targets. Keep both pre-upgrade and new backups. Do not delete sole copies during testing.

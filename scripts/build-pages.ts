@@ -28,8 +28,8 @@ const manifest = {
   start_url: base,
   scope: base,
   display: "standalone",
-  background_color: "#f2f5f5",
-  theme_color: "#123c46",
+  background_color: "#080f1c",
+  theme_color: "#123056",
   icons: [192, 512].map((n) => ({
     src: `${base}icons/icon-${n}.png`,
     sizes: `${n}x${n}`,
@@ -55,7 +55,7 @@ if (revision !== "local-uncommitted" && !/^[a-f0-9]{40}$/.test(revision))
   throw Error("Release SHA must be a full commit identifier");
 writeFileSync(
   dir + "/release.json",
-  JSON.stringify({ revision, datasetSchema: 2, base }) + "\n",
+  JSON.stringify({ revision, datasetSchema: 3, base }) + "\n",
 );
 const files = [
   "release.json",

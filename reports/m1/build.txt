@@ -1,0 +1,19 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> everyday-athlete-foundation@0.5.0-m1-candidate build
+> vite build && node scripts/build-offline.mjs
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 125 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                        0.44 kB │ gzip:  0.29 kB
+dist/assets/App-BLx640Y2.css           8.53 kB │ gzip:  2.65 kB
+dist/assets/index-DvG4p3FA.css        11.47 kB │ gzip:  3.45 kB
+dist/assets/jsx-runtime-Am8b9ysO.js    8.27 kB │ gzip:  3.12 kB
+dist/assets/App-B8mm-yO6.js          153.97 kB │ gzip: 43.52 kB
+dist/assets/index-D6ijGfqR.js        213.42 kB │ gzip: 66.95 kB
+
+✓ built in 131ms
+Offline cache built: 56f6c4d060e26650 5 bundled assets

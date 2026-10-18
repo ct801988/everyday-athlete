@@ -37,8 +37,12 @@ test("continuous logging, deliberate actuals, extras, grouping, pause, reopen, p
     .click();
   await expect(page.locator(".exercise-card")).toHaveCount(7);
   await page.getByRole("button", { name: "Group / unlink supersets" }).click();
-  await page.getByRole("checkbox", { name: "Demo dumbbell press", exact: true }).check();
-  await page.getByRole("checkbox", { name: "Demo dumbbell row", exact: true }).check();
+  await page
+    .getByRole("checkbox", { name: "Demo dumbbell press", exact: true })
+    .check();
+  await page
+    .getByRole("checkbox", { name: "Demo dumbbell row", exact: true })
+    .check();
   await page.getByRole("button", { name: "Group selected" }).click();
   await expect(first.locator(".group")).toHaveText("A1");
   await expect(second.locator(".group")).toHaveText("A2");
@@ -125,4 +129,113 @@ test("rest deadline expires green and reset restores configured time", async ({
   });
   await expect(page.locator(".rest-dock")).toHaveClass(/complete/);
   await expect(page.locator(".rest-bar")).toContainText("0:05");
+});
+
+test("offline reopen retains paused drafts and completed records; backup download and preview import", async ({
+  page,
+  context,
+}) => {
+  await page.goto("/");
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+  });
+  await page.reload();
+  await page
+    .getByRole("button", { name: "Begin Workout", exact: true })
+    .click();
+  const card = page.locator(".exercise-card").first();
+  await card.getByLabel(/set 1 weight/).fill("20");
+  await card.getByLabel(/set 1 reps/).fill("10");
+  await card.getByRole("button", { name: "Done", exact: true }).first().click();
+  await page
+    .getByRole("button", { name: "Pause Workout", exact: true })
+    .click();
+  await expect(page.getByRole("status")).toContainText("Saved");
+  await context.setOffline(true);
+  await page.reload();
+  await expect(
+    page.getByRole("button", { name: "Resume Workout" }),
+  ).toBeVisible();
+  await expect(card.getByText("Recorded: 20 lb × 10 reps")).toBeVisible();
+  await page.getByRole("button", { name: "Settings", exact: true }).click();
+  const dl = page.waitForEvent("download");
+  await page
+    .getByRole("button", { name: "Export backup", exact: true })
+    .click();
+  const download = await dl;
+  const path = await download.path();
+  expect(path).not.toBeNull();
+  await page.locator("input[type=file]").setInputFiles(path!);
+  await expect(page.getByText(/Preview: 1 sessions/)).toBeVisible();
+  await page.getByRole("button", { name: "Import reviewed backup" }).click();
+  await expect(page.getByText(/Preview: 1 sessions/)).not.toBeVisible();
+  await context.setOffline(false);
+});
+test("collapse and keyboard focus restore exact overlay position", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const card = page.locator(".exercise-card").nth(2);
+  await card.scrollIntoViewIfNeeded();
+  const info = card.getByRole("button", { name: /Information for/ });
+  await info.focus();
+  const y = await page.evaluate(() => scrollY);
+  await info.click();
+  await page
+    .getByRole("dialog")
+    .getByRole("button", { name: "Close overlay" })
+    .click();
+  await expect(info).toBeFocused();
+  expect(await page.evaluate(() => scrollY)).toBe(y);
+  await card.locator(".exercise-title").click();
+  await expect(card.locator(".set-row")).toHaveCount(0);
+  await card.locator(".exercise-title").click();
+  await expect(card.locator(".set-row")).toHaveCount(3);
+});
+test("independent origins cannot read M1 records or clear its caches", async ({
+  page,
+  context,
+}) => {
+  await page.goto("/");
+  await page.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+  });
+  async function datasetId(target: typeof page) {
+    return target.evaluate(async () => {
+      const name = (await indexedDB.databases()).find((x) =>
+        x.name?.endsWith("-m1"),
+      )!.name!;
+      return new Promise<string>((resolve, reject) => {
+        const q = indexedDB.open(name);
+        q.onerror = () => reject(q.error);
+        q.onsuccess = () => {
+          const db = q.result;
+          const tx = db.transaction("workspaces", "readonly");
+          const st = tx.objectStore("workspaces");
+          const a = st.get("active");
+          a.onsuccess = () => {
+            const d = st.get(a.result);
+            d.onsuccess = () => {
+              resolve(d.result.id);
+              db.close();
+            };
+          };
+        };
+      });
+    });
+  }
+  const originalId = await datasetId(page);
+  const before = await page.evaluate(() => caches.keys());
+  const other = await context.newPage();
+  await other.goto("http://localhost:5175/");
+  await expect(
+    other.getByRole("button", { name: "Begin Workout", exact: true }),
+  ).toBeVisible();
+  expect(await datasetId(other)).not.toBe(originalId);
+  await other.evaluate(async () => {
+    for (const key of await caches.keys()) await caches.delete(key);
+  });
+  expect(await datasetId(page)).toBe(originalId);
+  expect(await page.evaluate(() => caches.keys())).toEqual(before);
+  await other.close();
 });

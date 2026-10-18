@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   catalog,
+  mediaLibrary,
   emptyDraft,
   demoSession,
   performance,
@@ -19,7 +20,7 @@ import {
   clock,
 } from "../local/timer";
 import { reschedule, schedule } from "../domain/scheduling";
-import { canonical } from "../local/backup";
+import { canonical, MAX_BYTES } from "../local/backup";
 import "./m1.css";
 type DialogState = {
   kind: "info" | "library" | "settings" | "finish" | "duration" | "group";
@@ -149,6 +150,7 @@ export default function App() {
         current.current = next;
         setD(next);
         setSaved("Saved on this device");
+        setError("");
       } catch (e) {
         setError(String(e));
         setSaved("Not saved — reload current records before editing");
@@ -329,12 +331,13 @@ export default function App() {
         <button onClick={() => location.reload()}>Retry reading records</button>
         <button
           onClick={() =>
-            void db
-              .rawLegacy()
-              .then((x) => saveFile(x, "EA-original-legacy-records.json"))
+            void Promise.all([db.rawM1(), db.rawLegacy()]).then(
+              ([m1, legacy]) =>
+                saveFile({ m1, legacy }, "EA-raw-recovery-records.json"),
+            )
           }
         >
-          Export original legacy records
+          Export raw recovery records
         </button>
       </main>
     );
@@ -550,7 +553,7 @@ export default function App() {
                       aria-label={"Information for " + p.name}
                       onClick={() => open("info", p.identity.id)}
                     >
-                      ⓘ
+                      i
                     </button>
                   </header>
                   <div className="exercise-meta">
@@ -1003,8 +1006,12 @@ export default function App() {
                 foreground.current = true;
                 completionClaim.current = null;
                 if (d.preferences.timer.alert === "short-beep") {
-                  cancelAudio.current = new AudioContext();
-                  void cancelAudio.current.resume();
+                  try {
+                    cancelAudio.current = new AudioContext();
+                    void cancelAudio.current.resume();
+                  } catch {
+                    cancelAudio.current = null;
+                  }
                 }
                 void write("rest-start", {}, (x) => {
                   x.timer = startTimer(
@@ -1029,10 +1036,30 @@ export default function App() {
               className="radial"
               role="img"
               aria-label={`${clock(rest)} remaining`}
-              style={{
-                background: `conic-gradient(currentColor ${Math.max(0, rest / d.timer.selectedSeconds) * 360}deg, #25364d 0deg)`,
-              }}
             >
+              <svg viewBox="0 0 110 110" aria-hidden="true">
+                <circle
+                  cx="55"
+                  cy="55"
+                  r="51"
+                  fill="none"
+                  stroke="#25364d"
+                  strokeWidth="6"
+                />
+                <circle
+                  cx="55"
+                  cy="55"
+                  r="51"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="6"
+                  strokeDasharray="320.44"
+                  strokeDashoffset={
+                    320.44 * (1 - rest / d.timer.selectedSeconds)
+                  }
+                  transform="rotate(-90 55 55)"
+                />
+              </svg>
               <strong>{clock(rest)}</strong>
             </div>
             <div className="presets">
@@ -1125,12 +1152,10 @@ export default function App() {
                 instructions are unavailable and have not been reviewed.
               </p>
               <div className="frames">
-                {[1, 2, 3].map((n) => (
-                  <figure key={n}>
-                    <div className="frame">Frame {n}</div>
-                    <figcaption>
-                      Media unavailable · caption awaiting review
-                    </figcaption>
+                {(mediaLibrary[dialog.id ?? ""] ?? []).map((frame) => (
+                  <figure key={frame.id}>
+                    <div className="frame">Frame {frame.order + 1}</div>
+                    <figcaption>{frame.caption}</figcaption>
                   </figure>
                 ))}
               </div>
@@ -1261,7 +1286,7 @@ export default function App() {
                 onClick={() => {
                   void changeSession("manual-group", (_x, a) => {
                     for (const p of a.performances)
-                      if (groupIds.includes(p.id)) p.group = "A";
+                      p.group = groupIds.includes(p.id) ? "A" : null;
                   });
                   setGroupIds([]);
                   setDialog(null);
@@ -1341,6 +1366,10 @@ export default function App() {
                 hidden
                 onChange={(e) => {
                   const f = e.target.files?.[0];
+                  if (f && f.size > MAX_BYTES) {
+                    setError("Backup exceeds 20 MiB");
+                    return;
+                  }
                   if (f)
                     void f
                       .text()
@@ -1362,6 +1391,7 @@ export default function App() {
                         .then((next) => {
                           current.current = next;
                           setD(next);
+                          setExported(-1);
                           setPreview(null);
                           setEdits({});
                           setError("");

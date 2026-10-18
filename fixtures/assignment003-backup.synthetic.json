@@ -1,0 +1,247 @@
+{
+  "body": {
+    "format": "everyday-athlete-backup",
+    "formatVersion": 1,
+    "appVersion": "0.3.0",
+    "exportId": "dc0378de-2957-492a-a108-82e6826c977f",
+    "exportedAt": "2026-10-17T22:11:16.538Z",
+    "dataset": {
+      "schemaVersion": 1,
+      "id": "2f472388-ef4c-46cc-85e0-5044bd0fc2b6",
+      "subject": "3659eed2-3127-4c52-b07e-ae2c8f7decdc",
+      "revision": 0,
+      "program": "foundation",
+      "start": "2026-10-19",
+      "timezone": "America/New_York",
+      "weekdays": [
+        1,
+        3,
+        5
+      ],
+      "slots": [
+        {
+          "id": "slot-1",
+          "ordinal": 1,
+          "originalDate": "2026-10-19",
+          "plannedDate": "2026-10-19",
+          "status": "pending",
+          "revision": 0
+        },
+        {
+          "id": "slot-2",
+          "ordinal": 2,
+          "originalDate": "2026-10-21",
+          "plannedDate": "2026-10-21",
+          "status": "pending",
+          "revision": 0
+        },
+        {
+          "id": "slot-3",
+          "ordinal": 3,
+          "originalDate": "2026-10-23",
+          "plannedDate": "2026-10-23",
+          "status": "pending",
+          "revision": 0
+        }
+      ],
+      "sessions": [
+        {
+          "id": "4fb77180-b215-4eff-92c6-4f52f5cbfbf8",
+          "slot": "slot-1",
+          "prescription": {
+            "id": "4b55061e-ad71-4cc1-a42b-28f081cc7bcd",
+            "modality": "strength",
+            "programId": "foundation",
+            "programVersion": 1,
+            "sessionTemplateVersion": 1,
+            "phase": "normal",
+            "variation": "synthetic-db-press",
+            "protocol": "three-by-eight-to-twelve-v1",
+            "setCount": 3,
+            "low": 8,
+            "high": 12,
+            "suggested": {
+              "load": {
+                "kind": "external",
+                "value": 50,
+                "unit": "lb",
+                "basis": "per_dumbbell"
+              },
+              "reps": 10,
+              "seconds": null,
+              "rir": null,
+              "rirCapped": false
+            },
+            "effortTarget": null,
+            "synthetic": true
+          },
+          "status": "active",
+          "performedDate": null,
+          "context": {
+            "pain": false,
+            "tired": false
+          },
+          "revision": 0,
+          "actuals": [],
+          "effort": null,
+          "effortRevision": 0
+        },
+        {
+          "id": "d3970c0e-670a-4e15-bd25-c38035a0eb6d",
+          "slot": "slot-2",
+          "prescription": {
+            "id": "b9ed3c70-ec7a-4080-8dbd-f5f2a34f0bd7",
+            "modality": "strength",
+            "programId": "foundation",
+            "programVersion": 1,
+            "sessionTemplateVersion": 1,
+            "phase": "normal",
+            "variation": "synthetic-db-press",
+            "protocol": "three-by-eight-to-twelve-v1",
+            "setCount": 3,
+            "low": 8,
+            "high": 12,
+            "suggested": {
+              "load": {
+                "kind": "external",
+                "value": 50,
+                "unit": "lb",
+                "basis": "per_dumbbell"
+              },
+              "reps": 10,
+              "seconds": null,
+              "rir": null,
+              "rirCapped": false
+            },
+            "effortTarget": null,
+            "synthetic": true
+          },
+          "status": "active",
+          "performedDate": null,
+          "context": {
+            "pain": false,
+            "tired": false
+          },
+          "revision": 0,
+          "actuals": [],
+          "effort": null,
+          "effortRevision": 0
+        },
+        {
+          "id": "b35801ab-7761-4dfd-8a75-ddab4967679b",
+          "slot": "slot-3",
+          "prescription": {
+            "id": "fca7847f-98ed-4234-bbfe-db0568c9e529",
+            "modality": "strength",
+            "programId": "foundation",
+            "programVersion": 1,
+            "sessionTemplateVersion": 1,
+            "phase": "normal",
+            "variation": "synthetic-db-press",
+            "protocol": "three-by-eight-to-twelve-v1",
+            "setCount": 3,
+            "low": 8,
+            "high": 12,
+            "suggested": {
+              "load": {
+                "kind": "external",
+                "value": 50,
+                "unit": "lb",
+                "basis": "per_dumbbell"
+              },
+              "reps": 10,
+              "seconds": null,
+              "rir": null,
+              "rirCapped": false
+            },
+            "effortTarget": null,
+            "synthetic": true
+          },
+          "status": "active",
+          "performedDate": null,
+          "context": {
+            "pain": false,
+            "tired": false
+          },
+          "revision": 0,
+          "actuals": [],
+          "effort": null,
+          "effortRevision": 0
+        },
+        {
+          "id": "07fc6917-9db3-42bb-9e28-200c43901c59",
+          "slot": null,
+          "prescription": {
+            "id": "99999999-9999-4999-8999-999999999999",
+            "modality": "conditioning",
+            "programId": "fit",
+            "programVersion": 1,
+            "sessionTemplateVersion": 1,
+            "phase": "normal",
+            "variation": "synthetic-walk",
+            "protocol": "synthetic-walk-v1",
+            "setCount": 1,
+            "low": 8,
+            "high": 12,
+            "suggested": {
+              "load": {
+                "kind": "none"
+              },
+              "reps": null,
+              "seconds": 1200,
+              "rir": null,
+              "rirCapped": false
+            },
+            "effortTarget": {
+              "min": 5,
+              "max": 6,
+              "scale": "synthetic-effort",
+              "scaleVersion": 1,
+              "descriptor": "Moderate (synthetic fixture)",
+              "feel": "Illustrative cue only; not a reviewed real session."
+            },
+            "synthetic": true
+          },
+          "status": "active",
+          "performedDate": null,
+          "context": {
+            "pain": false,
+            "tired": false
+          },
+          "revision": 0,
+          "actuals": [],
+          "effort": null,
+          "effortRevision": 0
+        }
+      ],
+      "drafts": {},
+      "preferences": {
+        "rir": false,
+        "unit": "lb"
+      },
+      "view": {
+        "tab": "Workout",
+        "session": "4fb77180-b215-4eff-92c6-4f52f5cbfbf8",
+        "timer": {
+          "deadline": null,
+          "paused": 0
+        }
+      },
+      "audit": [],
+      "receipts": {},
+      "recommendations": [],
+      "content": {
+        "synthetic": true,
+        "review": "not-reviewed",
+        "exerciseId": "synthetic-db-press",
+        "exerciseVersion": 1,
+        "ruleVersion": "foundation-rules-1.1",
+        "evidence": [
+          "E01",
+          "E02"
+        ]
+      }
+    }
+  },
+  "checksum": "bc0992e7f95512e71912502c206815c38cb7fdb7e92d001b564c57af67536418"
+}
