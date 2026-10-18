@@ -812,3 +812,39 @@
 .m1 .panel h1 {
   color: #edf4f8;
 }
+
+/* Visual V2: compact left-thumbnail workout cards only. */
+.m1 .exercise-card { border-radius: 14px; border-color: #233d4e; }
+.m1 .exercise-card > header { padding: 12px 10px 6px; align-items: flex-start; }
+.m1 .exercise-card .exercise-title { gap: 10px; padding: 0; min-width: 0; }
+.m1 .exercise-title > span:not(.media-placeholder):not(.card-toggle) { flex: 1; min-width: 0; }
+.m1 .exercise-card .media-placeholder { width: 84px; height: 84px; flex: 0 0 84px; border-radius: 10px; }
+.m1 .exercise-title strong { font-size: 17px; letter-spacing: -0.35px; }
+.m1 .exercise-title small { font-size: 10px; line-height: 1.5; }
+.m1 .exercise-card .card-toggle { min-width: 14px; width: 14px; }
+.m1 .exercise-card > header > button:last-child { min-width: 44px; }
+.m1 .exercise-meta { padding: 0 12px 8px; }
+.m1 .last-target { grid-template-columns: 1fr 1fr; margin-bottom: 7px; font-size: 10px; }
+.m1 .last-target > span { min-height: 46px; padding: 7px 9px; }
+.m1 .last-target b { font-size: 10px; }
+.m1 .target-explanation summary { min-height: 30px; cursor: pointer; color: #accce1; }
+.m1 .target-explanation[open] summary { margin-bottom: 5px; }
+.m1 .target-explanation > span { display: block; line-height: 1.5; }
+.m1 .set-row input { font-size: 16px; } /* Avoid iOS focus zoom. */
+.m1 .set-wrap.is-done { background: #1083d610; }
+.m1 .set-row .done { color: #a6d8ff; background: #10334c; border-color: #285a7b; }
+.m1 .set-wrap.is-done .actual { color: #9ec4df; }
+.m1 .card-complete { border-color: #30725c; }
+.m1 .card-collapsed .media-placeholder { width: 56px; height: 56px; flex-basis: 56px; }
+.m1 .card-collapsed .exercise-title strong { font-size: 15px; }
+.m1 .card-collapsed .exercise-title small { display: none; }
+.m1 .card-collapsed > header { padding-bottom: 3px; }
+@media (max-width: 350px) {
+  .m1 .exercise-card .media-placeholder { width: 80px; height: 80px; flex-basis: 80px; }
+  .m1 .exercise-title strong { font-size: 15px; }
+  .m1 .exercise-card .exercise-title { gap: 7px; }
+  .m1 .exercise-card .card-toggle { display: none; }
+  .m1 .card-collapsed .media-placeholder { width: 48px; height: 48px; flex-basis: 48px; }
+}
+/* Keep the unchanged timer clear of the measured navigation height. */
+.m1 .rest-dock { bottom: calc(90px + env(safe-area-inset-bottom) + var(--keyboard)); }
