@@ -1,0 +1,9 @@
+{
+  "src/m1/model.ts": true,
+  "src/m1/storage.ts": true,
+  "src/m1/actions.ts": true,
+  "src/local/timer.ts": true,
+  "src/local/RestTimer.tsx": true,
+  "src/local/backup.ts": true,
+  "src/local/store.ts": true
+}
