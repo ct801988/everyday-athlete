@@ -1,3 +1,5 @@
+> SOURCING SUPERSEDED 2026-10-18: preferred first approach is owner-led photorealistic AI-generated instructional illustrations. The commissioned-photography budget was rejected; no budget is approved. See docs/exercise-media/ai-submission/REVISED_SOURCING_PLAN.md and IMAGE_SUBMISSION_SPEC.md. Preserve the technical architecture and storyboards below as planning references; do not treat the old sourcing recommendation as authorization.
+
 # Exercise Media Integration Plan — approval required
 2026-10-18. Planning/documentation only. Visual V2 is the owner-approved layout and functional UI baseline. Preserve source checkpoint 1901bcccabdb8ce8cae414d5ab862c15608aec5b (application source d908122a9890b19a86494b2c09a7f308f1828059), branch ea/visual-v2-exercise-cards / draft PR #4. No application changes, production image imports, generation, purchases or deployment in this assignment.
 

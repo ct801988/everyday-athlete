@@ -1,3 +1,5 @@
+> SOURCING SUPERSEDED 2026-10-18: preferred first approach is owner-led photorealistic AI-generated instructional illustrations. The commissioned-photography budget was rejected; no budget is approved. See docs/exercise-media/ai-submission/REVISED_SOURCING_PLAN.md and IMAGE_SUBMISSION_SPEC.md. Preserve the technical architecture and storyboards below as planning references; do not treat the old sourcing recommendation as authorization.
+
 # Everyday Athlete — pilot preparation for owner review
 2026-10-18. Architecture and two-exercise concept APPROVED; storyboards, sourcing recommendation, budget and implementation remain awaiting review. Visual V2 at 1901bcc remains the approved UI baseline; current branch documentation base is 018fd678. No application changes, image generation/import, purchase, commissioning, supplier outreach, deployment or publication.
 
