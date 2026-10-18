@@ -1,0 +1,119 @@
+{
+  "proposalOnly": true,
+  "productionApproved": false,
+  "schemaProposalVersion": 1,
+  "sequences": [
+    {
+      "id": "pilot-flat-barbell-bench",
+      "version": 1,
+      "variant": "Flat barbell bench press",
+      "status": "awaiting-owner-plan-approval",
+      "rights": "unverified",
+      "photoProvenance": "unverified",
+      "techniqueReview": "pending",
+      "thumbnailFrameId": "pilot-flat-barbell-bench-1",
+      "frames": [
+        {
+          "id": "pilot-flat-barbell-bench-1",
+          "order": 1,
+          "url": null,
+          "stage": "Setup",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        },
+        {
+          "id": "pilot-flat-barbell-bench-2",
+          "order": 2,
+          "url": null,
+          "stage": "Movement review position 1",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        },
+        {
+          "id": "pilot-flat-barbell-bench-3",
+          "order": 3,
+          "url": null,
+          "stage": "Completion",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        }
+      ]
+    },
+    {
+      "id": "pilot-supported-hip-car",
+      "version": 1,
+      "variant": "Supported hip CAR \u2014 exact setup/side/direction pending review",
+      "status": "awaiting-owner-plan-approval",
+      "rights": "unverified",
+      "photoProvenance": "unverified",
+      "techniqueReview": "pending",
+      "thumbnailFrameId": "pilot-supported-hip-car-1",
+      "frames": [
+        {
+          "id": "pilot-supported-hip-car-1",
+          "order": 1,
+          "url": null,
+          "stage": "Setup",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        },
+        {
+          "id": "pilot-supported-hip-car-2",
+          "order": 2,
+          "url": null,
+          "stage": "Movement review position 1",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        },
+        {
+          "id": "pilot-supported-hip-car-3",
+          "order": 3,
+          "url": null,
+          "stage": "Movement review position 2",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        },
+        {
+          "id": "pilot-supported-hip-car-4",
+          "order": 4,
+          "url": null,
+          "stage": "Movement review position 3",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        },
+        {
+          "id": "pilot-supported-hip-car-5",
+          "order": 5,
+          "url": null,
+          "stage": "Movement review position 4",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        },
+        {
+          "id": "pilot-supported-hip-car-6",
+          "order": 6,
+          "url": null,
+          "stage": "Movement review position 5",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        },
+        {
+          "id": "pilot-supported-hip-car-7",
+          "order": 7,
+          "url": null,
+          "stage": "Movement review position 6",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        },
+        {
+          "id": "pilot-supported-hip-car-8",
+          "order": 8,
+          "url": null,
+          "stage": "Completion",
+          "caption": "Draft caption slot \u2014 image and instruction require review",
+          "approved": false
+        }
+      ]
+    }
+  ]
+}
