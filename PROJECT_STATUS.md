@@ -1,3 +1,10 @@
+# Current checkpoint — established V2 baseline; one-decimal correction awaiting approval
+2026-10-18: owner approved the V2 exercise-card layout, Done/Undo, coaching strip and lb/kg functionality as the baseline. Only converted-display formatting was changed: one decimal, no redundant trailing zeroes; original stored and entered precision unchanged. Focused converted inputs reveal exact values; focus/blur and reps-only corrections cannot persist the rounded display.
+Application source: d908122a9890b19a86494b2c09a7f308f1828059. Branch ea/visual-v2-exercise-cards, draft PR #4; rollback 8b4a50405e107d2f95021e2dd5229a8d6f5111da. Fresh checks: 176 PASS / 0 FAIL / 3 inherited native-stack SKIP; typecheck/lint/build PASS. See VISUAL_V2_ROUNDING_CHECKPOINT.md and reports/visual-v2-rounding. The old final-candidate ZIP remains a pre-correction artifact.
+STOP for owner approval. No other visual changes. Photography/full Visuals library is a separate future milestone. Physical iPhone, hosting, merge/publication remain pending. Keep PR draft; no main/Winter Strong changes, deployment or costs. This section supersedes earlier waiting instructions, retained below for history.
+
+---
+
 # Current checkpoint — Visual V2 final candidate awaiting owner approval
 2026-10-18: approved bounded final card refinements and lb/kg support completed on ea/visual-v2-exercise-cards, draft PR #4. Tested source: 1fcde01483683deb8ac07c1711933cc4f83930ec; later commits save documentation/evidence only. Rollback to initial V2: 1a819b1dc29f4c0f661acdb74be793245564171d. V1/PR #3 and M1/PR #2 remain preserved.
 See VISUAL_V2_FINAL_REVIEW.md for exact changes, unit metadata/backup compatibility, source references, tests and resumption instructions. Final evidence: 136 unit + 21 integration + 17 M1/V2 browser + 1 Pages/offline = 175 PASS / 0 FAIL / 3 inherited native-stack SKIP. Typecheck/lint/build pass; 320/390/412 and axe covered; physical iPhone unverified. History is unchanged by unit preference changes, and exact lb/kg entry/backup behavior is tested.

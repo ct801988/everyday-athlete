@@ -1,3 +1,5 @@
+> Superseded formatting note: the owner has approved the V2 layout/unit baseline. Converted display now uses one decimal, with exact focused editing and stored precision preserved. See VISUAL_V2_ROUNDING_CHECKPOINT.md for the authoritative current source, 176/0/3 verification and approval stopping point. The three-decimal examples below describe the preserved pre-correction candidate.
+
 # Visual V2 final candidate — owner visual approval pending
 
 2026-10-18. Candidate only; no merge, hosting change, public release or deployment.
