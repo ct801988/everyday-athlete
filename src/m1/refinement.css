@@ -974,8 +974,7 @@
 }
 /* Focused fields stay unobstructed; restore timer when keyboard entry ends. */
 .m1:has(.set-row input:focus) .rest-dock {
-  visibility: hidden;
-  pointer-events: none;
+  display: none;
 }
 .m1 .set-row input {
   scroll-margin-top: 80px;
