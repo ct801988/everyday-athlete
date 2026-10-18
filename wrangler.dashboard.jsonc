@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "fitness-pilot-preview",
+  "main": ".data/dashboard-preview/worker.js",
+  "compatibility_date": "2026-10-17",
+  "workers_dev": true,
+  "preview_urls": false,
+  "upload_source_maps": false,
+  "observability": {
+    "enabled": false
+  },
+  "dev": {
+    "ip": "127.0.0.1",
+    "port": 5180,
+    "local_protocol": "https"
+  }
+}

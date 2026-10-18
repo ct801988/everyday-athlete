@@ -1,0 +1,22 @@
+Pages access preflight — changes since GitHub Pages evaluation v1.0 / 1497ee8
+
+CHECKSUMS.sha256
+FILES_CHANGED.txt
+PACKAGE_VALIDATION.json
+README.md
+SOURCE_MANIFEST.json
+docs/approved/CURRENT_REQUIREMENTS.md
+docs/pages-access/MILESTONE_HANDOFF.md
+docs/pages-access/SETUP_AND_CHECKPOINT.md
+reports/pages-access/build.log
+reports/pages-access/connection.json
+reports/pages-access/lint.log
+reports/pages-access/local-pages-verification.json
+reports/pages-access/pages-final.log
+reports/pages-access/pages.log
+reports/pages-access/secret-audit.json
+reports/pages-access/typecheck.log
+reports/pages-access/workflow-static-checks.json
+reports/pages-access/workflow.log
+scripts/audit-pages-secrets.py
+scripts/test-pages.ts

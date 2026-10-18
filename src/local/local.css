@@ -1,0 +1,524 @@
+.local {
+  --ink: #182b40;
+  --muted: #536778;
+  --line: #dce5e7;
+  --teal: #086f68;
+  --navy: #14253b;
+  max-width: 680px;
+  margin: auto;
+  min-height: 100dvh;
+  padding: 0 18px calc(190px + env(safe-area-inset-bottom));
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow-wrap: anywhere;
+}
+.local h1 {
+  font-size: 19px;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+}
+.local h2 {
+  font-size: 25px;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+.local h3 {
+  font-size: 17px;
+  margin: 0 0 12px;
+}
+.local p {
+  margin: 10px 0;
+  font-size: 14px;
+}
+.local .eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+}
+.local .app-header {
+  margin: 0 -18px;
+  padding: calc(18px + env(safe-area-inset-top)) 18px 18px;
+  background: var(--navy);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.local .app-header .eyebrow {
+  color: #b7dbd7;
+}
+.brand-mark {
+  height: 40px;
+  width: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #284355;
+  font-size: 24px;
+  font-weight: 850;
+  color: #a8e5d7;
+}
+.local label {
+  display: block;
+  margin: 10px 0;
+  font-size: 12px;
+  color: #425b6b;
+}
+.local input,
+.local select {
+  font-size: 16px;
+  min-height: 46px;
+  max-width: 100%;
+  min-width: 0;
+  border: 1px solid #b4c5cb;
+  background: #fbfdfd;
+  border-radius: 10px;
+  padding: 10px;
+  color: var(--ink);
+}
+.local input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  min-height: 22px;
+  margin-right: 9px;
+  vertical-align: middle;
+  accent-color: var(--teal);
+}
+.local label:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 13px;
+}
+.local button {
+  min-height: 44px;
+  margin: 4px 4px 4px 0;
+  padding: 10px 13px;
+  border: 1px solid #b6cbcf;
+  background: #fff;
+  color: #244655;
+  border-radius: 11px;
+  font-size: 13px;
+  font-weight: 750;
+  touch-action: manipulation;
+}
+.local button:hover:not(:disabled) {
+  background: #eaf4f2;
+}
+.local button.primary {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: #fff;
+}
+.local button:disabled {
+  color: #586975;
+  background: #e6ebed;
+  border-color: #d7e0e2;
+}
+.local :focus-visible {
+  outline: 3px solid #a34b08;
+  outline-offset: 3px;
+}
+.local select {
+  width: 100%;
+}
+.local nav {
+  position: fixed;
+  z-index: 20;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 680px);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  background: #fff;
+  border-top: 1px solid var(--line);
+  padding: 7px 10px calc(7px + env(safe-area-inset-bottom));
+  box-shadow: 0 -5px 22px #122b4009;
+}
+.local nav button {
+  margin: 0;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 1px;
+  min-height: 48px;
+  font-size: 12px;
+  color: #526675;
+  background: white;
+}
+.local nav button[aria-pressed="true"] {
+  background: #e4f3ef;
+  color: #075d57;
+  box-shadow: inset 0 3px 0 #08766c;
+}
+.local section {
+  background: white;
+  padding: 16px;
+  margin: 12px 0;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  box-shadow: 0 5px 20px #1b314505;
+  min-width: 0;
+}
+.local article {
+  min-width: 0;
+}
+.local .workout-hero {
+  color: white;
+  border: 0;
+  background: linear-gradient(120deg, #16283e, #294858);
+  padding: 20px;
+  margin: 18px 0;
+}
+.local .workout-hero .eyebrow {
+  color: #b4e2d7;
+}
+.local .workout-hero h2 {
+  margin: 9px 0;
+}
+.local .workout-hero p {
+  color: #d8e4ec;
+  font-size: 13px;
+}
+.session-progress {
+  display: grid;
+  gap: 7px;
+  margin-top: 18px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.session-progress progress {
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff40;
+}
+.session-progress progress::-webkit-progress-bar {
+  background: #ffffff40;
+}
+.session-progress progress::-webkit-progress-value {
+  background: #9be1c8;
+}
+.local .exercise-intro {
+  margin: 20px 0 10px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  border-top: 3px solid #299585;
+}
+.exercise-intro .eyebrow {
+  color: #496b73;
+}
+.local .exercise-intro h3 {
+  font-size: 21px;
+  margin: 7px 0;
+}
+.local .exercise-intro p {
+  color: var(--muted);
+  font-size: 12px;
+}
+.local .exercise-intro button {
+  width: 100%;
+  text-align: center;
+  background: #eef7f5;
+  border-color: #c9e3dd;
+  color: #075f57;
+}
+.local .set-card h3 {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.local .set-card.set-done {
+  border-left: 4px solid #268e73;
+  background: #f5fbf8;
+}
+.local .set {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.local .set input {
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 21px;
+  font-weight: 700;
+  text-align: center;
+}
+.local .set label {
+  margin: 8px 0;
+}
+.local .set label:has(select) {
+  grid-column: 1/-1;
+}
+.local .basis {
+  font-size: 10px;
+  font-weight: 500;
+  float: right;
+  color: var(--muted);
+}
+.local .done-control {
+  min-width: 100px;
+}
+.local pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  max-width: 100%;
+}
+.local .muted {
+  font-size: 12px;
+  color: var(--muted);
+}
+.local .warning {
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid #d8e7e3;
+  border-radius: 11px;
+  background: #eaf4f1;
+  color: #315a52;
+  font-size: 11px;
+}
+.local a {
+  color: #075f72;
+}
+.local [role="alert"] {
+  color: #842e20;
+  background: #fff2ed;
+  padding: 12px;
+  border-radius: 10px;
+}
+.local > p[role="status"] {
+  font-size: 11px;
+  color: #426057;
+  min-height: 17px;
+  margin: 8px 0;
+}
+.local .device-tools {
+  margin: 8px 0;
+  font-size: 12px;
+}
+.local summary {
+  cursor: pointer;
+  min-height: 44px;
+  align-content: center;
+  color: #49616f;
+}
+.local details p {
+  font-size: 12px;
+}
+.local output {
+  font-variant-numeric: tabular-nums;
+}
+.local dialog {
+  z-index: 100;
+  max-width: calc(100vw - 20px);
+  border-radius: 20px;
+}
+.local dialog header button {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.local dialog h2 {
+  font-size: 20px;
+}
+.local dialog .placeholder {
+  font-size: 16px;
+  background: #edf6f3;
+  border-color: #b5d5cc;
+  border-radius: 13px;
+  color: #305e59;
+}
+.local li {
+  margin: 8px 0;
+}
+.timer-dock {
+  position: fixed;
+  z-index: 21;
+  bottom: calc(78px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - 24px), 644px);
+  background: #fff;
+  border: 1px solid #cbdadf;
+  border-radius: 17px;
+  box-shadow: 0 7px 30px #152b4026;
+  color: #172c3d;
+}
+.timer-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  min-height: 72px;
+}
+.timer-copy {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+}
+.timer-copy .eyebrow {
+  max-width: 98px;
+  color: #405968;
+}
+.timer-copy output {
+  font-size: 29px;
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+}
+.local .timer-bar button {
+  margin: 0;
+  min-width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+.local .timer-stop {
+  font-size: 26px;
+  line-height: 1;
+  padding: 0 10px;
+}
+.local .timer-expand {
+  padding: 0;
+  font-size: 22px;
+}
+.timer-complete {
+  border-color: #95c6ad;
+  background: #f2faf5;
+}
+.timer-complete .timer-copy .eyebrow {
+  color: #276544;
+}
+.timer-options {
+  padding: 0 14px 14px;
+  max-height: 45dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-top: 1px solid var(--line);
+}
+.local .timer-options fieldset {
+  padding: 0;
+  margin: 12px 0;
+  border: 0;
+  min-width: 0;
+}
+.timer-options legend {
+  font-size: 12px;
+  font-weight: 750;
+}
+.presets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 5px;
+}
+.local .presets button {
+  padding: 8px 1px;
+  margin: 6px 0;
+  font-size: 12px;
+}
+.local .presets button[aria-pressed="true"] {
+  border: 2px solid #137a6c;
+  background: #e6f4ee;
+  color: #154e43;
+}
+.timer-options form {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+}
+.timer-options form label {
+  flex: 1;
+  min-width: 0;
+}
+.timer-options form button {
+  margin-bottom: 10px;
+}
+.local:has(.timer-options) {
+  padding-bottom: calc(550px + env(safe-area-inset-bottom));
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+html {
+  scroll-padding-bottom: 210px;
+}
+input,
+select {
+  scroll-margin-block: 140px;
+}
+@media (max-width: 360px) {
+  .local {
+    padding-inline: 12px;
+  }
+  .local .app-header {
+    margin-inline: -12px;
+    padding-inline: 12px;
+  }
+  .local h1 {
+    font-size: 17px;
+  }
+  .timer-bar {
+    gap: 6px;
+    padding-inline: 9px;
+  }
+  .timer-copy {
+    gap: 7px;
+  }
+  .timer-copy output {
+    font-size: 25px;
+  }
+  .timer-copy .eyebrow {
+    font-size: 9px;
+    max-width: 75px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .local * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+.local nav {
+  margin: 0;
+}
+.local .workout-hero {
+  padding: 16px;
+  margin-top: 12px;
+}
+.local .workout-hero h2 {
+  font-size: 23px;
+  margin: 6px 0;
+}
+.local .session-progress {
+  margin-top: 12px;
+}
+.local .workout-hero p {
+  margin: 6px 0;
+}
+.local .exercise-intro {
+  margin-top: 14px;
+}
+.local .app-header {
+  padding-top: calc(14px + env(safe-area-inset-top));
+  padding-bottom: 14px;
+}
+.local .warning {
+  margin: 9px 0;
+  padding: 8px 10px;
+}
