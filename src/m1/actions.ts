@@ -1,3 +1,4 @@
+import { draftUnit } from "./units";
 import { SetValues } from "../domain/contracts";
 import { readyTimer } from "../local/timer";
 import {
@@ -65,7 +66,7 @@ export function lifecycle(
   d.timer = readyTimer(d.timer.selectedSeconds);
   s.lastSeen = now;
 }
-export function rowValues(p: Performance, r: Row) {
+export function rowValues(p: Performance, r: Row, model?: Model) {
   const amount = Number(r.draft.amount);
   if (!r.draft.amount.trim()) throw Error("Enter actual reps or seconds");
   const weight = Number(r.draft.weight);
@@ -77,7 +78,7 @@ export function rowValues(p: Performance, r: Row) {
     ? {
         kind: p.identity.loadKind,
         value: weight,
-        unit: p.identity.unit,
+        unit: draftUnit(p, r, model),
         basis: p.identity.basis,
       }
     : { kind: p.identity.loadKind };
@@ -89,10 +90,16 @@ export function rowValues(p: Performance, r: Row) {
     rirCapped: false,
   });
 }
-export function record(s: Session, p: Performance, r: Row, now: number) {
+export function record(
+  s: Session,
+  p: Performance,
+  r: Row,
+  now: number,
+  model?: Model,
+) {
   if (!["active", "finished_full", "finished_partial"].includes(s.status))
     throw Error("Begin or resume workout before recording");
-  r.actual = rowValues(p, r);
+  r.actual = rowValues(p, r, model);
   r.confirmed = true;
   r.revision++;
   r.recordedAt = now;
@@ -116,7 +123,9 @@ export function comparable(d: Model, s: Session, p: Performance) {
     .flatMap((x) =>
       x.performances
         .filter(
-          (q) => JSON.stringify(q.identity) === JSON.stringify(p.identity),
+          (q) =>
+            JSON.stringify({ ...q.identity, unit: "lb" }) ===
+            JSON.stringify({ ...p.identity, unit: "lb" }),
         )
         .map((q) => ({ session: x, p: q })),
     )
