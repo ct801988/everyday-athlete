@@ -1,0 +1,14 @@
+# Sources and verification scope
+Checked 2026-10-18. Read-only retrieval; no trial, account, checkout, purchase, contact or photograph download/import. Sources support planning only, not a license grant or signed technique review.
+
+1. Adobe Stock plans — https://stock.adobe.com/plans — published US$29.99/month for 10 monthly credits with annual commitment; US$359.88/year is arithmetic, not an 11-photo quote. Price/terms can change. The annual commitment is material; this is not a $29.99 one-off pilot price.
+2. Adobe Stock license summary — https://stock.adobe.com/uk/license-terms — restrictions on standalone-file distribution remain even under Extended licensing; editorial restrictions and exact usage terms need asset-specific verification. Public code bundles/offline platform rights are not assumed.
+3. Photography Shark fitness sessions — https://www.photographyshark.com/fitness-photography-boston/ — $395–$795 published session examples, commercial brand projects scoped separately. This is an illustrative provider benchmark, not a local Minnesota quote or a technique-library licensing offer.
+4. U.S. Copyright Office, photographers — https://www.copyright.gov/engage/photographers/ — initial ownership and work-for-hire context. Payment or commissioning alone is not proof of an adequate rights grant.
+5. ASMP commercial agreement example — https://www.asmp.org/licensing-guide/terms-conditions/ — scope-specific rights, fees and releases. An example to inform requirements, not an executed EA agreement.
+6. Adobe model-release guidance — https://helpx.adobe.com/stock/contributor/content-policies-guidelines/model-property-releases/model-release-overview.html — release guidance for recognizable people in commercial stock. EA must verify its own intended use and contractual release evidence.
+7. ACE barbell chest press — https://www.acefitness.org/resources/everyone/exercise-library/5/chest-press/ — general bench movement outline used for paraphrased draft shot stages. No source photography is reproduced or licensed by citing it.
+8. Dr Notley, standing hip CARs — https://drnotley.com/standing-hip-circles-cars/ — supported movement outline, outward motion, hip-rotation transition and return. No source timing/repetition prescription has been imported.
+9. Kysero standing hip CAR — https://kysero.io/exercise-library/standing-hip-circle/ — corroborates support, forward/outward/backward circle and stable pelvis/trunk for planning. Its program defaults, imagery and substitutions are not imported.
+
+Owner-produced equipment/reviewer allowances and the $1,500–$4,000 commissioned-pilot envelope are internal planning estimates, not source-quoted market averages. Actual location, performer, equipment, rights, review and reshoot costs remain unquoted. No matching commercial 3/8-frame licensed set or provider provenance was verified; illustration/AI-animation catalog prices are not substitutes for genuine photography pricing.
