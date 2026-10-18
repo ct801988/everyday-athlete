@@ -535,6 +535,10 @@ export default function App() {
             {s.performances.map((p) => {
               const collapsed = d.view.collapsed[p.id];
               const last = comparable(d, s, p);
+              const prescribed = s.prescription.exercises.find(
+                (exercise) => exercise.id === p.prescriptionExerciseId,
+              );
+              const targets = [...new Set(prescribed?.sets.map((set) => set.target) ?? [])];
               return (
                 <section
                   className={
@@ -567,7 +571,7 @@ export default function App() {
                             : "Reps"}
                         </span>
                         <small>
-                          {p.identity.equipment.join(" · ")} ·{" "}
+                          {p.identity.equipment.join(" · ")} · {p.identity.category}{" · "}
                           {p.identity.modality === "time"
                             ? "Seconds"
                             : p.identity.loadKind === "bodyweight"
@@ -610,7 +614,7 @@ export default function App() {
                     <>
                       <div className="last-target">
                         <span>
-                          <b>Previous</b>{" "}
+                          <b>Last Time</b>{" "}
                           {last
                             ? last
                                 .map(
@@ -621,7 +625,13 @@ export default function App() {
                             : "No recorded sets yet"}
                         </span>
                         <span>
-                          <b>Today’s target</b> Demo · log your actual sets
+                          <b>Today’s Target</b>
+                          {targets.length ? (
+                            <details className="target-explanation">
+                              <summary>{p.identity.modality === "time" ? "Demo duration" : "Demo reps"} · details</summary>
+                              <span>{targets.join(" · ")}. Synthetic prescription; no recommended weight or progression.</span>
+                            </details>
+                          ) : "No prescribed target"}
                         </span>
                       </div>
                       <div className="set-head">
