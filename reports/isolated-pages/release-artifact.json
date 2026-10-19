@@ -1,0 +1,73 @@
+{
+  "base": "/",
+  "hash": "840e233352b02f4f",
+  "cachePrefix": "ea-pages-shell-8a5edab28263-",
+  "files": [
+    {
+      "path": "release.json",
+      "bytes": 85,
+      "sha256": "f2093168aba2f5edb375d0fcd3197aba8f683f718312cba1abde6c2473b716fe"
+    },
+    {
+      "path": "index.html",
+      "bytes": 928,
+      "sha256": "ed071e2a6fdfe91e508fbbf6795d20086897ca1b34cbbbf066369727e601ee62"
+    },
+    {
+      "path": "assets/App-Bd5Bz2rF.js",
+      "bytes": 161102,
+      "sha256": "b090c1a2530fe2c694b6bbd47e79d19cf3803e041ccd9b7000fe8b8c6fef6bff"
+    },
+    {
+      "path": "assets/App-u7FH7SVB.css",
+      "bytes": 22661,
+      "sha256": "dafe1a420e95e3907ea3983b3a6f3029f3ad42f43f7e8f8b40687ade48af79f4"
+    },
+    {
+      "path": "assets/index-DtriIW5F.js",
+      "bytes": 213673,
+      "sha256": "16a68ab986df5d9e2e3f7851fc886ec7f1bc62498e972f0da1b2b08fb29bddf2"
+    },
+    {
+      "path": "assets/index-DvG4p3FA.css",
+      "bytes": 11472,
+      "sha256": "2dc0cca496653cbaa2f0fb002da112c3ba3ce192a7ed1f2479e1061c787b7ec2"
+    },
+    {
+      "path": "assets/jsx-runtime-Am8b9ysO.js",
+      "bytes": 8276,
+      "sha256": "9bd1e242e0169cc4dc70b19b33bcdae67118a8d2e564f794723fd15f0d4cab40"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "bytes": 433,
+      "sha256": "c9a6ce15d3251cdeaa2b10ef779101843bdd951bfc5b0622ee6a9f8b2edcef3a"
+    },
+    {
+      "path": "icons/icon-180.png",
+      "bytes": 741,
+      "sha256": "77d64ede8a2ba6a33fa5e5d752289984b2469bdd62c205b003cdfdf8c376b556"
+    },
+    {
+      "path": "icons/icon-192.png",
+      "bytes": 823,
+      "sha256": "61a924c78a29f6d84ab05a22adb3d30c83b4b25cb68772372a2086eb30be2558"
+    },
+    {
+      "path": "icons/icon-512.png",
+      "bytes": 3274,
+      "sha256": "3cd670ab90618c8082bdf4117436ef33abe473ed452583f531e79ccb4d8fb514"
+    },
+    {
+      "path": "sw.js",
+      "bytes": 1187,
+      "sha256": "9fb6f16d4515c3e36bd496b3f4cd7526f5fb8a5fe44fbd36a050a1611ce4dee6"
+    },
+    {
+      "path": ".nojekyll",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "authentication": "none; public static host only; approval required"
+}
