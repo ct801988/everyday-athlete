@@ -327,7 +327,7 @@ test("rest ring neutral, running collapse/reopen/reset, five-second completion h
   await saved(page);
   for (let n = 0; n < 5; n++) {
     await page
-      .getByRole("button", { name: "Subtract five seconds (−5s)", exact: true })
+      .getByRole("button", { name: "Subtract five seconds · −5s", exact: true })
       .click();
     await saved(page);
   }
@@ -521,7 +521,7 @@ test("rest completion expires after five seconds; audio preference has exactly t
   await saved(page);
   for (let i = 0; i < 5; i++) {
     await page
-      .getByRole("button", { name: "Subtract five seconds (−5s)", exact: true })
+      .getByRole("button", { name: "Subtract five seconds · −5s", exact: true })
       .click();
     await saved(page);
   }

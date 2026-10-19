@@ -1449,7 +1449,7 @@ export default function App() {
             </div>
             <div className="adjust">
               <button
-                aria-label="Subtract five seconds (−5s)"
+                aria-label="Subtract five seconds · −5s"
                 disabled={d.timer.status === "running" || rest <= 5}
                 onClick={() =>
                   void write("rest-adjust", { delta: -5 }, (x) => {
@@ -1461,7 +1461,7 @@ export default function App() {
               </button>
               <span>{clock(d.timer.selectedSeconds)}</span>
               <button
-                aria-label="Add five seconds (+5s)"
+                aria-label="Add five seconds · +5s"
                 disabled={d.timer.status === "running" || rest >= 3600}
                 onClick={() =>
                   void write("rest-adjust", { delta: 5 }, (x) => {
