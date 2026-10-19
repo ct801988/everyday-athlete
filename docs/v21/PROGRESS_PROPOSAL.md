@@ -1,0 +1,13 @@
+# Separate approval proposal — Progress and verified achievements
+
+Proposal only. No dashboard/achievement code is enabled in V2.1. Keep reliability changes ahead of this work.
+
+Recommended bounded next milestone: one dashboard with workout counts by week, a selected exercise's comparable completed sets, timed-exercise duration history, and links to actual session records. Prefer transparent top recorded sets over estimated one-rep max or composite scores. No unsafe maximal-attempt prompts, progression prescriptions, calorie claims or training-to-failure encouragement.
+
+Data rules: finished records only for frequency; show partial/full separately. A single workout is a record, not a trend. At least two comparable sessions for a line, explicit sample count/date range, no interpolation through absent history. Group comparisons by exercise ID/version/variant, exact equipment and load kind/basis, reps versus seconds, and execution convention where recorded. Normalize physical units using existing precise conversions; round display only. Never mix assisted resistance with external/weighted-bodyweight records, or substitutions with a canonical variation. Exclude drafts/unconfirmed/deleted-by-undo entries. Legacy records with insufficient identity remain a separate history list, not inferred chart points.
+
+Strength: display top comparable recorded load at an explicitly selected rep count/range; show reps/load together so a heavier low-rep set is not silently labelled improvement over a lighter high-rep set. Rep trends hold load and measurement convention constant. Duration trends apply only to the same timed movement/convention; do not conflate workout elapsed time with performed seconds. All units can be switched without rewriting stored data.
+
+Personal best proposal: deterministic comparison within one identity/convention and chosen metric, tie handling, correction/undo recalculation, and a direct link to the source set. Mark single observations 'First recorded set' rather than 'Improved'. No streak punishment, unsupported achievements or combined cross-variant totals.
+
+Representative review images are rendered from progress-proposal.html. They use explicitly fictional data to demonstrate the layout and a one-workout honest empty state. They are NOT actual user results, production screens or an approved redesign. The full Progress layout requires owner/design approval before integration. No database/schema change is proposed initially; derived read-only views over existing records, with deterministic unit/identity/history tests and accessible text alternatives. Estimate scope only after visual/metric approval.

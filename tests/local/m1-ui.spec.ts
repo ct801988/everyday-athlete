@@ -38,10 +38,10 @@ test("continuous logging, deliberate actuals, extras, grouping, pause, reopen, p
   await expect(page.locator(".exercise-card")).toHaveCount(7);
   await page.getByRole("button", { name: "Group / unlink supersets" }).click();
   await page
-    .getByRole("checkbox", { name: "Demo dumbbell press", exact: true })
+    .getByRole("checkbox", { name: "Dumbbell press", exact: true })
     .check();
   await page
-    .getByRole("checkbox", { name: "Demo dumbbell row", exact: true })
+    .getByRole("checkbox", { name: "Dumbbell row", exact: true })
     .check();
   await page.getByRole("button", { name: "Group selected" }).click();
   await expect(first.locator(".group")).toHaveText("A1");
@@ -167,7 +167,7 @@ test("offline reopen retains paused drafts and completed records; backup downloa
   expect(path).not.toBeNull();
   await page.locator("input[type=file]").setInputFiles(path!);
   await expect(page.getByText(/Preview: 1 sessions/)).toBeVisible();
-  await page.getByRole("button", { name: "Import reviewed backup" }).click();
+  await page.getByRole("button", { name: "Confirm restore" }).click();
   await expect(page.getByText(/Preview: 1 sessions/)).not.toBeVisible();
   await context.setOffline(false);
 });

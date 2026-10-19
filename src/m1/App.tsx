@@ -19,7 +19,7 @@ import {
   type Row,
 } from "./model";
 import * as db from "./storage";
-import { lifecycle, elapsed, record, undo, comparable } from "./actions";
+import { lifecycle, elapsed, comparable } from "./actions";
 import { summary } from "./model";
 import {
   readyTimer,
@@ -30,6 +30,18 @@ import {
 } from "../local/timer";
 import { reschedule, schedule } from "../domain/scheduling";
 import { MAX_BYTES } from "../local/backup";
+import { canonical } from "../local/backup";
+import {
+  applyIntent,
+  forgetIntent,
+  prepareIntent,
+  recoverIntents,
+  rawIntents,
+  type Intent,
+} from "./lifecycle-journal";
+import { SetStopwatch } from "./SetStopwatch";
+import { verifiedRelease, type ReleaseInfo } from "./release";
+import { groupedOrder, exerciseFacts } from "./presentation";
 import "./m1.css";
 type DialogState = {
   kind: "info" | "library" | "settings" | "finish" | "duration" | "group";
@@ -83,26 +95,36 @@ export default function App() {
     [gear, setGear] = useState("All"),
     [now, setNow] = useState(Date.now()),
     [expanded, setExpanded] = useState(false),
-    [complete, setComplete] = useState(false),
     [edits, setEdits] = useState<Record<string, Row["draft"]>>({}),
     [weightInputs, setWeightInputs] = useState<
       Record<string, { text: string; unit: WeightUnit; weight: string }>
     >({}),
     [focusedWeight, setFocusedWeight] = useState<string | null>(null),
     [preview, setPreview] = useState<Model | null>(null),
-    [exported, setExported] = useState(-1),
+    [backupMessage, setBackupMessage] = useState(""),
+    [pending, setPending] = useState(0),
+    [releaseInfo, setReleaseInfo] = useState<ReleaseInfo | null>(null),
     [duration, setDuration] = useState(""),
     [groupIds, setGroupIds] = useState<string[]>([]);
   const current = useRef<Model | null>(null),
+    draftCache = useRef<Record<string, Row["draft"]>>({}),
     queue = useRef(Promise.resolve()),
     cancelAudio = useRef<AudioContext | null>(null),
     foreground = useRef(true),
     completionClaim = useRef<string | null>(null),
     inputFile = useRef<HTMLInputElement>(null);
+  const outstanding = useRef(0),
+    failed = useRef(false),
+    lifecycleLock = useRef(false);
   useEffect(() => {
+    void fetch(import.meta.env.BASE_URL + "release.json")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((x) => setReleaseInfo(verifiedRelease(x)))
+      .catch(() => {});
     void db
       .read()
       .then((x) => x ?? db.initialize())
+      .then(recoverIntents)
       .then((x) => {
         current.current = x;
         setD(x);
@@ -113,6 +135,13 @@ export default function App() {
         setSaved("Recovery needed — original records retained");
       });
     const timer = setInterval(() => setNow(Date.now()), 250);
+    const leave = (event: BeforeUnloadEvent) => {
+      if (outstanding.current > 0 || failed.current) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
+    };
+    window.addEventListener("beforeunload", leave);
     const visible = () => {
       if (
         current.current?.sessions.find(
@@ -135,6 +164,10 @@ export default function App() {
     window.addEventListener("pagehide", visible);
     const vv = () => {
       const v = window.visualViewport;
+      document.documentElement.dataset.keyboardOpen = String(
+        window.innerHeight - (v?.height ?? window.innerHeight) > 100 &&
+          document.activeElement?.tagName === "INPUT",
+      );
       document.documentElement.style.setProperty(
         "--keyboard",
         Math.max(
@@ -148,35 +181,93 @@ export default function App() {
     window.visualViewport?.addEventListener("resize", vv);
     return () => {
       clearInterval(timer);
+      window.removeEventListener("beforeunload", leave);
       document.removeEventListener("visibilitychange", vis);
       window.removeEventListener("pagehide", visible);
       window.visualViewport?.removeEventListener("resize", vv);
     };
   }, []);
-  function write(action: string, payload: unknown, fn: (x: Model) => void) {
+  function persist(operation: (old: Model) => Promise<Model>) {
+    outstanding.current++;
+    setPending(outstanding.current);
     setSaved("Saving…");
-    queue.current = queue.current.then(async () => {
+    const operationResult = queue.current.then(async () => {
       const old = current.current;
-      if (!old) return;
       try {
-        const next = await db.change(old, action, payload, fn);
+        if (!old || failed.current) return false;
+        const next = await operation(old);
         current.current = next;
         setD(next);
-        setSaved("Saved on this device");
         setError("");
+        return true;
       } catch (e) {
+        failed.current = true;
         setError(String(e));
-        setSaved("Not saved — reload current records before editing");
+        return false;
+      } finally {
+        outstanding.current--;
+        setPending(outstanding.current);
+        setSaved(
+          failed.current
+            ? "Not saved — recover records before editing"
+            : outstanding.current
+              ? "Saving…"
+              : "Saved on this device",
+        );
       }
     });
-    return queue.current;
+    queue.current = operationResult.then(() => {});
+    return operationResult;
+  }
+  function write(action: string, payload: unknown, fn: (x: Model) => void) {
+    return persist((old) => db.change(old, action, payload, fn));
   }
   const session = d?.sessions.find((s) => s.id === d.view.session);
+  function journalAction(
+    action: Intent["action"],
+    details: Intent["details"] = {},
+  ) {
+    try {
+      if (failed.current) return Promise.resolve(false);
+      const intent = prepareIntent(
+        current.current!,
+        session!.id,
+        action,
+        details,
+      );
+      return persist(async (old) => {
+        const next = await db.change(
+          old,
+          "lifecycle-intent",
+          intent,
+          (x) => applyIntent(x, intent),
+          intent.id,
+        );
+        forgetIntent(intent);
+        return next;
+      });
+    } catch (e) {
+      failed.current = e instanceof DOMException;
+      setError(`Action not saved: ${String(e)}`);
+      setSaved("Not saved — keep this app open and recover records");
+      return Promise.resolve(false);
+    }
+  }
   function changeSession(
     action: string,
     fn: (x: Model, s: NonNullable<typeof session>) => void,
   ) {
     const sid = session!.id;
+    if (["begin", "resume", "pause", "finish"].includes(action)) {
+      if (lifecycleLock.current || failed.current)
+        return Promise.resolve(false);
+      lifecycleLock.current = true;
+      return journalAction(
+        action as "begin" | "resume" | "pause" | "finish",
+      ).finally(() => {
+        lifecycleLock.current = false;
+      });
+    }
     return write(action, { session: sid }, (x) => {
       const s = x.sessions.find((s) => s.id === sid);
       if (!s) throw Error("Session unavailable");
@@ -195,11 +286,10 @@ export default function App() {
       now - d.timer.deadline! < 1500;
     void write("rest-completion", { run }, (x) => {
       if (x.timer.runId !== run) return;
-      x.timer = finishTimer(x.timer, run, Date.now());
-    }).then(() => {
+      x.timer = finishTimer(x.timer, run, x.timer.deadline!);
+    }).then((success) => {
+      if (!success) return;
       if (current.current?.timer.completedRunId !== run) return;
-      setExpanded(false);
-      setComplete(true);
       if (
         canBeep &&
         current.current.preferences.timer.alert === "short-beep" &&
@@ -214,13 +304,14 @@ export default function App() {
         o.start();
         o.stop(ctx.currentTime + 0.12);
       }
-      setTimeout(() => setComplete(false), 2200);
     });
   }, [d, now]);
   async function download(model: Model) {
     const b = await db.exportBackup(model);
     saveFile(b, "Everyday-Athlete-M1-backup.json");
-    setExported(model.revision);
+    setBackupMessage(
+      "Backup exported. Keep the downloaded file before restoring.",
+    );
   }
   function saveFile(value: unknown, name: string) {
     const url = URL.createObjectURL(
@@ -361,7 +452,10 @@ export default function App() {
           onClick={() =>
             void Promise.all([db.rawM1(), db.rawLegacy()]).then(
               ([m1, legacy]) =>
-                saveFile({ m1, legacy }, "EA-raw-recovery-records.json"),
+                saveFile(
+                  { m1, legacy, pendingActions: rawIntents() },
+                  "EA-raw-recovery-records.json",
+                ),
             )
           }
         >
@@ -372,16 +466,22 @@ export default function App() {
   const s = session;
   const totals = summary(s),
     time = elapsed(s, now),
-    rest = remaining(d.timer, now);
+    complete =
+      d.timer.completedAt !== null &&
+      now >= d.timer.completedAt &&
+      now - d.timer.completedAt < 5000,
+    rest = complete ? 0 : remaining(d.timer, now);
   const finished = s.status.startsWith("finished");
-  const blocked = /Another tab|Quota|Storage|database|limit|Backup/.test(error);
+  const blocked =
+    failed.current ||
+    /Another tab|Quota|Storage|database|limit|Backup/.test(error);
   function setDraft(
     p: Performance,
     r: Row,
     key: keyof Row["draft"],
     value: string,
   ) {
-    const prior = edits[r.id] ?? r.draft;
+    const prior = draftCache.current[r.id] ?? edits[r.id] ?? r.draft;
     // A focus/unchanged input event must never persist a rounded conversion.
     if (
       key === "weight" &&
@@ -401,25 +501,21 @@ export default function App() {
       }));
     }
     setEdits((old) => ({ ...old, [r.id]: draft }));
-    void changeSession("edit-draft", (_x, s) => {
-      s.performances
-        .find((e) => e.id === p.id)!
-        .rows.find((a) => a.id === r.id)!.draft = draft;
-    });
+    draftCache.current[r.id] = draft;
+    void journalAction("edit-draft", { performance: p.id, row: r.id, draft });
   }
   async function done(p: Performance, r: Row) {
-    await queue.current;
     const live = current.current!.sessions.find((a) => a.id === s.id)!;
     if (live.status === "planned") {
       if (!window.confirm("Begin Workout now and record this set?")) return;
-      await changeSession("begin-and-record", (x, a) =>
+      void changeSession("begin", (x, a) =>
         lifecycle(x, a, "begin", Date.now()),
       );
     }
-    await changeSession("record-set", (_x, a) => {
-      const perf = a.performances.find((e) => e.id === p.id)!;
-      const row = perf.rows.find((x) => x.id === r.id)!;
-      record(a, perf, row, Date.now(), _x);
+    await journalAction("record-set", {
+      performance: p.id,
+      row: r.id,
+      draft: draftCache.current[r.id] ?? edits[r.id] ?? r.draft,
     });
   }
   function open(kind: DialogState["kind"], id?: string) {
@@ -429,10 +525,41 @@ export default function App() {
   function stop() {
     cancelAudio.current?.close().catch(() => {});
     cancelAudio.current = null;
-    setComplete(false);
     void write("rest-reset", {}, (x) => {
       x.timer = readyTimer(x.timer.selectedSeconds);
     });
+  }
+  async function replaceWorkspace(rollback = false) {
+    setBackupMessage("Validating restore and saving a safety backup…");
+    const incoming = preview;
+    const success = await persist(async (old) => {
+      if (!rollback && !incoming)
+        throw Error("Preview a backup before confirming restore.");
+      if (!rollback && canonical(old) === canonical(incoming)) {
+        setBackupMessage("No changes: this backup matches your saved records.");
+        return old;
+      }
+      await download(old);
+      const next = rollback
+        ? await db.rollback(old, old.revision)
+        : await db.restore(old, incoming!, old.revision);
+      setBackupMessage(
+        rollback
+          ? "Previous workspace restored. The replaced workspace remains recoverable."
+          : "Backup restored successfully. Previous workspace retained for recovery.",
+      );
+      return next;
+    });
+    if (success) {
+      setPreview(null);
+      setEdits({});
+      draftCache.current = {};
+      setWeightInputs({});
+      setFocusedWeight(null);
+    } else
+      setBackupMessage(
+        "Restore failed. Your saved workspace was not partially replaced. Review the error below, then reload saved records.",
+      );
   }
   return (
     <div className="m1">
@@ -452,7 +579,7 @@ export default function App() {
           <Icon name="settings" />
         </button>
       </header>
-      <div className="save-status" role="status">
+      <div className="save-status" role="status" aria-busy={pending > 0}>
         <span className="status-dot" aria-hidden="true" />
         {saved === "Saved on this device" ? "Saved" : saved}
       </div>
@@ -466,7 +593,9 @@ export default function App() {
                   current.current = x;
                   setD(x);
                   setEdits({});
+                  draftCache.current = {};
                   setError("");
+                  failed.current = false;
                   setSaved("Reloaded saved records");
                 }
               })
@@ -508,7 +637,7 @@ export default function App() {
                 {s.status === "planned" && (
                   <button
                     className="primary"
-                    disabled={blocked}
+                    disabled={blocked || pending > 0}
                     onClick={() =>
                       void changeSession("begin", (x, a) =>
                         lifecycle(x, a, "begin", Date.now()),
@@ -520,7 +649,7 @@ export default function App() {
                 )}
                 {s.status === "active" && (
                   <button
-                    disabled={blocked}
+                    disabled={blocked || pending > 0}
                     onClick={() =>
                       void changeSession("pause", (x, a) =>
                         lifecycle(x, a, "pause", Date.now()),
@@ -533,7 +662,7 @@ export default function App() {
                 {s.status === "paused" && (
                   <button
                     className="primary"
-                    disabled={blocked}
+                    disabled={blocked || pending > 0}
                     onClick={() =>
                       void changeSession("resume", (x, a) =>
                         lifecycle(x, a, "resume", Date.now()),
@@ -554,6 +683,17 @@ export default function App() {
                   </button>
                 )}
               </div>
+              <button
+                className="group-access"
+                onClick={() => {
+                  setGroupIds(
+                    s.performances.filter((p) => p.group).map((p) => p.id),
+                  );
+                  open("group");
+                }}
+              >
+                Group exercises
+              </button>
               {time.review && (
                 <p className="notice">
                   Recorded elapsed time needs review. This is not measured
@@ -562,7 +702,7 @@ export default function App() {
                 </p>
               )}
             </section>
-            {s.performances.map((p) => {
+            {groupedOrder(s.performances).map((p, index, ordered) => {
               const collapsed = d.view.collapsed[p.id];
               const last = comparable(d, s, p);
               const prescribed = s.prescription.exercises.find(
@@ -576,11 +716,27 @@ export default function App() {
                   className={
                     "exercise-card" +
                     (collapsed ? " card-collapsed" : "") +
+                    (p.group ? " grouped-card" : "") +
                     (p.rows.every((r) => r.confirmed) ? " card-complete" : "")
                   }
                   key={p.id}
                   aria-label={p.name}
                 >
+                  {p.group && ordered[index - 1]?.group !== p.group && (
+                    <div className="group-heading">
+                      <strong>Superset {p.group}</strong>
+                      <button
+                        onClick={() =>
+                          void changeSession("unlink-group", (_x, a) => {
+                            for (const item of a.performances)
+                              if (item.group === p.group) item.group = null;
+                          })
+                        }
+                      >
+                        Unlink superset {p.group}
+                      </button>
+                    </div>
+                  )}
                   <header>
                     <button
                       className="exercise-title"
@@ -764,14 +920,10 @@ export default function App() {
                                 disabled={blocked || s.status === "paused"}
                                 onClick={() => {
                                   if (r.confirmed && !changed) {
-                                    void changeSession("undo-set", (_x, a) =>
-                                      undo(
-                                        a,
-                                        a.performances
-                                          .find((x) => x.id === p.id)!
-                                          .rows.find((x) => x.id === r.id)!,
-                                      ),
-                                    );
+                                    void journalAction("undo-set", {
+                                      performance: p.id,
+                                      row: r.id,
+                                    });
                                   } else void done(p, r);
                                 }}
                               >
@@ -785,6 +937,20 @@ export default function App() {
                                   : "Done"}
                               </button>
                             </div>
+                            {p.identity.modality === "time" && (
+                              <SetStopwatch
+                                id={`${d.id}:${s.id}:${r.id}`}
+                                active={
+                                  s.status === "active" &&
+                                  !blocked &&
+                                  !dialog &&
+                                  d.view.tab === "Workout"
+                                }
+                                onStop={(seconds) =>
+                                  setDraft(p, r, "amount", String(seconds))
+                                }
+                              />
+                            )}
                             {d.preferences.rir && (
                               <label className="rir">
                                 RIR (optional)
@@ -876,6 +1042,32 @@ export default function App() {
                   {totals.done} of {totals.planned} prescribed sets ·{" "}
                   {totals.extras} extras. Unperformed sets remain incomplete.
                 </p>
+                <div className="summary-grid">
+                  <div>
+                    <span>Workout duration</span>
+                    <strong>
+                      {time.review ? "Needs review" : clock(time.seconds)}
+                    </strong>
+                  </div>
+                  <div>
+                    <span>Exercises with recorded work</span>
+                    <strong>
+                      {exerciseFacts(s).performed}
+                      <small> / {exerciseFacts(s).prescribed} prescribed</small>
+                    </strong>
+                  </div>
+                </div>
+                <p>
+                  Only confirmed sets count. Additional exercises are included
+                  in performed work.
+                </p>
+                {exerciseFacts(s).highlights.map((h) => (
+                  <p key={h.id}>
+                    {displayName(h.name)} · {h.sets} recorded{" "}
+                    {h.sets === 1 ? "set" : "sets"}
+                    {h.extra ? " · added exercise" : ""}
+                  </p>
+                ))}
                 <button
                   onClick={() =>
                     void write("new-session", {}, (x) => {
@@ -1095,17 +1287,49 @@ export default function App() {
             aria-label={`${expanded ? "Collapse" : "Expand"} rest timer: ${complete ? "Rest complete" : d.timer.status === "running" ? "Rest" : "Ready"} ${clock(rest)}`}
             onClick={() => setExpanded(!expanded)}
           >
-            <span className="mini-ring" aria-hidden="true" />{" "}
+            <svg className="mini-ring" viewBox="0 0 36 36" aria-hidden="true">
+              <circle
+                cx="18"
+                cy="18"
+                r="14"
+                fill="none"
+                stroke="#37536a"
+                strokeWidth="4"
+              />
+              <circle
+                cx="18"
+                cy="18"
+                r="14"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="4"
+                strokeDasharray="87.965"
+                strokeDashoffset={
+                  87.965 *
+                  (1 -
+                    (complete
+                      ? 1
+                      : d.timer.status === "running"
+                        ? rest / d.timer.selectedSeconds
+                        : 0))
+                }
+                transform="rotate(-90 18 18)"
+              />
+            </svg>{" "}
             <span>
               {complete
-                ? "Rest complete"
+                ? "Done"
                 : d.timer.status === "running"
                   ? "Rest"
                   : "Ready"}{" "}
               <b>{clock(rest)}</b>
             </span>
           </button>
-          {d.timer.status === "ready" ? (
+          {complete ? (
+            <button aria-label="Dismiss completed rest timer" onClick={stop}>
+              ×
+            </button>
+          ) : d.timer.status === "ready" ? (
             <button
               className="primary"
               onClick={() => {
@@ -1157,11 +1381,21 @@ export default function App() {
                   cy="55"
                   r="51"
                   fill="none"
-                  stroke="currentColor"
+                  stroke={
+                    d.timer.status === "running" || complete
+                      ? "currentColor"
+                      : "#37536a"
+                  }
                   strokeWidth="6"
                   strokeDasharray="320.44"
                   strokeDashoffset={
-                    320.44 * (1 - rest / d.timer.selectedSeconds)
+                    320.44 *
+                    (1 -
+                      (complete
+                        ? 1
+                        : d.timer.status === "running"
+                          ? rest / d.timer.selectedSeconds
+                          : 0))
                   }
                   transform="rotate(-90 55 55)"
                 />
@@ -1209,6 +1443,7 @@ export default function App() {
               </button>
             </div>
             <button onClick={stop}>Stop &amp; Reset</button>
+            <button onClick={() => setExpanded(false)}>Collapse timer</button>
           </div>
         )}
       </aside>
@@ -1410,8 +1645,8 @@ export default function App() {
           {dialog.kind === "group" && (
             <>
               <p>
-                Choose exercises to label A1/A2. This does not recommend
-                pairings, shorten rest, or change records.
+                Choose two or more exercises. They will appear together as
+                A1/A2/A3 without changing your prescription or recorded sets.
               </p>
               {s.performances.map((p) => (
                 <label className="check" key={p.id}>
@@ -1426,7 +1661,7 @@ export default function App() {
                       )
                     }
                   />
-                  {p.name}
+                  {displayName(p.name)}
                 </label>
               ))}
               <button
@@ -1462,9 +1697,7 @@ export default function App() {
                   value={d.preferences.unit}
                   onChange={(e) => {
                     const unit = e.target.value as WeightUnit;
-                    void write("weight-display-unit", { unit }, (x) => {
-                      x.preferences.unit = unit;
-                    });
+                    void journalAction("weight-display-unit", { unit });
                   }}
                 >
                   <option value="lb">Pounds (lb)</option>
@@ -1500,9 +1733,14 @@ export default function App() {
                   }
                 >
                   <option value="silent">Silent</option>
-                  <option value="short-beep">One brief beep</option>
+                  <option value="short-beep">Short beep</option>
                 </select>
               </label>
+              <p className="muted">
+                Audio may be blocked by your browser. No beep is promised while
+                your iPhone is locked, the app is suspended or closed. Alerts
+                never repeat.
+              </p>
               <button
                 onClick={() =>
                   void write("preferred-rest", {}, (x) => {
@@ -1518,13 +1756,21 @@ export default function App() {
                 changing devices or origins.
               </p>
               <button
+                disabled={pending > 0 || blocked}
                 onClick={() =>
-                  void queue.current.then(() => download(current.current!))
+                  void queue.current
+                    .then(() => download(current.current!))
+                    .catch((e) =>
+                      setBackupMessage(`Export failed: ${String(e)}`),
+                    )
                 }
               >
                 Export backup
               </button>
-              <button onClick={() => inputFile.current?.click()}>
+              <button
+                disabled={pending > 0 || blocked}
+                onClick={() => inputFile.current?.click()}
+              >
                 Preview backup import
               </button>
               <input
@@ -1534,57 +1780,102 @@ export default function App() {
                 hidden
                 onChange={(e) => {
                   const f = e.target.files?.[0];
+                  e.target.value = "";
+                  setPreview(null);
+                  setBackupMessage("");
                   if (f && f.size > MAX_BYTES) {
-                    setError("Backup exceeds 20 MiB");
+                    setBackupMessage(
+                      "Backup exceeds 20 MiB. No records changed.",
+                    );
                     return;
                   }
                   if (f)
                     void f
                       .text()
                       .then(db.parseBackup)
-                      .then(setPreview)
-                      .catch((e) => setError(String(e)));
+                      .then((x) => {
+                        setPreview(x);
+                        setBackupMessage(
+                          "Preview only. Nothing has been restored.",
+                        );
+                      })
+                      .catch((e) =>
+                        setBackupMessage(
+                          `Invalid backup: ${String(e)}. No records changed.`,
+                        ),
+                      );
                 }}
               />
               {preview && (
                 <section className="notice">
                   <p>
-                    Preview: {preview.sessions.length} sessions. Current
-                    workspace will be retained.
+                    Preview: {preview.sessions.length} sessions. This replaces
+                    the active workspace; it does not merge records. Your
+                    current {d.sessions.length} sessions will be retained for
+                    recovery. A safety backup is downloaded before changes.
+                  </p>
+                  <p>
+                    Recorded sets:{" "}
+                    {preview.sessions.reduce(
+                      (n, s) =>
+                        n +
+                        s.performances.reduce(
+                          (m, p) =>
+                            m + p.rows.filter((r) => r.confirmed).length,
+                          0,
+                        ),
+                      0,
+                    )}{" "}
+                    in backup;{" "}
+                    {d.sessions.reduce(
+                      (n, s) =>
+                        n +
+                        s.performances.reduce(
+                          (m, p) =>
+                            m + p.rows.filter((r) => r.confirmed).length,
+                          0,
+                        ),
+                      0,
+                    )}{" "}
+                    currently.{" "}
+                    {canonical(preview) === canonical(d)
+                      ? "Identical saved records — no changes needed."
+                      : "The saved sessions, entries and preferences from this backup will replace current values."}
                   </p>
                   <button
-                    onClick={() =>
-                      void db
-                        .restore(current.current!, preview, exported)
-                        .then((next) => {
-                          current.current = next;
-                          setD(next);
-                          setExported(-1);
-                          setPreview(null);
-                          setEdits({});
-                          setError("");
-                        })
-                        .catch((e) => setError(String(e)))
-                    }
+                    disabled={pending > 0 || blocked}
+                    onClick={() => void replaceWorkspace()}
                   >
-                    Import reviewed backup
+                    Confirm restore
                   </button>
-                  <button onClick={() => setPreview(null)}>
+                  <button
+                    onClick={() => {
+                      setPreview(null);
+                      setBackupMessage(
+                        "Restore cancelled. No records changed.",
+                      );
+                    }}
+                  >
                     Cancel import
                   </button>
                 </section>
               )}
+              {backupMessage && (
+                <p role="status" className="notice">
+                  {backupMessage}
+                </p>
+              )}
+              {error && (
+                <div role="alert" className="error">
+                  {error}
+                  <button onClick={() => location.reload()}>
+                    Recover saved records
+                  </button>
+                </div>
+              )}
               <button
-                onClick={() =>
-                  void db
-                    .rollback(current.current!, exported)
-                    .then((next) => {
-                      current.current = next;
-                      setD(next);
-                      setEdits({});
-                    })
-                    .catch((e) => setError(String(e)))
-                }
+                disabled={pending > 0 || blocked}
+                onClick={() => void replaceWorkspace(true)}
               >
                 Restore retained M1 workspace
               </button>
@@ -1598,9 +1889,12 @@ export default function App() {
                 </button>
               )}
               <p className="muted">
-                M1 reconstruction · synthetic content · no deployment. Original
-                legacy storage remains untouched. Old code cannot read new
-                records.
+                Synthetic development preview.{" "}
+                {releaseInfo
+                  ? `Release ${releaseInfo.revision.slice(0, 7)} · data format ${releaseInfo.datasetSchema}.`
+                  : "Release identity unavailable in this build."}{" "}
+                Export your records before changing devices or using older
+                versions.
               </p>
             </>
           )}
@@ -1611,3 +1905,4 @@ export default function App() {
 }
 
 import "./refinement.css";
+import "./v21.css";
