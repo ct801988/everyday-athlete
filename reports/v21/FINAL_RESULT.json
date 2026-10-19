@@ -1,0 +1,23 @@
+{
+  "applicationSourceCommit": "ba54a5c2f59c22f496911cb3619f4497e71a8068",
+  "baselineDeployedCommit": "89d087e5746eb36b5763b8356e2204de864e7622",
+  "branch": "ea/v2-1-reliability-usability",
+  "draftPR": 6,
+  "node": "v24.19.0",
+  "freshInstall": "npm ci --ignore-scripts passed; lockfile unchanged",
+  "passed": 198,
+  "failed": 0,
+  "skipped": 3,
+  "suites": {"unit":143,"integration":21,"m1V2V21Browser":30,"projectPathOffline":1,"isolatedRootUpdateRollback":3},
+  "skipReason": "Three inherited native Supabase/database/login-stack integration checks are not available in this environment",
+  "baselineReproductions": {"passed":4,"includedInCandidateTotal":false},
+  "supplementalChecks": {"passed":3,"includedInCandidateTotal":false,"evidence":"supplemental-results.json"},
+  "checks": {"typecheck":"PASS","lint":"PASS","productionBuild":"PASS","rootPagesBuild":"PASS","sourceUnchangedDuringValidation":true,"accessibility":"PASS including full axe for expanded/completed timer and root layouts"},
+  "sourceFingerprint": "7413cef5638c568b39431e3af2be485d1eaa40367af78d6a0e4fd0342152ca8b",
+  "rootArtifactManifestSha256": "3815d15988bd0002176d81e23626ea0be9b1a241898d3c853c8e0c97bbab228d",
+  "screenshots": {"widths":[320,390,412],"height":844,"environment":"Desktop Chromium viewport emulation and isolated local candidate, not physical iPhone or live V2.1 deployment"},
+  "notVerified": ["Physical iPhone Safari/Home Screen safe area and keyboard", "Real locked/suspended OS process-kill behavior", "Actual audible beep on iPhone"],
+  "deployment": "NOT AUTHORIZED; live V2 and publishing repository unchanged",
+  "datasetSchema":3,
+  "backupFormatVersion":3
+}

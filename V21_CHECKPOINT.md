@@ -1,0 +1,28 @@
+# Current checkpoint — V2.1 candidate ready for owner review (2026-10-19)
+Branch ea/v2-1-reliability-usability / draft PR #6, based on preserved5c9e0f8. Tested application source ba54a5c2f59c22f496911cb3619f4497e71a8068. Final suites:143 unit +21 integration +30 M1/V2/V2.1 browser +1 project-path offline +3 isolated-root/update/rollback =198 PASS /0 FAIL /3 inherited native Supabase/database/login SKIP. Typecheck/lint/production/root build pass; frozen-source fingerprint7413cef5638c568b39431e3af2be485d1eaa40367af78d6a0e4fd0342152ca8b. Four baseline reproductions and three supplemental recovery checks passed separately, not added to198.
+Root artifact-manifest SHA2563815d15988bd0002176d81e23626ea0be9b1a241898d3c853c8e0c97bbab228d. This is an UNPUBLISHED, UNAPPROVED release candidate. Live release.json re-read still89d087e5746eb36b5763b8356e2204de864e7622; publisher main unchanged4e1238417bcda08569d027be7756d387f4a5b352.
+Implemented recoverable critical mutation intents, honest save queue, serial visible restore/rollback with safety export, bottom-margin/safe-area corrections, timer ring/collapse/reset/five-second Done/audio preference fix, foreground timed-row stopwatch, adjacent manual supersets/header access/unlink, factual finish summary and release metadata. Workout/backup schema3 unchanged; exact load precision/history/legacy migration retained. Pending V2.1 journal operations must be recovered before rollback to old code.
+See docs/v21/V21_REVIEW.md, README.md, CHANGELOG.md, PACKAGE_README.md, separate Progress/notification proposals and reports/v21/FINAL_RESULT.json/raw evidence. Native320/390/412 viewport screenshots and baseline comparison are review artifacts, not physical iPhone certification. Real Safari/Home Screen keyboard/safe-area/locked/background/OS-kill and audible beep checks remain unverified. No photography integrated.
+STOP for owner candidate feedback. No source PR merges, publisher/approval/workflow/hosting changes, deployment, cost, Winter Strong access, broad redesign or M2. Codeba54a5c is the immutable resumption point; the enclosing later commit adds documentation/evidence only. Fetch current branch and read this checkpoint before edits. Only subsequent owner instructions authorize further work.
+
+---
+Historical checkpoints below are retained as evidence, not current authority:
+
+# V2.1 — implementation in progress
+
+Owner authorization: upload Pasted text(5).txt, 2026-10-19. Bounded reliability/usability milestone. No merge, publication, live-site changes, publisher changes, costs or Winter Strong access.
+
+Branch ea/v2-1-reliability-usability, base 5c9e0f8b1b8882705a024e0a08fc12275f35bf21; deployed comparison/rollback 89d087e5746eb36b5763b8356e2204de864e7622. Base differs from deployed code only in saved documentation/evidence. Preserve source draft PRs #1–#5.
+
+Source findings and implemented corrections:
+- Global src/styles.css nav margin 18px 0 survives on fixed bottom-nav, producing an actual 18px scrolling gap.
+- db.change already waits for IndexedDB transaction completion before React model update. Immediate click/reload can interrupt a queued uncommitted Pause; current UI has no durable lifecycle intent recovery. Also each individual queued write sets Saved even when later writes remain, and failures are swallowed before completion callbacks.
+- Restore requires exportedRevision equal current revision; QA exported then finished (changed revision), so restore correctly rejects but error appears in page behind modal. Restore/rollback bypass mutation queue; no explicit success/no-change status.
+
+P0 implementation now uses small synchronous, ordered mutation intents for lifecycle, draft edits, record/undo and unit selection; IDB receipts provide replay idempotence. Published workout schema remains 3. Mutation UI updates only after the transaction commits; save status tracks the whole queue, aborts are latched for recovery, rejected invalid entries do not poison recovery. Restore is serialized, auto-exports a safety copy before replacing, retains the prior atomic workspace, and shows modal-local success/no-change/cancel/failure states.
+
+P1/P2 bounded changes implemented locally: cancel inherited nav margin, safe-area/keyboard dock handling; neutral/actual-progress/5-second green timer states and collapsible controls; foreground-only timed-set stopwatch checkpoints; adjacent manual superset display with header access/unlink and no prescription mutation; factual finish summary and release-metadata Settings. Separate Progress/notification proposals are review-only.
+
+Executed so far: 142 unit PASS / 0 FAIL; integration 21 PASS / 0 FAIL / 3 inherited native-stack SKIP; initial 10 focused V2.1 browser cases PASS, including synchronous reloads and failed-commit recovery. Baseline archive89d087e: four reproduction checks PASS, establishing actual18px gap at320/390/412 and stale-export restore rejection without data change. Before screenshots saved. Current expanded full regression run is IN PROGRESS; do not treat the above as final candidate acceptance. Initial earlier focused run had a text-normalization test assertion corrected (not an application failure).
+
+Next: finish full M1/V2/V2.1, Pages/offline/update/rollback/accessibility checks; inspect screenshots; final source/evidence checkpoint, candidate ZIP/README/changelog/rollback, owner review. Physical iPhone behavior and actual audible beep remain unverified. No deployment or source merges. Live89d087e is untouched. Avoid old scratch sources and keep pending journal recovery within this branch until committed/settled; do not downgrade unresolved operations to V2.

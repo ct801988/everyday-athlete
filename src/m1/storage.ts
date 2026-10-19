@@ -88,7 +88,7 @@ export async function change(
   action: string,
   payload: unknown,
   apply: (d: Model) => void,
-  id = crypto.randomUUID(),
+  id: string = crypto.randomUUID(),
 ): Promise<Model> {
   return transact("readwrite", async (s) => {
     const key = await req(s.get("active"));

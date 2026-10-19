@@ -38,10 +38,10 @@ test("continuous logging, deliberate actuals, extras, grouping, pause, reopen, p
   await expect(page.locator(".exercise-card")).toHaveCount(7);
   await page.getByRole("button", { name: "Group / unlink supersets" }).click();
   await page
-    .getByRole("checkbox", { name: "Demo dumbbell press", exact: true })
+    .getByRole("checkbox", { name: "Dumbbell press", exact: true })
     .check();
   await page
-    .getByRole("checkbox", { name: "Demo dumbbell row", exact: true })
+    .getByRole("checkbox", { name: "Dumbbell row", exact: true })
     .check();
   await page.getByRole("button", { name: "Group selected" }).click();
   await expect(first.locator(".group")).toHaveText("A1");
@@ -124,10 +124,14 @@ test("rest deadline expires green and reset restores configured time", async ({
     .locator(".rest-bar")
     .getByRole("button", { name: "Start", exact: true })
     .click();
-  await expect(page.locator(".rest-bar")).toContainText("Rest complete", {
+  await expect(page.locator(".rest-bar")).toContainText("Done", {
     timeout: 10000,
   });
   await expect(page.locator(".rest-dock")).toHaveClass(/complete/);
+  await expect(page.locator(".rest-bar")).toContainText("0:00");
+  await page
+    .getByRole("button", { name: "Dismiss completed rest timer", exact: true })
+    .click();
   await expect(page.locator(".rest-bar")).toContainText("0:05");
 });
 
@@ -167,7 +171,7 @@ test("offline reopen retains paused drafts and completed records; backup downloa
   expect(path).not.toBeNull();
   await page.locator("input[type=file]").setInputFiles(path!);
   await expect(page.getByText(/Preview: 1 sessions/)).toBeVisible();
-  await page.getByRole("button", { name: "Import reviewed backup" }).click();
+  await page.getByRole("button", { name: "Confirm restore" }).click();
   await expect(page.getByText(/Preview: 1 sessions/)).not.toBeVisible();
   await context.setOffline(false);
 });

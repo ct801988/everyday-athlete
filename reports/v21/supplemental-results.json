@@ -1,0 +1,17 @@
+{
+  "scope": "local review artifact; disposable browser profile",
+  "checks": [
+    {
+      "name": "rapid duplicate Begin/Pause/Resume preserve one active interval after reload",
+      "result": "PASS"
+    },
+    {
+      "name": "stopwatch interrupted by reload recovers observed draft without confirming a set",
+      "result": "PASS"
+    },
+    {
+      "name": "journal storage failure rejects action visibly and permits safe recovery/retry",
+      "result": "PASS"
+    }
+  ]
+}

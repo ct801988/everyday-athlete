@@ -1,0 +1,57 @@
+{
+  "node": "v24.19.0",
+  "sourceFingerprint": "7413cef5638c568b39431e3af2be485d1eaa40367af78d6a0e4fd0342152ca8b",
+  "started": "2026-10-19T21:59:05.031Z",
+  "checks": [
+    {
+      "name": "typecheck",
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "name": "unit",
+      "command": "npm run test:unit -- --reporter=json --outputFile=reports/v21/unit-results.json",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "name": "integration",
+      "command": "npm run test:integration -- --reporter=json --outputFile=reports/v21/integration-results.json",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "name": "production-build",
+      "command": "npm run build",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "name": "m1-v2-v21-browser",
+      "command": "npm exec -- playwright test --config playwright.v21-regression.config.ts",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "name": "project-path-offline",
+      "command": "npm run test:m1:pages",
+      "exitCode": 0,
+      "error": null
+    },
+    {
+      "name": "isolated-root-update-rollback",
+      "command": "npm exec -- playwright test --config playwright.isolated-pages.config.ts",
+      "exitCode": 0,
+      "error": null
+    }
+  ],
+  "finished": "2026-10-19T22:00:58.152Z",
+  "sourceStable": true
+}
