@@ -1,3 +1,8 @@
+# Current checkpoint — bench media v001 received; corrections requested
+2026-10-19: original three-frame bench ZIP preserved unchanged in attached persistent file libfile_71268a243b70819190e493d9250f4ddc; archive/frame hashes and dimensions verified. See docs/exercise-media/BENCH_V001_RECEIPT.md for exact evidence and findings. Frame 002 endpoint is ambiguous near face/neck, frame 003 is mid-press rather than completed return, and equipment continuity changes. Request correction/clarification before qualified technique clearance. Style approved only; all production/integration/terms/technique/publication gates pending. No images added to public repository or application; documentation-only receipt. Prior application evidence unchanged, no application tests rerun. Next planned hip CAR uses female demonstrator. PR #4 remains draft. STOP after verification/report; no merge/deploy/publication/costs or library expansion.
+
+---
+
 # Current checkpoint — mixed demonstrator direction recorded
 
 ## Owner direction update — mixed demonstrators (2026-10-18, America/Chicago)
