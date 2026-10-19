@@ -1,3 +1,74 @@
+# Current checkpoint — GitHub Pages plan; shared-origin cache blocker
+2026-10-19. GitHub Pages preferred; proposed https://ct801988.github.io/everyday-athlete/ not approved or enabled. Source parent 5b8c6575f2046c812bb9029a69c3033dcd0bf397. See docs/GITHUB_PAGES_PREVIEW_PLAN.md. Exact host/path guard change required; DB names are path-namespaced, but reference Winter Strong activation deletes all other same-origin caches. One isolated Node VM simulation reproduced deletion of EA sentinel cache; NOT live/browser/iPhone verification. Live Winter Strong untouched and behavior unverified. Shared-origin deployment held pending evidence; GitHub organization hostname is proposed isolation alternative, no creation authorized. No Cloudflare project. Application tests not rerun, historical V2 results unchanged. Media directions/corrections recorded in docs/exercise-media/DIRECTION_UPDATE_2026_10_19.md. PR #4 stays draft. STOP for hosting-plan approval; no workflows, main changes, merges, deployments, purchases or media integration.
+
+---
+
+# Current checkpoint — bench media v001 received; corrections requested
+2026-10-19: original three-frame bench ZIP preserved unchanged in attached persistent file libfile_71268a243b70819190e493d9250f4ddc; archive/frame hashes and dimensions verified. See docs/exercise-media/BENCH_V001_RECEIPT.md for exact evidence and findings. Frame 002 endpoint is ambiguous near face/neck, frame 003 is mid-press rather than completed return, and equipment continuity changes. Request correction/clarification before qualified technique clearance. Style approved only; all production/integration/terms/technique/publication gates pending. No images added to public repository or application; documentation-only receipt. Prior application evidence unchanged, no application tests rerun. Next planned hip CAR uses female demonstrator. PR #4 remains draft. STOP after verification/report; no merge/deploy/publication/costs or library expansion.
+
+---
+
+# Current checkpoint — mixed demonstrator direction recorded
+
+## Owner direction update — mixed demonstrators (2026-10-18, America/Chicago)
+
+Maintain a balanced, intentional mix of male and female demonstrators across the overall exercise library; both versions are not required for every exercise. Preserve consistent photographic style, clear movement, exact exercise/variant mapping, concise per-image captions, high quality and beginner-friendly clarity. Keep the same demonstrator within each sequence unless a deliberate change is explicitly documented and reviewed.
+
+The owner approves the current bench-press sequence as the first pilot STYLE REFERENCE only, subject to later qualified technique and integration review. Preserve that selected sequence; do not regenerate or replace it solely for representation. The actual selected image files were not supplied with this direction update, so this record does not claim local receipt, file hashes, exact file approval or completed integration. When supplied, bind the existing selection to exact files/version through the unchanged manifest, approval and provenance process.
+
+Next pilot: use a female demonstrator for Supported Hip CAR, following the existing supported standing right-hip forward-circle storyboard and exact variant mapping. Preserve the initial eight-position planning reference; final frames/angles depend on technique review. Identify any specific reason a female demonstrator is unsuitable before proposing a change; representation alone does not justify changing exercise, support, side, direction or movement phases. Owner develops/selects the sequence in standard ChatGPT. Work does not generate or integrate images under this update.
+
+Visual selection is not technique clearance, integration authorization or publication approval. All existing provenance, commercial-use and review gates remain intact. No budget, merge, deployment or publication is approved.
+
+Documentation-only update based on branch checkpoint 4ab13200e1ad7c2676d494a60d60d8f0fd1c599c. Visual V2 and application source/tests unchanged; no new application tests run. PR #4 remains draft. STOP after recording direction; await owner-supplied assets and explicit next instructions. Earlier entries below are retained as history.
+
+---
+
+# Current checkpoint — AI-first pilot sourcing; submission specification delivered
+2026-10-18: owner approved technical architecture/two-exercise concept but REJECTED the $1,500–$4,000 commissioned-photography allowance. No external budget is approved. Preferred first approach is original photorealistic AI-generated instructional illustrations, developed/reviewed/selected by the owner in standard ChatGPT. Work maintains manifests, mappings, future optimization/integration/offline tests/GitHub only within approved scope.
+V2 at 1901bcc remains the approved UI baseline. Bench B1–B3 and supported hip CAR H1–H8 storyboards are preserved as review references; 3+ reviewed frames, no maximum, per-image captions, explicit side/direction/support. AI appearance is not real-camera provenance, technique certification, medical validation or automatic commercial-use clearance.
+Delivered docs/exercise-media/ai-submission: revised plan, exact submission specification and example manifest with 3/8 named frame slots, format/resolution/size targets, thumbnail choices and pending owner/qualified-technique/provenance/terms gates. Older sourcing recommendations are marked superseded. No images generated, optimized/imported or integrated; no app code/tests/build changed or run. Last application verification remains historical 176 PASS / 0 FAIL / 3 SKIP.
+STOP after this documentation package. Await owner-supplied candidate assets and explicit next integration instructions; incomplete review stays held. If generated motion is unreliable, identify need for real-video/photo review without acquiring services. No purchasing, supplier contact, commissioning, external expense, M2, live Winter Strong access, merge, deployment/publication or hosting changes. Keep ea/visual-v2-exercise-cards / PR #4 draft. Earlier entries below are retained as history, not spending authorization.
+
+---
+
+# Current checkpoint — media architecture/pilot concept approved; acquisition/storyboards pending
+2026-10-18: owner approved the canonical variable-length photo architecture and flat-barbell-bench / supported-hip-CAR pilot concept. Real photography is primary; minimum 3 approved frames, no maximum, concise caption per frame; anatomy remains secondary/future. V2 baseline at 1901bcc is preserved.
+Prepared docs/exercise-media/pilot-preparation: three-frame bench storyboard, eight-position supported right-hip forward-circle storyboard (reviewer sets final count/angles), null-URL review-only manifest/HTML, acquisition comparison, rights/release requirements, exact source reuse and bounded integration/test plan. Recommendation: limited commissioned original-photo pilot with technique reviewer, subject to approval; owner-produced alternative included. Published provider price examples are separate from internal $1,500–$4,000 commissioning allowance; no quotes obtained, suppliers contacted or costs incurred.
+Source model already permits arbitrary frame arrays; overlay currently still renders placeholders and offline builders only enumerate built assets. These gaps are documented for future approved implementation, not changed now. No app code/tests changed or run; prior 176 PASS / 0 FAIL / 3 SKIP remains historical. No production photographs generated/imported or software implementation begun.
+STOP for review of storyboards, acquisition recommendation, exact variant/direction scope and any budget/rights/reviewer decisions. Keep ea/visual-v2-exercise-cards / PR #4 draft. No merging, hosting/deployment/publication, acquisition/commissioning, costs, Winter Strong access or M2. Read PILOT_PREPARATION.md and SOURCES.md before resumption. Earlier entries below are retained as history.
+
+---
+
+# Current checkpoint — V2 approved; Exercise Media Integration plan awaiting approval
+2026-10-18: owner explicitly approved Visual V2, including one-decimal converted displays at 1901bcccabdb8ce8cae414d5ab862c15608aec5b, as the established design and functional UI baseline. Preserve ea/visual-v2-exercise-cards / draft PR #4 and all M1/V1 rollback/history. This approval does not authorize merge, hosting, deployment or publication.
+New direction: real reviewed exercise photography is primary; ordered 3+ images with NO fixed maximum and concise per-image instructions; optional muscle-highlight graphics are secondary/future. Keep compact card thumbnails, image-led overlays, canonical searchable six-category Visuals and exact overlay state restoration.
+Planning only completed: docs/exercise-media/EXERCISE_MEDIA_INTEGRATION_PLAN.md, 126-asset inventory, 42-entry mapping triage, unapproved 3/8-frame pilot manifest. CRC/decode/hash checks passed; 126/126 match prior inventory. Significant mislabeled/mixed/cropped assets found; all rights/provenance/technique status remains unverified. Hip CAR sequence is absent. No production photos generated, purchased, imported or enabled. No application code changed or tests rerun; last V2 application results remain 176 PASS / 0 FAIL / 3 inherited SKIP.
+STOP for approval of the plan and pilot variants before any implementation or image acquisition/import. Exact source baseline is 1901bcc (application d908122); inspect current branch head/PR and plan before resuming. Keep PRs draft; no independent redesign, M2, real training programs, costs or live Winter Strong changes. This entry supersedes older waiting instructions below, retained as history.
+
+---
+
+# Current checkpoint — established V2 baseline; one-decimal correction awaiting approval
+2026-10-18: owner approved the V2 exercise-card layout, Done/Undo, coaching strip and lb/kg functionality as the baseline. Only converted-display formatting was changed: one decimal, no redundant trailing zeroes; original stored and entered precision unchanged. Focused converted inputs reveal exact values; focus/blur and reps-only corrections cannot persist the rounded display.
+Application source: d908122a9890b19a86494b2c09a7f308f1828059. Branch ea/visual-v2-exercise-cards, draft PR #4; rollback 8b4a50405e107d2f95021e2dd5229a8d6f5111da. Fresh checks: 176 PASS / 0 FAIL / 3 inherited native-stack SKIP; typecheck/lint/build PASS. See VISUAL_V2_ROUNDING_CHECKPOINT.md and reports/visual-v2-rounding. The old final-candidate ZIP remains a pre-correction artifact.
+STOP for owner approval. No other visual changes. Photography/full Visuals library is a separate future milestone. Physical iPhone, hosting, merge/publication remain pending. Keep PR draft; no main/Winter Strong changes, deployment or costs. This section supersedes earlier waiting instructions, retained below for history.
+
+---
+
+# Current checkpoint — Visual V2 final candidate awaiting owner approval
+2026-10-18: approved bounded final card refinements and lb/kg support completed on ea/visual-v2-exercise-cards, draft PR #4. Tested source: 1fcde01483683deb8ac07c1711933cc4f83930ec; later commits save documentation/evidence only. Rollback to initial V2: 1a819b1dc29f4c0f661acdb74be793245564171d. V1/PR #3 and M1/PR #2 remain preserved.
+See VISUAL_V2_FINAL_REVIEW.md for exact changes, unit metadata/backup compatibility, source references, tests and resumption instructions. Final evidence: 136 unit + 21 integration + 17 M1/V2 browser + 1 Pages/offline = 175 PASS / 0 FAIL / 3 inherited native-stack SKIP. Typecheck/lint/build pass; 320/390/412 and axe covered; physical iPhone unverified. History is unchanged by unit preference changes, and exact lb/kg entry/backup behavior is tested.
+STOP for final owner visual approval. No merge, deployment, public release, hosting/hostname changes, costs or Winter Strong access/modification. Do not start M2. Inspect current HEAD/PR, owner feedback and unit compatibility notes before any further edits. Older readers may reject new optional weightUnit draft metadata; never blindly downgrade new browser data. This entry supersedes older waiting instructions below, retained for history.
+
+---
+
+# Current checkpoint — Visual V2 screenshot review
+2026-10-18: owner authorized bounded exercise-card V2. Branch ea/visual-v2-exercise-cards starts at 27ce80a51f916d086356574635b1f16ab63e03c2, retaining V1/PR #3 unchanged. V2 application presentation is saved at 9b5b4f2a40d5d173c092af9ec2a38dd45a9fe807; subsequent commits add tests/review documentation only. See VISUAL_V2_REVIEW.md for exact scope, evidence, comparison deviations and rollback.
+Final targeted verification: typecheck/lint/build PASS; 3 new responsive card scenarios + 11 existing M1 browser scenarios PASS (14 PASS / 0 FAIL / 0 SKIP). Unit/integration/Pages final suites deferred until owner visual approval; do not carry V1 counts forward as new runs.
+STOP for owner screenshot feedback. No final V2 approval, merge, publication, hosting, cost or Winter Strong changes. Next: inspect current remote checkpoint and owner feedback/reference, implement only approved adjustments, then full relevant validation and candidate packaging. This section supersedes the older waiting-for-design stopping point retained below.
+
+---
+
 # Everyday Athlete — PROJECT_STATUS
 
 ## Current authoritative checkpoint — 2026-10-18 owner review

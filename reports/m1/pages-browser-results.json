@@ -2,13 +2,13 @@
   "config": {
     "argv": [
       "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
-      "/workspace/scratch/c33167563505/recovered-baseline/node_modules/.bin/playwright",
+      "/workspace/scratch/c33167563505/m1-v2-final/node_modules/.bin/playwright",
       "test",
       "--config",
       "playwright.m1-pages.config.ts"
     ],
-    "configFile": "/workspace/scratch/c33167563505/recovered-baseline/playwright.m1-pages.config.ts",
-    "rootDir": "/workspace/scratch/c33167563505/recovered-baseline/tests/local",
+    "configFile": "/workspace/scratch/c33167563505/m1-v2-final/playwright.m1-pages.config.ts",
+    "rootDir": "/workspace/scratch/c33167563505/m1-v2-final/tests/local",
     "failOnFlakyTests": false,
     "forbidOnly": false,
     "fullyParallel": false,
@@ -24,7 +24,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "/workspace/scratch/c33167563505/recovered-baseline/.data/local-test-results",
+        "outputDir": "/workspace/scratch/c33167563505/m1-v2-final/.data/local-test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -32,7 +32,7 @@
         },
         "id": "",
         "name": "",
-        "testDir": "/workspace/scratch/c33167563505/recovered-baseline/tests/local",
+        "testDir": "/workspace/scratch/c33167563505/m1-v2-final/tests/local",
         "testIgnore": [],
         "testMatch": [
           "m1-pages.spec.ts"
@@ -44,15 +44,15 @@
       {
         "grep": {},
         "grepInvert": null,
-        "outputDir": "/workspace/scratch/c33167563505/recovered-baseline/.data/local-test-results",
+        "outputDir": "/workspace/scratch/c33167563505/m1-v2-final/.data/local-test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
           "actualWorkers": 1
         },
         "name": "",
-        "testDir": "/workspace/scratch/c33167563505/recovered-baseline/tests/local",
-        "snapshotDir": "/workspace/scratch/c33167563505/recovered-baseline/tests/local",
+        "testDir": "/workspace/scratch/c33167563505/m1-v2-final/tests/local",
+        "snapshotDir": "/workspace/scratch/c33167563505/m1-v2-final/tests/local",
         "testIgnore": [],
         "testMatch": "m1-pages.spec.ts",
         "timeout": 45000,
@@ -63,7 +63,7 @@
             "height": 844
           },
           "launchOptions": {
-            "executablePath": "/workspace/scratch/c33167563505/recovered-baseline/.data/chromium/chromium",
+            "executablePath": "/workspace/scratch/c33167563505/m1-v2-final/.data/chromium/chromium",
             "args": [
               "--no-sandbox",
               "--disable-dev-shm-usage",
@@ -129,12 +129,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 477,
+                  "duration": 843,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-18T19:06:34.489Z",
+                  "startTime": "2026-10-18T22:10:31.337Z",
                   "annotations": [],
                   "attachments": []
                 }
@@ -152,8 +152,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-18T19:06:32.248Z",
-    "duration": 2844.534,
+    "startTime": "2026-10-18T22:10:28.730Z",
+    "duration": 3657.7120000000004,
     "expected": 1,
     "skipped": 0,
     "unexpected": 0,

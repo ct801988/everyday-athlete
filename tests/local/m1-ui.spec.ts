@@ -19,7 +19,7 @@ test("continuous logging, deliberate actuals, extras, grouping, pause, reopen, p
     .getByRole("button", { name: "Done", exact: true })
     .first()
     .click();
-  await expect(first.getByText("Recorded: 25 lb × 8 reps")).toBeVisible();
+  await expect(first.getByText("Recorded: 25 × 8 reps")).toBeVisible();
   await second.getByLabel(/set 1 weight/).fill("30");
   await second.getByLabel(/set 1 reps/).fill("9");
   await first.getByRole("button", { name: "Information for" }).click();
@@ -70,7 +70,7 @@ test("continuous logging, deliberate actuals, extras, grouping, pause, reopen, p
     page.getByRole("button", { name: "Resume Workout" }),
   ).toBeVisible();
   await expect(second.getByLabel(/set 1 reps/)).toHaveValue("9");
-  await expect(first.getByText("Recorded: 25 lb × 8 reps")).toBeVisible();
+  await expect(first.getByText("Recorded: 25 × 8 reps")).toBeVisible();
   await page.getByRole("button", { name: "Resume Workout" }).click();
   await page
     .getByRole("button", { name: "Finish Workout", exact: true })
@@ -156,7 +156,7 @@ test("offline reopen retains paused drafts and completed records; backup downloa
   await expect(
     page.getByRole("button", { name: "Resume Workout" }),
   ).toBeVisible();
-  await expect(card.getByText("Recorded: 20 lb × 10 reps")).toBeVisible();
+  await expect(card.getByText("Recorded: 20 × 10 reps")).toBeVisible();
   await page.getByRole("button", { name: "Settings", exact: true }).click();
   const dl = page.waitForEvent("download");
   await page

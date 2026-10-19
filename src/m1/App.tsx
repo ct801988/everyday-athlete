@@ -1,3 +1,11 @@
+import {
+  draftWeight,
+  draftUnit,
+  loadBasis,
+  setText,
+  rowChanged,
+  type WeightUnit,
+} from "./units";
 import { Icon, MediaPlaceholder, displayName } from "./visual";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
@@ -21,7 +29,7 @@ import {
   clock,
 } from "../local/timer";
 import { reschedule, schedule } from "../domain/scheduling";
-import { canonical, MAX_BYTES } from "../local/backup";
+import { MAX_BYTES } from "../local/backup";
 import "./m1.css";
 type DialogState = {
   kind: "info" | "library" | "settings" | "finish" | "duration" | "group";
@@ -77,6 +85,10 @@ export default function App() {
     [expanded, setExpanded] = useState(false),
     [complete, setComplete] = useState(false),
     [edits, setEdits] = useState<Record<string, Row["draft"]>>({}),
+    [weightInputs, setWeightInputs] = useState<
+      Record<string, { text: string; unit: WeightUnit; weight: string }>
+    >({}),
+    [focusedWeight, setFocusedWeight] = useState<string | null>(null),
     [preview, setPreview] = useState<Model | null>(null),
     [exported, setExported] = useState(-1),
     [duration, setDuration] = useState(""),
@@ -369,7 +381,25 @@ export default function App() {
     key: keyof Row["draft"],
     value: string,
   ) {
-    const draft = { ...(edits[r.id] ?? r.draft), [key]: value };
+    const prior = edits[r.id] ?? r.draft;
+    // A focus/unchanged input event must never persist a rounded conversion.
+    if (
+      key === "weight" &&
+      value === draftWeight(p, r, prior, d!.preferences.unit, d!, true)
+    )
+      return;
+    const draft = {
+      ...prior,
+      weightUnit: prior.weightUnit ?? draftUnit(p, r, d ?? undefined),
+      [key]: value,
+    };
+    if (key === "weight") {
+      draft.weightUnit = d!.preferences.unit;
+      setWeightInputs((old) => ({
+        ...old,
+        [r.id]: { text: value, unit: d!.preferences.unit, weight: value },
+      }));
+    }
     setEdits((old) => ({ ...old, [r.id]: draft }));
     void changeSession("edit-draft", (_x, s) => {
       s.performances
@@ -389,7 +419,7 @@ export default function App() {
     await changeSession("record-set", (_x, a) => {
       const perf = a.performances.find((e) => e.id === p.id)!;
       const row = perf.rows.find((x) => x.id === r.id)!;
-      record(a, perf, row, Date.now());
+      record(a, perf, row, Date.now(), _x);
     });
   }
   function open(kind: DialogState["kind"], id?: string) {
@@ -535,6 +565,12 @@ export default function App() {
             {s.performances.map((p) => {
               const collapsed = d.view.collapsed[p.id];
               const last = comparable(d, s, p);
+              const prescribed = s.prescription.exercises.find(
+                (exercise) => exercise.id === p.prescriptionExerciseId,
+              );
+              const targets = [
+                ...new Set(prescribed?.sets.map((set) => set.target) ?? []),
+              ];
               return (
                 <section
                   className={
@@ -568,14 +604,9 @@ export default function App() {
                         </span>
                         <small>
                           {p.identity.equipment.join(" · ")} ·{" "}
-                          {p.identity.modality === "time"
-                            ? "Seconds"
-                            : p.identity.loadKind === "bodyweight"
-                              ? "Bodyweight"
-                              : p.identity.loadKind === "external"
-                                ? `${p.identity.unit} · ${p.identity.basis === "per_dumbbell" ? "per dumbbell" : p.identity.basis.replaceAll("_", " ")}`
-                                : "No weight"}
+                          {p.identity.category}
                         </small>
+                        <small>{loadBasis(p)}</small>
                       </span>
                       <span className="card-toggle">
                         {p.rows.every((r) => r.confirmed) && (
@@ -610,18 +641,44 @@ export default function App() {
                     <>
                       <div className="last-target">
                         <span>
-                          <b>Previous</b>{" "}
+                          <b>Last Time</b>{" "}
                           {last
                             ? last
-                                .map(
-                                  (v) =>
-                                    `${"value" in v.load ? v.load.value + " " + v.load.unit + " × " : ""}${v.reps ?? v.seconds}${v.seconds ? "s" : ""}`,
-                                )
+                                .map((v) => setText(v, d.preferences.unit))
                                 .join(" / ")
                             : "No recorded sets yet"}
                         </span>
                         <span>
-                          <b>Today’s target</b> Demo · log your actual sets
+                          <b>Today’s Target</b>
+                          {targets.length ? (
+                            <details className="target-explanation">
+                              <summary>
+                                {p.identity.modality === "time"
+                                  ? "Demo duration"
+                                  : "Demo reps"}{" "}
+                                · details
+                              </summary>
+                              <span>
+                                {targets.join(" · ")}. Synthetic prescription;
+                                no progression advice.
+                                {prescribed?.sets.map((set) =>
+                                  set.suggested ? (
+                                    <span
+                                      key={set.id}
+                                      className="prescribed-load"
+                                    >
+                                      {setText(
+                                        set.suggested,
+                                        d.preferences.unit,
+                                      )}
+                                    </span>
+                                  ) : null,
+                                )}
+                              </span>
+                            </details>
+                          ) : (
+                            "No prescribed target"
+                          )}
                         </span>
                       </div>
                       <div className="set-head">
@@ -632,7 +689,7 @@ export default function App() {
                             "assisted",
                             "added_bodyweight",
                           ].includes(p.identity.loadKind)
-                            ? "Weight"
+                            ? `Weight (${d.preferences.unit})`
                             : "Load"}
                         </span>
                         <span>
@@ -643,21 +700,8 @@ export default function App() {
                       {p.rows.map((r, i) => {
                         const draft = edits[r.id] ?? r.draft;
                         const changed =
-                          r.confirmed &&
-                          canonical(draft) !==
-                            canonical({
-                              weight:
-                                r.actual && "value" in r.actual.load
-                                  ? String(r.actual.load.value)
-                                  : "",
-                              amount: String(
-                                r.actual?.reps ?? r.actual?.seconds ?? "",
-                              ),
-                              rir:
-                                r.actual?.rir === null
-                                  ? ""
-                                  : String(r.actual?.rir ?? ""),
-                            });
+                          r.confirmed && rowChanged(p, r, draft, d);
+                        const entry = weightInputs[r.id];
                         return (
                           <div
                             className={
@@ -678,7 +722,22 @@ export default function App() {
                                 <input
                                   aria-label={`${p.name} set ${i + 1} weight`}
                                   inputMode="decimal"
-                                  value={draft.weight}
+                                  value={
+                                    entry &&
+                                    entry.unit === d.preferences.unit &&
+                                    entry.weight === draft.weight
+                                      ? entry.text
+                                      : draftWeight(
+                                          p,
+                                          r,
+                                          draft,
+                                          d.preferences.unit,
+                                          d,
+                                          focusedWeight === r.id,
+                                        )
+                                  }
+                                  onFocus={() => setFocusedWeight(r.id)}
+                                  onBlur={() => setFocusedWeight(null)}
                                   onChange={(e) =>
                                     setDraft(p, r, "weight", e.target.value)
                                   }
@@ -701,7 +760,7 @@ export default function App() {
                                 disabled={blocked}
                               />
                               <button
-                                className={r.confirmed ? "done" : "primary"}
+                                className={r.confirmed ? "done" : "set-confirm"}
                                 disabled={blocked || s.status === "paused"}
                                 onClick={() => {
                                   if (r.confirmed && !changed) {
@@ -716,6 +775,9 @@ export default function App() {
                                   } else void done(p, r);
                                 }}
                               >
+                                {r.confirmed && !changed && (
+                                  <Icon name="check" size={12} />
+                                )}
                                 {r.confirmed
                                   ? changed
                                     ? "Save edit"
@@ -743,14 +805,9 @@ export default function App() {
                             {r.confirmed && (
                               <small className="actual">
                                 Recorded:{" "}
-                                {r.actual && "value" in r.actual.load
-                                  ? r.actual.load.value +
-                                    " " +
-                                    r.actual.load.unit +
-                                    " × "
+                                {r.actual
+                                  ? setText(r.actual, d.preferences.unit, false)
                                   : ""}
-                                {r.actual?.reps ?? r.actual?.seconds}
-                                {r.actual?.seconds ? " seconds" : " reps"}
                                 {changed ? " · draft edit not recorded" : ""}
                               </small>
                             )}
@@ -1000,6 +1057,21 @@ export default function App() {
                       {elapsed(a, now).review
                         ? "duration unverified"
                         : clock(elapsed(a, now).seconds)}
+                    </small>
+                    <small className="progress-loads">
+                      {a.performances
+                        .filter((p) => p.rows.some((r) => r.confirmed))
+                        .map((p) => (
+                          <span key={p.id}>
+                            {displayName(p.name)}:{" "}
+                            {p.rows
+                              .filter((r) => r.confirmed && r.actual)
+                              .map((r) =>
+                                setText(r.actual!, d.preferences.unit),
+                              )
+                              .join(" / ")}
+                          </span>
+                        ))}
                     </small>
                   </span>
                 </button>
@@ -1384,6 +1456,26 @@ export default function App() {
           )}
           {dialog.kind === "settings" && (
             <>
+              <label>
+                Weight units
+                <select
+                  value={d.preferences.unit}
+                  onChange={(e) => {
+                    const unit = e.target.value as WeightUnit;
+                    void write("weight-display-unit", { unit }, (x) => {
+                      x.preferences.unit = unit;
+                    });
+                  }}
+                >
+                  <option value="lb">Pounds (lb)</option>
+                  <option value="kg">Kilograms (kg)</option>
+                </select>
+              </label>
+              <p className="muted">
+                Display and entry units. Your recorded weights keep their
+                original units. Converted displays round to 0.1; saved precision
+                is retained.
+              </p>
               <label className="check">
                 <input
                   type="checkbox"

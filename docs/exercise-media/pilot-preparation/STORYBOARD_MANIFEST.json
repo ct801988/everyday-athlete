@@ -1,0 +1,137 @@
+{
+  "reviewOnly": true,
+  "productionApproved": false,
+  "sourceBaseline": "1901bcccabdb8ce8cae414d5ab862c15608aec5b",
+  "sequences": [
+    {
+      "id": "pilot-flat-barbell-bench",
+      "name": "Flat Barbell Bench Press",
+      "variant": "Flat barbell bench, bilateral, flat bench/rack",
+      "minimumProductionFrames": 3,
+      "maximumFrames": null,
+      "status": "storyboard-review-only",
+      "frames": [
+        {
+          "id": "B1",
+          "order": 1,
+          "stage": "Setup / upper position",
+          "camera": "Side three-quarter; whole body, bench, rack and bar visible",
+          "captionDraft": "Plant your feet and steady the bar.",
+          "reviewCheck": "Reviewer verifies stable body contact, grip, rack safety and the photographed bar position. Unrack/rerack may need extra frames.",
+          "url": null,
+          "approved": false
+        },
+        {
+          "id": "B2",
+          "order": 2,
+          "stage": "Controlled lower position",
+          "camera": "Same camera, subject, grip, equipment and scale",
+          "captionDraft": "Lower the bar with control.",
+          "reviewCheck": "Reviewer defines and verifies the appropriate lower position and elbow/wrist alignment. Do not force a generic depth.",
+          "url": null,
+          "approved": false
+        },
+        {
+          "id": "B3",
+          "order": 3,
+          "stage": "Return / completion",
+          "camera": "Same locked camera and full-body framing",
+          "captionDraft": "Press back up while staying braced.",
+          "reviewCheck": "Reviewer checks completion and body position; add setup/rerack views if three frames do not teach the movement clearly.",
+          "url": null,
+          "approved": false
+        }
+      ]
+    },
+    {
+      "id": "pilot-supported-hip-car",
+      "name": "Supported Hip CAR",
+      "variant": "Standing supported right-hip CAR, one forward circle; exact range/angles pending review",
+      "minimumProductionFrames": 3,
+      "maximumFrames": null,
+      "status": "storyboard-review-only",
+      "frames": [
+        {
+          "id": "H1",
+          "order": 1,
+          "stage": "Supported neutral stance",
+          "camera": "Front three-quarter; full torso, pelvis, support and both feet",
+          "captionDraft": "Hold support. Stand tall.",
+          "reviewCheck": "Proposed variant: standing, supported, right hip; stable support stays in the same place in every frame.",
+          "url": null,
+          "approved": false
+        },
+        {
+          "id": "H2",
+          "order": 2,
+          "stage": "Forward knee lift",
+          "camera": "Same front three-quarter view",
+          "captionDraft": "Lift your knee without leaning.",
+          "reviewCheck": "Capture hip flexion without substituting trunk rounding. Reviewer sets knee angle/range.",
+          "url": null,
+          "approved": false
+        },
+        {
+          "id": "H3",
+          "order": 3,
+          "stage": "Begin outward arc",
+          "camera": "Same camera and body orientation",
+          "captionDraft": "Guide your knee out to the side.",
+          "reviewCheck": "Show an intermediate transition, not a change of exercise or a 90/90 floor switch.",
+          "url": null,
+          "approved": false
+        },
+        {
+          "id": "H4",
+          "order": 4,
+          "stage": "Lateral position",
+          "camera": "Same camera; add synchronized second angle only if necessary",
+          "captionDraft": "Keep your pelvis level.",
+          "reviewCheck": "Capture the knee outward while the trunk and support remain consistent; reviewer determines the endpoint.",
+          "url": null,
+          "approved": false
+        },
+        {
+          "id": "H5",
+          "order": 5,
+          "stage": "Rotation transition",
+          "camera": "Secondary rear three-quarter view if needed; clearly identify angle change",
+          "captionDraft": "Rotate at your hip; keep your body still.",
+          "reviewCheck": "Show the internal-rotation transition and foot/knee relationship without implying that the knee joint performs the rotation.",
+          "url": null,
+          "approved": false
+        },
+        {
+          "id": "H6",
+          "order": 6,
+          "stage": "Posterior arc",
+          "camera": "Rear/side three-quarter showing hip and trunk together",
+          "captionDraft": "Move your bent leg behind you.",
+          "reviewCheck": "Reviewer checks that the pictured motion comes from the hip rather than back arching or pelvic twisting.",
+          "url": null,
+          "approved": false
+        },
+        {
+          "id": "H7",
+          "order": 7,
+          "stage": "Return toward neutral",
+          "camera": "Maintain the reviewed view; include stance foot and pelvis",
+          "captionDraft": "Lower your leg with control.",
+          "reviewCheck": "Capture the transition under the hip, not a jump between disconnected poses.",
+          "url": null,
+          "approved": false
+        },
+        {
+          "id": "H8",
+          "order": 8,
+          "stage": "Finish / reset",
+          "camera": "Return to the original front three-quarter view",
+          "captionDraft": "Return to your starting position.",
+          "reviewCheck": "Completes one forward circle only. A reverse-direction demonstration requires separately reviewed ordering/captions and extra frames as needed.",
+          "url": null,
+          "approved": false
+        }
+      ]
+    }
+  ]
+}

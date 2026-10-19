@@ -1,0 +1,231 @@
+{
+  "templateOnly": true,
+  "submissionVersion": 1,
+  "packageId": "EA_media-pilot_submission_v001",
+  "productionApproved": false,
+  "sequences": [
+    {
+      "exerciseId": "flat-barbell-bench-press",
+      "variantId": "flat-bench-bilateral",
+      "sequenceVersion": 1,
+      "assetKind": "ai-generated-instructional-illustration",
+      "variantDefinition": "Flat barbell bench, bilateral, flat bench/rack",
+      "support": "flat bench and barbell rack",
+      "direction": "bilateral press",
+      "thumbnailFrameId": "flat-barbell-bench-press__flat-bench-bilateral__v001__f001",
+      "thumbnailApproval": "pending",
+      "provenance": {
+        "provider": null,
+        "tool": null,
+        "modelVersion": null,
+        "generationDate": null,
+        "promptRecord": null,
+        "revisionRecord": null,
+        "referenceInputs": null,
+        "commercialTermsUrl": null,
+        "termsVersionDate": null,
+        "termsEvidenceRef": null,
+        "termsReview": "pending"
+      },
+      "reviews": {
+        "ownerVisualSelection": "pending",
+        "qualifiedTechnique": {
+          "status": "pending",
+          "reviewer": null,
+          "qualifications": null,
+          "date": null,
+          "scope": null,
+          "evidenceRef": null
+        },
+        "ownerIntegrationAuthorization": "pending",
+        "ownerPublicationAuthorization": "pending"
+      },
+      "productionApproved": false,
+      "frames": [
+        {
+          "id": "flat-barbell-bench-press__flat-bench-bilateral__v001__f001",
+          "order": 1,
+          "file": "images/flat-barbell-bench-press__flat-bench-bilateral__v001__001.png",
+          "caption": "Plant your feet and steady the bar.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Side three-quarter; whole body, bench, rack and bar visible",
+          "approval": "pending"
+        },
+        {
+          "id": "flat-barbell-bench-press__flat-bench-bilateral__v001__f002",
+          "order": 2,
+          "file": "images/flat-barbell-bench-press__flat-bench-bilateral__v001__002.png",
+          "caption": "Lower the bar with control.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Same camera, subject, grip, equipment and scale",
+          "approval": "pending"
+        },
+        {
+          "id": "flat-barbell-bench-press__flat-bench-bilateral__v001__f003",
+          "order": 3,
+          "file": "images/flat-barbell-bench-press__flat-bench-bilateral__v001__003.png",
+          "caption": "Press back up while staying braced.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Same locked camera and full-body framing",
+          "approval": "pending"
+        }
+      ]
+    },
+    {
+      "exerciseId": "supported-hip-car",
+      "variantId": "standing-right-forward",
+      "sequenceVersion": 1,
+      "assetKind": "ai-generated-instructional-illustration",
+      "variantDefinition": "Standing supported right-hip CAR, one forward circle; exact range/angles pending review",
+      "support": "stable support; exact support to be declared",
+      "direction": "right hip, one forward circle",
+      "thumbnailFrameId": "supported-hip-car__standing-right-forward__v001__f004",
+      "thumbnailApproval": "pending",
+      "provenance": {
+        "provider": null,
+        "tool": null,
+        "modelVersion": null,
+        "generationDate": null,
+        "promptRecord": null,
+        "revisionRecord": null,
+        "referenceInputs": null,
+        "commercialTermsUrl": null,
+        "termsVersionDate": null,
+        "termsEvidenceRef": null,
+        "termsReview": "pending"
+      },
+      "reviews": {
+        "ownerVisualSelection": "pending",
+        "qualifiedTechnique": {
+          "status": "pending",
+          "reviewer": null,
+          "qualifications": null,
+          "date": null,
+          "scope": null,
+          "evidenceRef": null
+        },
+        "ownerIntegrationAuthorization": "pending",
+        "ownerPublicationAuthorization": "pending"
+      },
+      "productionApproved": false,
+      "frames": [
+        {
+          "id": "supported-hip-car__standing-right-forward__v001__f001",
+          "order": 1,
+          "file": "images/supported-hip-car__standing-right-forward__v001__001.png",
+          "caption": "Hold support. Stand tall.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Front three-quarter; full torso, pelvis, support and both feet",
+          "approval": "pending"
+        },
+        {
+          "id": "supported-hip-car__standing-right-forward__v001__f002",
+          "order": 2,
+          "file": "images/supported-hip-car__standing-right-forward__v001__002.png",
+          "caption": "Lift your knee without leaning.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Same front three-quarter view",
+          "approval": "pending"
+        },
+        {
+          "id": "supported-hip-car__standing-right-forward__v001__f003",
+          "order": 3,
+          "file": "images/supported-hip-car__standing-right-forward__v001__003.png",
+          "caption": "Guide your knee out to the side.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Same camera and body orientation",
+          "approval": "pending"
+        },
+        {
+          "id": "supported-hip-car__standing-right-forward__v001__f004",
+          "order": 4,
+          "file": "images/supported-hip-car__standing-right-forward__v001__004.png",
+          "caption": "Keep your pelvis level.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Same camera; add synchronized second angle only if necessary",
+          "approval": "pending"
+        },
+        {
+          "id": "supported-hip-car__standing-right-forward__v001__f005",
+          "order": 5,
+          "file": "images/supported-hip-car__standing-right-forward__v001__005.png",
+          "caption": "Rotate at your hip; keep your body still.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Secondary rear three-quarter view if needed; clearly identify angle change",
+          "approval": "pending"
+        },
+        {
+          "id": "supported-hip-car__standing-right-forward__v001__f006",
+          "order": 6,
+          "file": "images/supported-hip-car__standing-right-forward__v001__006.png",
+          "caption": "Move your bent leg behind you.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Rear/side three-quarter showing hip and trunk together",
+          "approval": "pending"
+        },
+        {
+          "id": "supported-hip-car__standing-right-forward__v001__f007",
+          "order": 7,
+          "file": "images/supported-hip-car__standing-right-forward__v001__007.png",
+          "caption": "Lower your leg with control.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Maintain the reviewed view; include stance foot and pelvis",
+          "approval": "pending"
+        },
+        {
+          "id": "supported-hip-car__standing-right-forward__v001__f008",
+          "order": 8,
+          "file": "images/supported-hip-car__standing-right-forward__v001__008.png",
+          "caption": "Return to your starting position.",
+          "captionStatus": "draft-from-storyboard",
+          "altText": null,
+          "width": null,
+          "height": null,
+          "sha256": null,
+          "view": "Return to the original front three-quarter view",
+          "approval": "pending"
+        }
+      ]
+    }
+  ]
+}

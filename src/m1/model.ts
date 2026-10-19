@@ -5,6 +5,7 @@ import { Timer, TimerPreferences, readyTimer } from "../local/timer";
 export const Draft = z
   .object({
     weight: z.string().max(20),
+    weightUnit: z.enum(["lb", "kg"]).optional(),
     amount: z.string().max(20),
     rir: z.string().max(5),
   })
@@ -340,6 +341,7 @@ export function valuesDraft(
 ): z.infer<typeof Draft> {
   return {
     weight: "value" in v.load ? String(v.load.value) : "",
+    ...("unit" in v.load ? { weightUnit: v.load.unit } : {}),
     amount: String(v.reps ?? v.seconds ?? ""),
     rir: v.rir === null ? "" : String(v.rir),
   };
