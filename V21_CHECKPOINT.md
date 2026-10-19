@@ -1,3 +1,13 @@
+# Current checkpoint — V2.1 candidate ready for owner review (2026-10-19)
+Branch ea/v2-1-reliability-usability / draft PR #6, based on preserved5c9e0f8. Tested application source ba54a5c2f59c22f496911cb3619f4497e71a8068. Final suites:143 unit +21 integration +30 M1/V2/V2.1 browser +1 project-path offline +3 isolated-root/update/rollback =198 PASS /0 FAIL /3 inherited native Supabase/database/login SKIP. Typecheck/lint/production/root build pass; frozen-source fingerprint7413cef5638c568b39431e3af2be485d1eaa40367af78d6a0e4fd0342152ca8b. Four baseline reproductions and three supplemental recovery checks passed separately, not added to198.
+Root artifact-manifest SHA2563815d15988bd0002176d81e23626ea0be9b1a241898d3c853c8e0c97bbab228d. This is an UNPUBLISHED, UNAPPROVED release candidate. Live release.json re-read still89d087e5746eb36b5763b8356e2204de864e7622; publisher main unchanged4e1238417bcda08569d027be7756d387f4a5b352.
+Implemented recoverable critical mutation intents, honest save queue, serial visible restore/rollback with safety export, bottom-margin/safe-area corrections, timer ring/collapse/reset/five-second Done/audio preference fix, foreground timed-row stopwatch, adjacent manual supersets/header access/unlink, factual finish summary and release metadata. Workout/backup schema3 unchanged; exact load precision/history/legacy migration retained. Pending V2.1 journal operations must be recovered before rollback to old code.
+See docs/v21/V21_REVIEW.md, README.md, CHANGELOG.md, PACKAGE_README.md, separate Progress/notification proposals and reports/v21/FINAL_RESULT.json/raw evidence. Native320/390/412 viewport screenshots and baseline comparison are review artifacts, not physical iPhone certification. Real Safari/Home Screen keyboard/safe-area/locked/background/OS-kill and audible beep checks remain unverified. No photography integrated.
+STOP for owner candidate feedback. No source PR merges, publisher/approval/workflow/hosting changes, deployment, cost, Winter Strong access, broad redesign or M2. Codeba54a5c is the immutable resumption point; the enclosing later commit adds documentation/evidence only. Fetch current branch and read this checkpoint before edits. Only subsequent owner instructions authorize further work.
+
+---
+Historical checkpoints below are retained as evidence, not current authority:
+
 # V2.1 — implementation in progress
 
 Owner authorization: upload Pasted text(5).txt, 2026-10-19. Bounded reliability/usability milestone. No merge, publication, live-site changes, publisher changes, costs or Winter Strong access.

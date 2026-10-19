@@ -5,3 +5,5 @@ Added ordered recoverable intents and honest serialized save status for critical
 No workout schema or backup-format migration, no new real prescriptions/progression, no media integration, no Progress dashboard/achievement implementation, no notifications/backend, no hosting/publisher changes, no merge or deployment. Review-only Progress and notification proposals are included separately.
 
 Validation history is transparent: an initial focused assertion compared innerText/CSS uppercase to textContent and was corrected; a prior rest-completion assertion was updated for the approved Done0:00 behavior; regression exposed a real Short beep preference reversion from deferred event target reads, now fixed with event-time capture. Final suite results supersede earlier intermediate failures; repeated runs are not added as extra tests. See raw final evidence and known device-only checks.
+
+Full accessibility scanning also found visible/accessibility-name mismatches in stopwatch and expanded/completed timer controls; names now include the visible labels, with no rule suppression. Final frozen source passes the expanded-state scans and the full isolated-root scan.
