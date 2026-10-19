@@ -3,7 +3,14 @@ import { createModel } from "../../src/m1/model";
 import { groupedOrder, exerciseFacts } from "../../src/m1/presentation";
 import { lifecycle, record, elapsed } from "../../src/m1/actions";
 import { verifiedRelease } from "../../src/m1/release";
+import { readyTimer, startTimer, remaining } from "../../src/local/timer";
 describe("V2.1 factual presentation without schema mutation", () => {
+  it("rest countdown cannot briefly exceed selected duration when the render clock trails Start", () => {
+    const timer = startTimer(readyTimer(5), 1000, crypto.randomUUID());
+    expect(remaining(timer, 800)).toBe(5);
+    expect(remaining(timer, 3000)).toBe(3);
+    expect(remaining(timer, 6000)).toBe(0);
+  });
   it("three manual group members stay adjacent in pinned order; ungroup restores order and identity", () => {
     const d = createModel(),
       s = d.sessions[0],

@@ -104,6 +104,7 @@ export default function App() {
     [backupMessage, setBackupMessage] = useState(""),
     [pending, setPending] = useState(0),
     [releaseInfo, setReleaseInfo] = useState<ReleaseInfo | null>(null),
+    [runningRows, setRunningRows] = useState<Record<string, boolean>>({}),
     [duration, setDuration] = useState(""),
     [groupIds, setGroupIds] = useState<string[]>([]);
   const current = useRef<Model | null>(null),
@@ -198,6 +199,7 @@ export default function App() {
         const next = await operation(old);
         current.current = next;
         setD(next);
+        setNow(Date.now());
         setError("");
         return true;
       } catch (e) {
@@ -587,18 +589,25 @@ export default function App() {
         <div className="error" role="alert">
           {error}
           <button
+            disabled={pending > 0}
             onClick={() =>
-              void db.read().then((x) => {
-                if (x) {
-                  current.current = x;
-                  setD(x);
-                  setEdits({});
-                  draftCache.current = {};
-                  setError("");
-                  failed.current = false;
-                  setSaved("Reloaded saved records");
-                }
-              })
+              void queue.current
+                .then(() => db.read())
+                .then((x) => (x ? recoverIntents(x) : null))
+                .then((x) => {
+                  if (x) {
+                    current.current = x;
+                    setD(x);
+                    setEdits({});
+                    draftCache.current = {};
+                    setWeightInputs({});
+                    setFocusedWeight(null);
+                    setError("");
+                    failed.current = false;
+                    setSaved("Reloaded saved records");
+                  }
+                })
+                .catch((e) => setError(String(e)))
             }
           >
             Reload saved records
@@ -917,7 +926,11 @@ export default function App() {
                               />
                               <button
                                 className={r.confirmed ? "done" : "set-confirm"}
-                                disabled={blocked || s.status === "paused"}
+                                disabled={
+                                  blocked ||
+                                  s.status === "paused" ||
+                                  runningRows[r.id]
+                                }
                                 onClick={() => {
                                   if (r.confirmed && !changed) {
                                     void journalAction("undo-set", {
@@ -939,6 +952,12 @@ export default function App() {
                             </div>
                             {p.identity.modality === "time" && (
                               <SetStopwatch
+                                onRunning={(value) =>
+                                  setRunningRows((old) => ({
+                                    ...old,
+                                    [r.id]: value,
+                                  }))
+                                }
                                 id={`${d.id}:${s.id}:${r.id}`}
                                 active={
                                   s.status === "active" &&
@@ -1050,17 +1069,27 @@ export default function App() {
                     </strong>
                   </div>
                   <div>
-                    <span>Exercises with recorded work</span>
+                    <span>Prescribed exercises with recorded work</span>
                     <strong>
-                      {exerciseFacts(s).performed}
+                      {exerciseFacts(s).prescribedPerformed}
                       <small> / {exerciseFacts(s).prescribed} prescribed</small>
                     </strong>
                   </div>
                 </div>
                 <p>
-                  Only confirmed sets count. Additional exercises are included
-                  in performed work.
+                  Only confirmed sets count. {exerciseFacts(s).extraPerformed}{" "}
+                  additional exercises with recorded work.
                 </p>
+                {s.performances.some(
+                  (p) =>
+                    p.origin !== "prescribed" ||
+                    p.rows.some((r) => r.origin !== "prescribed"),
+                ) && (
+                  <p>
+                    Modified workout: includes added sets or exercises.
+                    Unrecorded additions are not counted as completed work.
+                  </p>
+                )}
                 {exerciseFacts(s).highlights.map((h) => (
                   <p key={h.id}>
                     {displayName(h.name)} · {h.sets} recorded{" "}
@@ -1189,22 +1218,23 @@ export default function App() {
                       <input
                         type="date"
                         value={slot.plannedDate}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          const date = e.target.value;
                           void write(
                             "reschedule",
-                            { slot: slot.id, date: e.target.value },
+                            { slot: slot.id, date },
                             (x) => {
                               x.slots = reschedule(
                                 x.slots,
                                 slot.id,
-                                e.target.value,
+                                date,
                                 1,
                                 slot.revision,
                                 [1, 3, 5],
                               );
                             },
-                          )
-                        }
+                          );
+                        }}
                       />
                     </label>{" "}
                     · {slot.status}
@@ -1284,7 +1314,7 @@ export default function App() {
       >
         <div className="rest-bar">
           <button
-            aria-label={`${expanded ? "Collapse" : "Expand"} rest timer: ${complete ? "Rest complete" : d.timer.status === "running" ? "Rest" : "Ready"} ${clock(rest)}`}
+            aria-label={`${expanded ? "Collapse" : "Expand"} rest timer: ${complete ? "Done" : d.timer.status === "running" ? "Rest" : "Ready"} ${clock(rest)}`}
             onClick={() => setExpanded(!expanded)}
           >
             <svg className="mini-ring" viewBox="0 0 36 36" aria-hidden="true">
@@ -1338,7 +1368,7 @@ export default function App() {
                 if (d.preferences.timer.alert === "short-beep") {
                   try {
                     cancelAudio.current = new AudioContext();
-                    void cancelAudio.current.resume();
+                    void cancelAudio.current.resume().catch(() => {});
                   } catch {
                     cancelAudio.current = null;
                   }
@@ -1419,7 +1449,7 @@ export default function App() {
             </div>
             <div className="adjust">
               <button
-                aria-label="Subtract five seconds"
+                aria-label="Subtract five seconds (−5s)"
                 disabled={d.timer.status === "running" || rest <= 5}
                 onClick={() =>
                   void write("rest-adjust", { delta: -5 }, (x) => {
@@ -1431,7 +1461,7 @@ export default function App() {
               </button>
               <span>{clock(d.timer.selectedSeconds)}</span>
               <button
-                aria-label="Add five seconds"
+                aria-label="Add five seconds (+5s)"
                 disabled={d.timer.status === "running" || rest >= 3600}
                 onClick={() =>
                   void write("rest-adjust", { delta: 5 }, (x) => {
@@ -1713,11 +1743,12 @@ export default function App() {
                 <input
                   type="checkbox"
                   checked={d.preferences.rir}
-                  onChange={(e) =>
-                    void write("rir", { value: e.target.checked }, (x) => {
-                      x.preferences.rir = e.target.checked;
-                    })
-                  }
+                  onChange={(e) => {
+                    const value = e.target.checked;
+                    void write("rir", { value }, (x) => {
+                      x.preferences.rir = value;
+                    });
+                  }}
                 />
                 Show optional RIR
               </label>
@@ -1725,12 +1756,12 @@ export default function App() {
                 Rest alert
                 <select
                   value={d.preferences.timer.alert}
-                  onChange={(e) =>
-                    void write("rest-alert", { value: e.target.value }, (x) => {
-                      x.preferences.timer.alert = e.target.value as
-                        "silent" | "short-beep";
-                    })
-                  }
+                  onChange={(e) => {
+                    const value = e.target.value as "silent" | "short-beep";
+                    void write("rest-alert", { value }, (x) => {
+                      x.preferences.timer.alert = value;
+                    });
+                  }}
                 >
                   <option value="silent">Silent</option>
                   <option value="short-beep">Short beep</option>

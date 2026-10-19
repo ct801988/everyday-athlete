@@ -11,6 +11,16 @@ export function groupedOrder(performances: Performance[]): Performance[] {
 export function exerciseFacts(session: Session) {
   return {
     prescribed: session.prescription.exercises.length,
+    prescribedPerformed: session.performances.filter(
+      (p) =>
+        p.origin === "prescribed" &&
+        p.rows.some((r) => r.confirmed && r.actual),
+    ).length,
+    extraPerformed: session.performances.filter(
+      (p) =>
+        p.origin !== "prescribed" &&
+        p.rows.some((r) => r.confirmed && r.actual),
+    ).length,
     performed: session.performances.filter((p) =>
       p.rows.some((r) => r.confirmed && r.actual),
     ).length,

@@ -124,10 +124,14 @@ test("rest deadline expires green and reset restores configured time", async ({
     .locator(".rest-bar")
     .getByRole("button", { name: "Start", exact: true })
     .click();
-  await expect(page.locator(".rest-bar")).toContainText("Rest complete", {
+  await expect(page.locator(".rest-bar")).toContainText("Done", {
     timeout: 10000,
   });
   await expect(page.locator(".rest-dock")).toHaveClass(/complete/);
+  await expect(page.locator(".rest-bar")).toContainText("0:00");
+  await page
+    .getByRole("button", { name: "Dismiss completed rest timer", exact: true })
+    .click();
   await expect(page.locator(".rest-bar")).toContainText("0:05");
 });
 

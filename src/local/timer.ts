@@ -61,7 +61,10 @@ export function finishTimer(t: Timer, runId: string, now: number): Timer {
 }
 export function remaining(t: Timer, now: number) {
   return t.status === "running"
-    ? Math.max(0, Math.ceil((t.deadline! - now) / 1000))
+    ? Math.min(
+        t.selectedSeconds,
+        Math.max(0, Math.ceil((t.deadline! - now) / 1000)),
+      )
     : t.selectedSeconds;
 }
 export function clock(seconds: number) {

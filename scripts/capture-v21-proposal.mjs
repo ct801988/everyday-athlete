@@ -15,6 +15,8 @@ await page.screenshot({
 await page.goto(
   "file://" + resolve("docs/v21/progress-proposal.html") + "#empty",
 );
+await page.reload();
+await page.locator("#empty").waitFor({ state: "visible" });
 await page.screenshot({
   path: "reports/v21/progress-proposal-empty.png",
   fullPage: true,

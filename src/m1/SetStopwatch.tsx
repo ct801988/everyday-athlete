@@ -6,10 +6,12 @@ export function SetStopwatch({
   id,
   active,
   onStop,
+  onRunning,
 }: {
   id: string;
   active: boolean;
   onStop: (seconds: number) => void;
+  onRunning: (running: boolean) => void;
 }) {
   const [seconds, setSeconds] = useState(0),
     [running, setRunning] = useState(false),
@@ -17,23 +19,37 @@ export function SetStopwatch({
   const state = useRef({ running: false, ms: 0, last: 0 });
   const callback = useRef(onStop);
   callback.current = onStop;
+  const runningCallback = useRef(onRunning);
+  runningCallback.current = onRunning;
   const key = `ea-set-stopwatch:${id}`;
   function stop(interrupted = false) {
     const s = state.current;
     if (!s.running) return;
     s.running = false;
     setRunning(false);
+    runningCallback.current(false);
     const value = Math.floor(s.ms / 1000);
     if (value > 0) callback.current(value);
     setMessage(
-      interrupted
-        ? "Stopped on interruption. Check seconds, then tap Done."
-        : "Seconds filled in. Check them, then tap Done.",
+      value === 0
+        ? "Less than one second measured. No duration entered; check Seconds before Done."
+        : interrupted
+          ? "Stopped on interruption. Check seconds, then tap Done."
+          : "Seconds filled in. Check them, then tap Done.",
     );
-    sessionStorage.removeItem(key);
+    try {
+      sessionStorage.removeItem(key);
+    } catch {
+      /* No checkpoint storage; saved set data is independent. */
+    }
   }
   useEffect(() => {
-    const recovered = sessionStorage.getItem(key);
+    let recovered: string | null = null;
+    try {
+      recovered = sessionStorage.getItem(key);
+    } catch {
+      /* Optional UI checkpoint unavailable. */
+    }
     if (recovered && /^\d+$/.test(recovered)) {
       const n = Number(recovered);
       if (n > 0 && n <= 86400) {
@@ -43,7 +59,11 @@ export function SetStopwatch({
           "Interrupted stopwatch: last observed seconds recovered. Check before Done.",
         );
       }
-      sessionStorage.removeItem(key);
+      try {
+        sessionStorage.removeItem(key);
+      } catch {
+        /* best effort */
+      }
     }
     const tick = setInterval(() => {
       const s = state.current;
@@ -83,27 +103,37 @@ export function SetStopwatch({
   }, [active]);
   return (
     <div className="set-stopwatch">
-      <button
-        disabled={!active && !running}
-        type="button"
-        aria-label={
-          running ? "Stop exercise stopwatch" : "Start exercise stopwatch"
-        }
-        onClick={() => {
-          if (running) {
-            stop();
-            return;
+      <div className="stopwatch-controls">
+        <button
+          disabled={!active && !running}
+          type="button"
+          aria-label={
+            running ? "Stop exercise stopwatch" : "Start exercise stopwatch"
           }
-          state.current = { running: true, ms: 0, last: performance.now() };
-          setSeconds(0);
-          setRunning(true);
-          setMessage(
-            "Only foreground time is measured. Stop fills Seconds; Done records the set.",
-          );
-        }}
-      >
-        {running ? "Stop" : "Start hold"} · {seconds}s
-      </button>
+          onClick={() => {
+            if (running) {
+              stop();
+              return;
+            }
+            state.current = { running: true, ms: 0, last: performance.now() };
+            setSeconds(0);
+            setRunning(true);
+            runningCallback.current(true);
+            setMessage(
+              "Only foreground time is measured. Stop fills Seconds; Done records the set.",
+            );
+          }}
+        >
+          {running ? "Stop" : "Start"}
+        </button>
+        <span
+          className="stopwatch-readout"
+          role="timer"
+          aria-label="Observed exercise time"
+        >
+          {seconds}s
+        </span>
+      </div>
       {message && <small role="status">{message}</small>}
     </div>
   );

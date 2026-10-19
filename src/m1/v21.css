@@ -45,6 +45,17 @@ html[data-keyboard-open="true"] .m1 .rest-dock {
 .m1 .set-stopwatch {
   padding: 4px 0;
 }
+.m1 .stopwatch-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.m1 .stopwatch-readout {
+  min-width: 60px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
 .m1 .set-stopwatch button {
   min-height: 44px;
   width: 100%;

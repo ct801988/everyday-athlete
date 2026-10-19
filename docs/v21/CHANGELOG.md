@@ -1,0 +1,7 @@
+# V2.1 — unpublished candidate
+
+Added ordered recoverable intents and honest serialized save status for critical workout changes; visible, serialized backup preview/restore/no-op/rollback outcomes with safety export; corrected inherited nav margin/safe-area handling; clarified rest ring with five-second Done state, collapse/reset and captured audio preference; added foreground timed-set stopwatches with interruption recovery and manual Done; adjacent manual superset display/header grouping/unlink without rewriting prescription order; factual finished-workout summary and metadata-derived release text.
+
+No workout schema or backup-format migration, no new real prescriptions/progression, no media integration, no Progress dashboard/achievement implementation, no notifications/backend, no hosting/publisher changes, no merge or deployment. Review-only Progress and notification proposals are included separately.
+
+Validation history is transparent: an initial focused assertion compared innerText/CSS uppercase to textContent and was corrected; a prior rest-completion assertion was updated for the approved Done0:00 behavior; regression exposed a real Short beep preference reversion from deferred event target reads, now fixed with event-time capture. Final suite results supersede earlier intermediate failures; repeated runs are not added as extra tests. See raw final evidence and known device-only checks.

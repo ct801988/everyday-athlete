@@ -327,11 +327,12 @@ test("rest ring neutral, running collapse/reopen/reset, five-second completion h
   await saved(page);
   for (let n = 0; n < 5; n++) {
     await page
-      .getByRole("button", { name: "Subtract five seconds", exact: true })
+      .getByRole("button", { name: "Subtract five seconds (−5s)", exact: true })
       .click();
     await saved(page);
   }
   await page.screenshot({ path: "reports/v21/390-timer-ready.png" });
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.getByRole("button", { name: "Start", exact: true }).click();
   await saved(page);
   await page.getByRole("button", { name: /Collapse rest timer/ }).click();
@@ -346,6 +347,7 @@ test("rest ring neutral, running collapse/reopen/reset, five-second completion h
   ).toBeVisible({ timeout: 10000 });
   await expect(page.locator(".rest-bar")).toContainText("0:00");
   await page.screenshot({ path: "reports/v21/390-timer-done.png" });
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
   await page.waitForTimeout(2000);
   await expect(page.locator(".rest-dock")).toHaveClass(/complete/);
   await page
@@ -375,6 +377,9 @@ test("timed set stopwatch records only observed seconds, remains editable, pause
     .first()
     .click();
   await page.waitForTimeout(2200);
+  await expect(
+    hold.getByRole("button", { name: "Done", exact: true }).first(),
+  ).toBeDisabled();
   await hold
     .getByRole("button", { name: "Stop exercise stopwatch", exact: true })
     .click();
@@ -516,7 +521,7 @@ test("rest completion expires after five seconds; audio preference has exactly t
   await saved(page);
   for (let i = 0; i < 5; i++) {
     await page
-      .getByRole("button", { name: "Subtract five seconds", exact: true })
+      .getByRole("button", { name: "Subtract five seconds (−5s)", exact: true })
       .click();
     await saved(page);
   }
