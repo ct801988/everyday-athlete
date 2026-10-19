@@ -1092,7 +1092,7 @@ export default function App() {
       >
         <div className="rest-bar">
           <button
-            aria-label={expanded ? "Collapse rest timer" : "Expand rest timer"}
+            aria-label={`${expanded ? "Collapse" : "Expand"} rest timer: ${complete ? "Rest complete" : d.timer.status === "running" ? "Rest" : "Ready"} ${clock(rest)}`}
             onClick={() => setExpanded(!expanded)}
           >
             <span className="mini-ring" aria-hidden="true" />{" "}

@@ -1,0 +1,91 @@
+name: Approved Everyday Athlete preview release
+# Install ONLY in the dedicated publishing repository after infrastructure review.
+# No push, pull_request, schedule, or repository_dispatch deployment trigger.
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Full owner-approved source commit
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: everyday-athlete-preview-pages
+  cancel-in-progress: false
+jobs:
+  validate-build:
+    if: github.repository == 'everyday-athlete-preview/everyday-athlete-preview.github.io' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Require an explicitly approved immutable release
+        env:
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const sha = process.env.SOURCE_SHA;
+          if (!/^[a-f0-9]{40}$/.test(sha)) throw Error('Full SHA required');
+          const releases = JSON.parse(fs.readFileSync('approved-releases.json', 'utf8'));
+          const entry = releases.find(x => x.sourceSha === sha && x.deploymentApproved === true);
+          if (!entry || !/^[a-f0-9]{64}$/.test(entry.artifactManifestSha256) || !entry.ownerApprovalRef)
+            throw Error('Release has no recorded final owner deployment approval');
+          fs.writeFileSync(process.env.RUNNER_TEMP + '/expected-digest', entry.artifactManifestSha256);
+          NODE
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          repository: ct801988/everyday-athlete
+          ref: ${{ inputs.source_sha }}
+          path: source
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24.19.0'
+      - name: Validate source and all preview regressions
+        working-directory: source
+        run: |
+          set -euo pipefail
+          npm ci --ignore-scripts
+          npm run browser:prepare
+          npm run typecheck
+          npm run lint
+          npm run test:unit
+          npm run test:integration
+          npm run build
+          npx playwright test --config playwright.v2-final.config.ts
+          npm run test:m1:pages
+          npx playwright test --config playwright.isolated-pages.config.ts
+      - name: Build exact approved release and verify artifact identity
+        working-directory: source
+        env:
+          EA_ISOLATED_PAGES: '1'
+          EA_PAGES_BASE: /
+          VITE_EA_APPROVED_HOST: everyday-athlete-preview.github.io
+          EA_PAGES_RELEASE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          npm run build:pages
+          EXPECTED_DIGEST=$(cat "$RUNNER_TEMP/expected-digest")
+          printf '%s  %s\n' "$EXPECTED_DIGEST" reports/github-pages/pages-artifact.json | sha256sum --check
+      - uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: source/.data/pages-build
+          retention-days: 1
+  deploy:
+    needs: validate-build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publish approved tested artifact
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

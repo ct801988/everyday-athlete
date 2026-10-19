@@ -6,8 +6,8 @@ import {
   copyFileSync,
 } from "node:fs";
 import { createHash } from "node:crypto";
-import { pagesBase } from "./pages-path";
-const base = pagesBase(),
+import { deploymentBase } from "./isolated-pages-config";
+const base = deploymentBase(),
   dir = ".data/pages-build";
 if (
   !readFileSync(dir + "/index.html", "utf8").includes(
@@ -23,8 +23,8 @@ for (const n of [180, 192, 512])
   );
 const manifest = {
   id: base,
-  name: "Fitness App Preview",
-  short_name: "Fitness App Preview",
+  name: "Everyday Athlete Preview",
+  short_name: "Everyday Athlete",
   start_url: base,
   scope: base,
   display: "standalone",
@@ -73,7 +73,7 @@ const hash = sha(
 const paths = files.map((f) => base + f);
 const worker = `const PREFIX=${JSON.stringify(prefix)},CACHE=PREFIX+${JSON.stringify(hash)},BASE=${JSON.stringify(base)},FILES=${JSON.stringify(paths)};
 self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES))));
-self.addEventListener('message',e=>{if(e.data==='ACTIVATE')self.skipWaiting()});
+${process.env.EA_ISOLATED_PAGES === "1" ? "// No forced activation: close all app windows to apply a waiting update safely." : "self.addEventListener('message',e=>{if(e.data==='ACTIVATE')self.skipWaiting()});"}
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith(PREFIX)&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{const u=new URL(e.request.url);if(e.request.method!=='GET'||u.origin!==self.location.origin||u.search)return;if(e.request.mode==='navigate'&&(u.pathname===BASE||u.pathname===BASE+'index.html')){e.respondWith(caches.open(CACHE).then(c=>c.match(BASE+'index.html')).then(r=>r||fetch(e.request)));return;}if(FILES.includes(u.pathname))e.respondWith(caches.open(CACHE).then(c=>c.match(u.pathname)).then(r=>r||fetch(e.request)));});`;
 writeFileSync(dir + "/sw.js", worker);
