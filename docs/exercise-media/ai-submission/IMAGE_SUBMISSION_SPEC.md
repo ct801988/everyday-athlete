@@ -1,3 +1,15 @@
+## Owner direction update — mixed demonstrators (2026-10-18, America/Chicago)
+
+Maintain a balanced, intentional mix of male and female demonstrators across the overall exercise library; both versions are not required for every exercise. Preserve consistent photographic style, clear movement, exact exercise/variant mapping, concise per-image captions, high quality and beginner-friendly clarity. Keep the same demonstrator within each sequence unless a deliberate change is explicitly documented and reviewed.
+
+The owner approves the current bench-press sequence as the first pilot STYLE REFERENCE only, subject to later qualified technique and integration review. Preserve that selected sequence; do not regenerate or replace it solely for representation. The actual selected image files were not supplied with this direction update, so this record does not claim local receipt, file hashes, exact file approval or completed integration. When supplied, bind the existing selection to exact files/version through the unchanged manifest, approval and provenance process.
+
+Next pilot: use a female demonstrator for Supported Hip CAR, following the existing supported standing right-hip forward-circle storyboard and exact variant mapping. Preserve the initial eight-position planning reference; final frames/angles depend on technique review. Identify any specific reason a female demonstrator is unsuitable before proposing a change; representation alone does not justify changing exercise, support, side, direction or movement phases. Owner develops/selects the sequence in standard ChatGPT. Work does not generate or integrate images under this update.
+
+Visual selection is not technique clearance, integration authorization or publication approval. All existing provenance, commercial-use and review gates remain intact. No budget, merge, deployment or publication is approved.
+
+---
+
 # Image submission specification — two-exercise AI pilot
 Use this specification when sending selected assets from standard ChatGPT. Images are candidates for instructional use until the required reviews clear. Sending a ZIP does not itself authorize publication.
 

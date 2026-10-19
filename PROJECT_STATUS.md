@@ -1,3 +1,19 @@
+# Current checkpoint — mixed demonstrator direction recorded
+
+## Owner direction update — mixed demonstrators (2026-10-18, America/Chicago)
+
+Maintain a balanced, intentional mix of male and female demonstrators across the overall exercise library; both versions are not required for every exercise. Preserve consistent photographic style, clear movement, exact exercise/variant mapping, concise per-image captions, high quality and beginner-friendly clarity. Keep the same demonstrator within each sequence unless a deliberate change is explicitly documented and reviewed.
+
+The owner approves the current bench-press sequence as the first pilot STYLE REFERENCE only, subject to later qualified technique and integration review. Preserve that selected sequence; do not regenerate or replace it solely for representation. The actual selected image files were not supplied with this direction update, so this record does not claim local receipt, file hashes, exact file approval or completed integration. When supplied, bind the existing selection to exact files/version through the unchanged manifest, approval and provenance process.
+
+Next pilot: use a female demonstrator for Supported Hip CAR, following the existing supported standing right-hip forward-circle storyboard and exact variant mapping. Preserve the initial eight-position planning reference; final frames/angles depend on technique review. Identify any specific reason a female demonstrator is unsuitable before proposing a change; representation alone does not justify changing exercise, support, side, direction or movement phases. Owner develops/selects the sequence in standard ChatGPT. Work does not generate or integrate images under this update.
+
+Visual selection is not technique clearance, integration authorization or publication approval. All existing provenance, commercial-use and review gates remain intact. No budget, merge, deployment or publication is approved.
+
+Documentation-only update based on branch checkpoint 4ab13200e1ad7c2676d494a60d60d8f0fd1c599c. Visual V2 and application source/tests unchanged; no new application tests run. PR #4 remains draft. STOP after recording direction; await owner-supplied assets and explicit next instructions. Earlier entries below are retained as history.
+
+---
+
 # Current checkpoint — AI-first pilot sourcing; submission specification delivered
 2026-10-18: owner approved technical architecture/two-exercise concept but REJECTED the $1,500–$4,000 commissioned-photography allowance. No external budget is approved. Preferred first approach is original photorealistic AI-generated instructional illustrations, developed/reviewed/selected by the owner in standard ChatGPT. Work maintains manifests, mappings, future optimization/integration/offline tests/GitHub only within approved scope.
 V2 at 1901bcc remains the approved UI baseline. Bench B1–B3 and supported hip CAR H1–H8 storyboards are preserved as review references; 3+ reviewed frames, no maximum, per-image captions, explicit side/direction/support. AI appearance is not real-camera provenance, technique certification, medical validation or automatic commercial-use clearance.
